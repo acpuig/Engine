@@ -1,9 +1,2 @@
-﻿  Application.cpp
-  log.cpp
-  Main.cpp
-  ModuleInput.cpp
-  ModuleOpenGL.cpp
-  ModuleWindow.cpp
-  Generating Code...
-LINK : fatal error LNK1104: cannot open file 'glew32.lib'
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppCommon.targets(1074,5): error MSB6006: "link.exe" exited with code 1104.
+﻿  ModuleOpenGL.cpp
+  Engine.vcxproj -> C:\Users\Ariadna\Documents\Master\Engine\Engine\Engine\Source\x64\Debug\Engine.exe
