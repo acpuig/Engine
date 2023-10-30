@@ -9,7 +9,6 @@ class ModuleWindow;
 class ModuleTextures;
 class ModuleInput;
 class ModuleRenderExercise;
-class ModuleRender;
 class ModuleProgram;
 class ModuleEditor;
 
@@ -25,23 +24,19 @@ public:
 	update_status Update();
 	bool CleanUp();
 
-    ModuleOpenGL* GetOpenGL() { return renderOPGL; }
-    ModuleWindow* GetWindow() { return window; }
+    ModuleWindow* GetWindow() { return window; }  
+    ModuleOpenGL* GetOpenGL() { return render; }
     ModuleInput*  GetInput() { return input; }
-    ModuleRender* GetRender() { return render; }
     ModuleProgram* GetProgram() { return program; }
-   // ModuleRenderExercise* GetRenderExercise() { return; }
     ModuleEditor* GetEditor() { return editor; }
 
 
 private:
 
-    ModuleOpenGL* renderOPGL = nullptr;
+    ModuleOpenGL* render = nullptr;
     ModuleWindow* window = nullptr;
     ModuleInput* input = nullptr;
-    ModuleRender* render = nullptr;
     ModuleProgram* program = nullptr;
-    //ModuleRenderExercise* renderExercise = nullptr;
     ModuleEditor* editor = nullptr;
 
 

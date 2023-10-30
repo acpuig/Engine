@@ -27,7 +27,6 @@ bool ModuleEditor::Init()
 
 
 	LOG("Creating ImGui context");
-
 	// Setup Dear ImGui context
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();

@@ -3,8 +3,8 @@
 #include "ModuleRenderExercise.h"
 #include "ModuleWindow.h"
 #include "SDL.h"
-#include "ModuleRender.h"
 #include "ModuleProgram.h"
+#include "ModuleOpenGL.h"
 #include <GL/glew.h>
 
 
@@ -27,7 +27,7 @@ bool ModuleRenderExercise::Init() {
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vtx_data), vtx_data, GL_STATIC_DRAW);
 
 	// Create a program with Hello World shaders
-	const char* vertexShaderSource = App->GetProgram()->LoadShaderSource("default_shader.glsl");
+	const char* vertexShaderSource = App->GetProgram()->LoadShaderSource("default_vertex.glsl");
 	const char* fragmentShaderSource = App->GetProgram()->LoadShaderSource("default_fragment.glsl");
 
 	unsigned vertexShader = App->GetProgram()->CompileShader(GL_VERTEX_SHADER, vertexShaderSource);
@@ -51,7 +51,7 @@ update_status ModuleRenderExercise::Update()
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glDrawArrays(GL_TRIANGLES, 0, 3);
 
-	App->GetRender()->RenderVBO(vbo, helloProgram);
+	App->GetOpenGL()->RenderVBO(vbo,helloProgram);
 
 	return UPDATE_CONTINUE;
 }
