@@ -3,6 +3,7 @@
 #include "ModuleInput.h"
 #include "ModuleOpenGL.h"
 #include "SDL/include/SDL.h"
+#include <imgui_impl_sdl2.h>
 
 ModuleInput::ModuleInput()
 {}
@@ -43,7 +44,13 @@ update_status ModuleInput::Update()
                     App->GetOpenGL()->WindowResized(sdlEvent.window.data1, sdlEvent.window.data2);
                 break;
         }
+
+        //Sending Input Events to ImGui
+        ImGui_ImplSDL2_ProcessEvent(&sdlEvent);
+
     }
+
+
 
     keyboard = SDL_GetKeyboardState(NULL);
 
