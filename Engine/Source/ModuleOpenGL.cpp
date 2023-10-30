@@ -29,7 +29,7 @@ bool ModuleOpenGL::Init()
 	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8); // we want to have a stencil buffer with 8 bit
 
 	LOG("Creating Renderer context");
-	SDL_GL_CreateContext(App->GetWindow()->window);
+	context = SDL_GL_CreateContext(App->GetWindow()->window);
 
 	//SDL_WINDOW_OPENGL();  Remember to create the SDL window with special flag
 
