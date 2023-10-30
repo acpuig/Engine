@@ -1,2 +1,11 @@
 ﻿  Application.cpp
+  Main.cpp
+  ModuleEditor.cpp
+  ModuleInput.cpp
+  ModuleOpenGL.cpp
+  ModuleProgram.cpp
+  ModuleRender.cpp
+  ModuleRenderExercise.cpp
+  ModuleWindow.cpp
+  Generating Code...
   Engine.vcxproj -> C:\Users\ariadnacp1\Desktop\Engine\Engine\Source\x64\Debug\Engine.exe
