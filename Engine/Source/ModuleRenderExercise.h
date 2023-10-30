@@ -3,7 +3,7 @@
 #include "Module.h"
 #include "Globals.h"
 
-class ModuleProgram; 
+//class ModuleRender;
 
 
 class ModuleRenderExercise : public Module
@@ -17,9 +17,6 @@ public:
 	bool CleanUp();
 
 	// Forward declaration
-	const char* LoadShaderSource(const char* shader_file_name); 
-	unsigned CreateProgram(unsigned vtx_shader, unsigned frg_shader);
-	unsigned CompileShader(unsigned type, const char* source);
 
 	unsigned helloProgram;
 	unsigned vbo;

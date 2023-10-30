@@ -30,6 +30,7 @@ bool ModuleRender::Init()
 
 	return true; 
 }
+
 // This function must be called each frame for drawing the triangle
 void ModuleRender::RenderVBO(unsigned vbo, unsigned program)
 {

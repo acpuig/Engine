@@ -3,6 +3,10 @@
 #include "ModuleWindow.h"
 #include "ModuleOpenGL.h"
 #include "ModuleInput.h"
+#include "ModuleRender.h"
+#include "ModuleProgram.h"
+#include "ModuleRenderExercise.h"
+
 
 using namespace std;
 
@@ -10,8 +14,12 @@ Application::Application()
 {
 	// Order matters: they will Init/start/update in this order
 	modules.push_back(window = new ModuleWindow());
-	modules.push_back(render = new ModuleOpenGL());
+	modules.push_back(renderOPGL = new ModuleOpenGL());
 	modules.push_back(input = new ModuleInput());
+	modules.push_back(program = new ModuleProgram());
+	modules.push_back(render = new ModuleRender());
+	modules.push_back(renderExercise = new ModuleRenderExercise());
+
 }
 
 Application::~Application()
