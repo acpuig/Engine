@@ -48,7 +48,7 @@ bool ModuleOpenGL::Init()
 	//Initialize global states
 	glEnable(GL_DEPTH_TEST); // Enable depth test
 	glEnable(GL_CULL_FACE); // Enable cull backward faces
-	glFrontFace(GL_CCW); // Front faces will be counter clockwise*/
+	glFrontFace(GL_CCW); // Front faces will be counter clockwise*/f
 	return true;
 }
 
@@ -101,3 +101,4 @@ void ModuleOpenGL::RenderVBO(unsigned vbo, unsigned program)
 	// 1 triangle to draw = 3 vertices
 	glDrawArrays(GL_TRIANGLES, 0, 3);
 }
+

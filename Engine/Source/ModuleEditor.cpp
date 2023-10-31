@@ -2,6 +2,8 @@
 #include "Application.h"
 #include "ModuleEditor.h"
 #include "ModuleWindow.h"
+#include "ModuleOpenGL.h"
+
 #include "SDL.h"
 
 #include <imgui.h>
@@ -24,16 +26,14 @@ ModuleEditor::~ModuleEditor()
 // Called before render is available
 bool ModuleEditor::Init()
 {
-
-
+	//Create Context
 	LOG("Creating ImGui context");
-	// Setup Dear ImGui context
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
-
-	context = SDL_GL_CreateContext(App->GetWindow()->window);
-	ImGui_ImplSDL2_InitForOpenGL(App->GetWindow()->window, context);
+	ImGui_ImplSDL2_InitForOpenGL(App->GetWindow()->window, App->GetOpenGL()->GetContext());
 	ImGui_ImplOpenGL3_Init("#version 330");
+
+
 	return true;
 }
 
@@ -42,7 +42,6 @@ update_status ModuleEditor::PreUpdate()
 	 ImGui_ImplOpenGL3_NewFrame();
 	 ImGui_ImplSDL2_NewFrame(App->GetWindow()->window);
 	 ImGui::NewFrame();
-
 
 	return UPDATE_CONTINUE;
 }
@@ -53,22 +52,24 @@ update_status ModuleEditor::Update()
 	//Render frame before swapping buffers
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+	ImGui::ShowDemoWindow();
+
 
 	return UPDATE_CONTINUE;
 }
 
 update_status ModuleEditor::PostUpdate()
-{
-	ImGui_ImplOpenGL3_Shutdown();
-	ImGui_ImplSDL2_Shutdown();
-	ImGui::DestroyContext();
-
+{	
 	return UPDATE_CONTINUE;
 }
 
 // Called before quitting
 bool ModuleEditor::CleanUp()
 {
+	//Destroy Context
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplSDL2_Shutdown();
+	ImGui::DestroyContext();
 
 	return true;
 }

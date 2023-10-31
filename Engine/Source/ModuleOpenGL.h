@@ -16,6 +16,8 @@ public:
 	update_status PreUpdate();
 	update_status Update();
 	update_status PostUpdate();
+
+	void* GetContext() const {return context;}
 	bool CleanUp();
 	void WindowResized(unsigned width, unsigned height);
 	void RenderVBO(unsigned vbo, unsigned program);
