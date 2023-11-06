@@ -33,7 +33,6 @@ bool ModuleEditor::Init()
 	ImGui_ImplSDL2_InitForOpenGL(App->GetWindow()->window, App->GetOpenGL()->GetContext());
 	ImGui_ImplOpenGL3_Init("#version 330");
 
-
 	return true;
 }
 

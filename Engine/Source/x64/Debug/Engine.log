@@ -1,2 +1,10 @@
-﻿  ModuleEditor.cpp
+﻿  Application.cpp
+  Main.cpp
+  ModuleEditor.cpp
+  ModuleInput.cpp
+  ModuleOpenGL.cpp
+  ModuleProgram.cpp
+  ModuleRenderExercise.cpp
+  ModuleWindow.cpp
+  Generando código...
   Engine.vcxproj -> C:\Users\Ariadna\OneDrive\Documentos\Master\Engine\Engine\Engine\Source\x64\Debug\Engine.exe

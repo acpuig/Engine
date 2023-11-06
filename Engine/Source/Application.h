@@ -28,7 +28,7 @@ public:
     ModuleOpenGL* GetOpenGL() { return render; }
     ModuleInput*  GetInput() { return input; }
     ModuleProgram* GetProgram() { return program; }
-    ModuleEditor* GetEditor() { return editor; }
+ //   ModuleEditor* GetEditor() { return editor; }
 
 
 private:
@@ -37,7 +37,9 @@ private:
     ModuleWindow* window = nullptr;
     ModuleInput* input = nullptr;
     ModuleProgram* program = nullptr;
-    ModuleEditor* editor = nullptr;
+    ModuleRenderExercise* triangle = nullptr;
+
+//    ModuleEditor* editor = nullptr;
 
 
     std::list<Module*> modules;

@@ -20,6 +20,7 @@ ModuleOpenGL::~ModuleOpenGL()
 // Called before render is available
 bool ModuleOpenGL::Init()
 {
+		//Create Context
 	//Setup attributes
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4); // desired version
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 6);

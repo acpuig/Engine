@@ -20,21 +20,24 @@ ModuleRenderExercise::~ModuleRenderExercise()
 }
 
 bool ModuleRenderExercise::Init() {
-
+	
+	// Generate VBO and bind vertex data
 	float vtx_data[] = { -1.0f, -1.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f };
 	glGenBuffers(1, &vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo); // set vbo active
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vtx_data), vtx_data, GL_STATIC_DRAW);
 
-	// Create a program with Hello World shaders
+	// Load and compile shaders
 	const char* vertexShaderSource = App->GetProgram()->LoadShaderSource("default_vertex.glsl");
 	const char* fragmentShaderSource = App->GetProgram()->LoadShaderSource("default_fragment.glsl");
 
 	unsigned vertexShader = App->GetProgram()->CompileShader(GL_VERTEX_SHADER, vertexShaderSource);
 	unsigned fragmentShader = App->GetProgram()->CompileShader(GL_FRAGMENT_SHADER, fragmentShaderSource);
 
+	// Link shaders into a program
 	 helloProgram = App->GetProgram()->CreateProgram(vertexShader, fragmentShader);
 
+	 // Delete individual shaders
 	 glDeleteShader(vertexShader);
 	 glDeleteShader(fragmentShader);
 
