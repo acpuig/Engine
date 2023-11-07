@@ -46,12 +46,6 @@ update_status ModuleRenderExercise::Update()
 	return UPDATE_CONTINUE;
 }
 
-// This function must be called one time at destruction of vertex buffer
-void ModuleRenderExercise::DestroyVBO(unsigned vbo)
-{
-	glDeleteBuffers(1, &vbo);
-}
-
 bool ModuleRenderExercise::CleanUp() 
 {
 	DestroyVBO(vbo);
@@ -59,6 +53,11 @@ bool ModuleRenderExercise::CleanUp()
 	return true;
 }
 
+// This function must be called one time at destruction of vertex buffer
+void ModuleRenderExercise::DestroyVBO(unsigned vbo)
+{
+	glDeleteBuffers(1, &vbo);
+}
 // This function must be called each frame for drawing the triangle
 void ModuleRenderExercise::RenderVBO(unsigned vbo, unsigned program)
 {

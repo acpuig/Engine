@@ -3,8 +3,6 @@
 #include "Module.h"
 #include "Globals.h"
 
-//class ModuleRender;
-
 
 class ModuleRenderExercise : public Module
 {
