@@ -127,7 +127,8 @@
 // --------------------------------
 //  INTERFACING WITH YOUR RENDERER
 // --------------------------------
-// Debug Draw doesn't touch on any renderer-specific aspects or APIs, instead you provide
+// Debug Draw doesn't touch on any renderer-specific 
+// s or APIs, instead you provide
 // the library with all of it's rendering needs via the dd::RenderInterface abstract class.
 //
 // See the declaration of dd::RenderInterface for details. Not all methods are

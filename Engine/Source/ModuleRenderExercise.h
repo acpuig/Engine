@@ -15,6 +15,7 @@ public:
 	void DestroyVBO(unsigned vbo);
 	bool CleanUp();
 	void RenderVBO(unsigned vbo, unsigned program);
+	void RenderTriangle(unsigned vbo, unsigned program);
 
 	// Forward declaration
 
@@ -26,5 +27,7 @@ public:
 
 private:
 	Frustum frustum;
+	float4x4 model, view, proj;
+
 
 };
