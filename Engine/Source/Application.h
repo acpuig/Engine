@@ -11,6 +11,7 @@ class ModuleInput;
 class ModuleRenderExercise;
 class ModuleProgram;
 class ModuleEditor;
+class ModuleDebugDraw;
 
 
 class Application
@@ -28,8 +29,8 @@ public:
     ModuleOpenGL* GetOpenGL() { return render; }
     ModuleInput*  GetInput() { return input; }
     ModuleProgram* GetProgram() { return program; }
-   ModuleEditor* GetEditor() { return editor; }
-
+    ModuleEditor* GetEditor() { return editor; }
+    ModuleDebugDraw* GetDebugger() { return debugger; }
 
 private:
 
@@ -39,6 +40,7 @@ private:
     ModuleProgram* program = nullptr;
     ModuleRenderExercise* triangle = nullptr;
     ModuleEditor* editor = nullptr;
+    ModuleDebugDraw* debugger = nullptr;
 
 
     std::list<Module*> modules;

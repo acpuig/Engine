@@ -2,6 +2,7 @@
 
 #include "Module.h"
 #include "Globals.h"
+#include "MathGeoLib.h"
 
 
 class ModuleRenderExercise : public Module
@@ -19,6 +20,11 @@ public:
 
 	unsigned helloProgram;
 	unsigned vbo;
+	float4x4 GetView();
+	float4x4 GetProjection();
+	float4x4 GetModel();
 
+private:
+	Frustum frustum;
 
 };
