@@ -27,22 +27,9 @@ bool ModuleRenderExercise::Init() {
 	glBindBuffer(GL_ARRAY_BUFFER, vbo); // set vbo active
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vtx_data), vtx_data, GL_STATIC_DRAW);
 
-	// Load and compile shaders
-	const char* vertexShaderSource = App->GetProgram()->LoadShaderSource("default_vertex.glsl");
-	const char* fragmentShaderSource = App->GetProgram()->LoadShaderSource("default_fragment.glsl");
-
-	unsigned vertexShader = App->GetProgram()->CompileShader(GL_VERTEX_SHADER, vertexShaderSource);
-	unsigned fragmentShader = App->GetProgram()->CompileShader(GL_FRAGMENT_SHADER, fragmentShaderSource);
-
-	// Link shaders into a program
-	 helloProgram = App->GetProgram()->CreateProgram(vertexShader, fragmentShader);
-
-	 // Delete individual shaders
-	 glDeleteShader(vertexShader);
-	 glDeleteShader(fragmentShader);
+	helloProgram = App->GetProgram()->Init("default_vertex.glsl", "default_fragment.glsl");
 
 	 return true;
-
 }
 
 update_status ModuleRenderExercise::Update()
@@ -54,7 +41,7 @@ update_status ModuleRenderExercise::Update()
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glDrawArrays(GL_TRIANGLES, 0, 3);
 
-	App->GetOpenGL()->RenderVBO(vbo,helloProgram);
+	RenderVBO(vbo,helloProgram);
 
 	return UPDATE_CONTINUE;
 }
@@ -67,8 +54,21 @@ void ModuleRenderExercise::DestroyVBO(unsigned vbo)
 
 bool ModuleRenderExercise::CleanUp() 
 {
-	glDeleteBuffers(1, &vbo);
+	DestroyVBO(vbo);
 	glDeleteProgram(helloProgram);
 	return true;
-
 }
+
+// This function must be called each frame for drawing the triangle
+void ModuleRenderExercise::RenderVBO(unsigned vbo, unsigned program)
+{
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glEnableVertexAttribArray(0);
+	// size = 3 float per vertex
+	// stride = 0 is equivalent to stride = sizeof(float)*3
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+	glUseProgram(program);
+	// 1 triangle to draw = 3 vertices
+	glDrawArrays(GL_TRIANGLES, 0, 3);
+}
+

@@ -90,16 +90,3 @@ void ModuleOpenGL::WindowResized(unsigned width, unsigned height)
 {
 }
 
-// This function must be called each frame for drawing the triangle
-void ModuleOpenGL::RenderVBO(unsigned vbo, unsigned program)
-{
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glEnableVertexAttribArray(0);
-	// size = 3 float per vertex
-	// stride = 0 is equivalent to stride = sizeof(float)*3
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-	glUseProgram(program);
-	// 1 triangle to draw = 3 vertices
-	glDrawArrays(GL_TRIANGLES, 0, 3);
-}
-

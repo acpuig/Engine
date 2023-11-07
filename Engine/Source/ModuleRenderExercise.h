@@ -15,6 +15,7 @@ public:
 	update_status Update();
 	void DestroyVBO(unsigned vbo);
 	bool CleanUp();
+	void RenderVBO(unsigned vbo, unsigned program);
 
 	// Forward declaration
 
