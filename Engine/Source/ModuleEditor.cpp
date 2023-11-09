@@ -56,6 +56,7 @@ update_status ModuleEditor::Update()
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame(App->GetWindow()->window);
 	ImGui::NewFrame();
+
 	ImGui::ShowDemoWindow();
 
 	//Render frame before swapping buffers

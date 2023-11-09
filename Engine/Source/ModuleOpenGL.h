@@ -20,7 +20,6 @@ public:
 	void* GetContext() const {return context;}
 	bool CleanUp();
 	void WindowResized(unsigned width, unsigned height);
-	void RenderVBO(unsigned vbo, unsigned program);
 
 private:
 	void* context;
