@@ -591,7 +591,10 @@ ModuleDebugDraw::~ModuleDebugDraw()
 bool ModuleDebugDraw::Init()
 {
     implementation = new DDRenderInterfaceCoreGL;
-    dd::initialize(implementation);
+    dd::initialize(implementation); 
+    
+    dd::xzSquareGrid(-500, 500, -0.1f, 1.0f, dd::colors::White);
+    dd::axisTriad(float4x4::identity, 0.0f, 25.0f);
     return true;
 }
 
@@ -608,8 +611,8 @@ bool ModuleDebugDraw::CleanUp()
 
 update_status  ModuleDebugDraw::Update()
 {
-    dd::xzSquareGrid(-500, 500, -0.1f, 1.0f, dd::colors::White);
-    dd::axisTriad(float4x4::identity, 0.0f, 25.0f);
+
+
 	return UPDATE_CONTINUE;
 }
 
