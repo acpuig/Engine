@@ -2,6 +2,9 @@
 #include "Application.h"
 #include "ModuleOpenGL.h"
 #include "ModuleWindow.h"
+#include "ModuleCamera.h"
+#include "ModuleDebugDraw.h"
+
 #include "SDL.h"
 
 #include <GL/glew.h>
@@ -65,6 +68,9 @@ update_status ModuleOpenGL::PreUpdate()
 // Called every draw update
 update_status ModuleOpenGL::Update()
 {
+	int w, h;
+	SDL_GetWindowSize(App->GetWindow()->window, &w, &h);
+	App->GetDebugDraw()->Draw(App->GetCamera()->GetView(), App->GetCamera()->GetProjection(), w, h);
 
 	return UPDATE_CONTINUE;
 }
@@ -88,5 +94,7 @@ bool ModuleOpenGL::CleanUp()
 
 void ModuleOpenGL::WindowResized(unsigned width, unsigned height)
 {
+	int w, h;
+	SDL_GetWindowSize(App->GetWindow()->window, &w, &h);
+	glViewport(0, 0, w, h);
 }
-
