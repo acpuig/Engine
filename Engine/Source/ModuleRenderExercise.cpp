@@ -28,7 +28,7 @@ bool ModuleRenderExercise::Init() {
 	glGenBuffers(1, &vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo); // set vbo active
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vtx_data), vtx_data, GL_STATIC_DRAW);
-
+	App->GetCamera()->InitFrustum();
 	helloProgram = App->GetProgram()->Init("default_vertex.glsl", "default_fragment.glsl");
 
 	 return true;
@@ -71,17 +71,16 @@ void ModuleRenderExercise::RenderVBO(unsigned vbo, unsigned program)
 
 void ModuleRenderExercise::RenderTriangle(unsigned vbo, unsigned program)
 {
-	float4x4 model, view, projection;
-
-	// TODO: retrieve model view and projection
+	float4x4 model, view, proj;
 	view = App->GetCamera()->GetView();
-	projection = App->GetCamera()->GetProjection();
+	proj = App->GetCamera()->GetProjection();
 	model = App->GetCamera()->GetModel();
 
 	glUseProgram(program);
+
 	glUniformMatrix4fv(glGetUniformLocation(program, "model"), 1, GL_TRUE, &model[0][0]);
 	glUniformMatrix4fv(glGetUniformLocation(program, "view"), 1, GL_TRUE, &view[0][0]);
-	glUniformMatrix4fv(glGetUniformLocation(program, "proj"), 1, GL_TRUE, &projection[0][0]);
+	glUniformMatrix4fv(glGetUniformLocation(program, "proj"), 1, GL_TRUE, &proj[0][0]);
 
 	// TODO: bind buffer and vertex attributes
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);

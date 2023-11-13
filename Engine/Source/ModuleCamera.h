@@ -15,9 +15,11 @@ public:
 	float4x4 GetProjection() const;
 
 	float4x4 GetModel() const;
+	void InitFrustum();
+
 
 private:
 
-	Frustum frustrum;  
+	Frustum frustum;  
 
 };
