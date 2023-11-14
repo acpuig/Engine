@@ -13,6 +13,8 @@ public:
 	~ModuleRenderExercise();
 	bool Init();
 	update_status Update();
+	update_status PostUpdate();
+
 	void DestroyVBO(unsigned vbo);
 	bool CleanUp();
 	void RenderVBO(unsigned vbo, unsigned program);
