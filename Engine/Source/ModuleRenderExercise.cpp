@@ -36,7 +36,6 @@ bool ModuleRenderExercise::Init() {
 
 update_status ModuleRenderExercise::Update()
 {
-
 	RenderTriangle(vbo, helloProgram);
 
 	return UPDATE_CONTINUE;
