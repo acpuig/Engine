@@ -165,6 +165,7 @@ public:
 	/// Generates one of the eight corner points of this Frustum.
 	/** @param cornerIndex The index of the corner point to generate, in the range [0, 7].
 		 The points are returned in the order 0: ---, 1: --+, 2: -+-, 3: -++, 4: +--, 5: +-+, 6: ++-, 7: +++.
+		 The points are returned in the order 0: ---, 1: --+, 2: -+-, 3: -++, 4: +--, 5: +-+, 6: ++-, 7: +++.
 		 (corresponding the XYZ axis directions). */
 	float3 CornerPoint(int cornerIndex) const;
 
