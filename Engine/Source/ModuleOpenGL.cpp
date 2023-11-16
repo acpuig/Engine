@@ -69,15 +69,14 @@ update_status ModuleOpenGL::PreUpdate()
 update_status ModuleOpenGL::Update()
 {
 
-	int w, h;
-	SDL_GetWindowSize(App->GetWindow()->window, &w, &h);
-	App->GetDebugDraw()->Draw(App->GetCamera()->GetView(), App->GetCamera()->GetProjection(), w, h);
-
 	return UPDATE_CONTINUE;
 }
 
 update_status ModuleOpenGL::PostUpdate()
 {
+	int w, h;
+	SDL_GetWindowSize(App->GetWindow()->window, &w, &h);
+	App->GetDebugDraw()->Draw(App->GetCamera()->GetView(), App->GetCamera()->GetProjection(), w, h);
 	//change backbuffer y front buffer 
 	SDL_GL_SwapWindow(App->GetWindow()->window);
 	return UPDATE_CONTINUE;

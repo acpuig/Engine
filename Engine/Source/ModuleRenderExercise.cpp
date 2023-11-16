@@ -6,6 +6,7 @@
 #include "ModuleProgram.h"
 #include "ModuleOpenGL.h"
 #include "ModuleCamera.h"
+#include "ModuleDebugDraw.h"
 
 #include <GL/glew.h>
 
@@ -38,7 +39,17 @@ update_status ModuleRenderExercise::Update()
 {
 	RenderTriangle(vbo, helloProgram);
 
+
 	return UPDATE_CONTINUE;
+}
+
+update_status ModuleRenderExercise::PostUpdate()
+{
+	int w, h;
+	SDL_GetWindowSize(App->GetWindow()->window, &w, &h);
+	App->GetDebugDraw()->Draw(App->GetCamera()->GetView(), App->GetCamera()->GetProjection(), w, h);
+
+	return update_status();
 }
 
 // This function must be called one time at destruction of vertex buffer
