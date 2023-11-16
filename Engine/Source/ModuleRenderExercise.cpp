@@ -29,7 +29,7 @@ bool ModuleRenderExercise::Init() {
 	glGenBuffers(1, &vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo); // set vbo active
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vtx_data), vtx_data, GL_STATIC_DRAW);
-	App->GetCamera()->InitFrustum();
+	App->GetCamera()->Init();
 	helloProgram = App->GetProgram()->Init("default_vertex.glsl", "default_fragment.glsl");
 
 	 return true;
@@ -47,7 +47,7 @@ update_status ModuleRenderExercise::PostUpdate()
 {
 	int w, h;
 	SDL_GetWindowSize(App->GetWindow()->window, &w, &h);
-	App->GetDebugDraw()->Draw(App->GetCamera()->GetView(), App->GetCamera()->GetProjection(), w, h);
+	App->GetDebugDraw()->Draw(App->GetCamera()->GetViewMatrix(), App->GetCamera()->GetProjectionMatrix(), w, h);
 
 	return update_status();
 }
@@ -82,8 +82,8 @@ void ModuleRenderExercise::RenderVBO(unsigned vbo, unsigned program)
 void ModuleRenderExercise::RenderTriangle(unsigned vbo, unsigned program)
 {
 	float4x4 model, view, proj;
-	view = App->GetCamera()->GetView();
-	proj = App->GetCamera()->GetProjection();
+	view = App->GetCamera()->GetViewMatrix();
+	proj = App->GetCamera()->GetProjectionMatrix();
 	model = App->GetCamera()->GetModel();
 
 	glUseProgram(program);
