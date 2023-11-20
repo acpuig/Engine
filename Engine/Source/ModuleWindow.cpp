@@ -68,3 +68,6 @@ bool ModuleWindow::CleanUp()
 	return true;
 }
 
+SDL_Surface* ModuleWindow::GetScreenSurface() {
+	return screen_surface;
+}

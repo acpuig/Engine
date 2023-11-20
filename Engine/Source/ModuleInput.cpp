@@ -63,3 +63,7 @@ bool ModuleInput::CleanUp()
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
 	return true;
 }
+
+const unsigned ModuleInput::GetKey(SDL_Scancode key) const {
+    return keyboard[key];
+}

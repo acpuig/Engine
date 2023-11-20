@@ -5,3 +5,5 @@ Engine/Source/Game/imgui.ini
 Engine/Source/.vs/Engine/v16/Browse.VC.db
 Engine/Source/.vs/Engine/v16/.suo
 *.db
+*.db
+Engine/Source/.vs/Engine/v16/.suo

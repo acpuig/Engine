@@ -21,6 +21,8 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	SDL_Surface* GetScreenSurface();
+
 public:
 	//The window we'll be rendering to
 	SDL_Window* window = NULL;
