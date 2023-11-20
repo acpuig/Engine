@@ -129,6 +129,7 @@
       <Filter>MathGeoLib\Time</Filter>
     </ClCompile>
     <ClCompile Include="ModuleCamera.cpp" />
+    <ClCompile Include="ModuleTexture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -356,6 +357,7 @@
       <Filter>DebugDraw</Filter>
     </ClInclude>
     <ClInclude Include="ModuleCamera.h" />
+    <ClInclude Include="ModuleTexture.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ImGui">
