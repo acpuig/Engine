@@ -1,5 +1,4 @@
 #include "ModuleTexture.h"
-//#include "DirectXTex.h"
 
 ModuleTexture::ModuleTexture() {
 
@@ -8,9 +7,17 @@ ModuleTexture::~ModuleTexture() {
 
 }
 
-void ModuleTexture::Load(char texture_path) {
+void ModuleTexture::Load(char texture_path, char texture_type) {
 	//1. Load image data with external library into CPU
+	/*switch (texture_type) {
+	case ('dds' || 'DDS'):  DirectX::LoadFromDDSFile(texture_path,);
 
+	case ('tga' || 'TGA'): 
+		DirectX::ScratchImage::GetMetadata(); 
+
+		DirectX::LoadFromTGAFile(texture_path, );
+	default : //DirectX::LoadFromWICFile()
+	}*/
 	//2. Create and load OpenGL texture into GPU
 
 	//3. Add texture coordinates(UVs) into VBO

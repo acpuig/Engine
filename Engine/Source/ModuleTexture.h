@@ -1,6 +1,7 @@
 #pragma once
 #include "Module.h"
 #include "Globals.h"
+#include "DirectXTex/DirectXTex.h"
 
 
 
@@ -10,9 +11,11 @@ public:
 	ModuleTexture();
 	~ModuleTexture();
 
-	void Load(char texture_path);
+	void Load(char texture_path, char texture_type);
+
 	void Draw();
 
 private: 
 	
+
 };
