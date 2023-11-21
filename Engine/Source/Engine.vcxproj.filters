@@ -358,6 +358,9 @@
     </ClInclude>
     <ClInclude Include="ModuleCamera.h" />
     <ClInclude Include="ModuleTexture.h" />
+    <ClInclude Include="DirectXTex\DirectXTex\DirectXTex.h">
+      <Filter>DirectXTex</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ImGui">
@@ -381,6 +384,9 @@
     <Filter Include="DebugDraw">
       <UniqueIdentifier>{d15b9243-b30e-45cf-baae-078ce63fe51a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DirectXTex">
+      <UniqueIdentifier>{303ca652-e045-4fb3-9de1-ca055b56ec4a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="MathGeoLib\include\Geometry\KDTree.inl">
@@ -400,6 +406,9 @@
     </None>
     <None Include="MathGeoLib\include\Math\Matrix.inl">
       <Filter>MathGeoLib\Math</Filter>
+    </None>
+    <None Include="DirectXTex\DirectXTex\DirectXTex_Desktop_2019_Win10.vcxproj">
+      <Filter>DirectXTex</Filter>
     </None>
   </ItemGroup>
 </Project>

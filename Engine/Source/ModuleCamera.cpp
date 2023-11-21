@@ -174,8 +174,8 @@ void ModuleCamera::Zoom(const float fov_diffdeg) {
 
 	int zoom_speed = 0.5;
 	int scroll_value = App->GetInput()->GetMouse();
-	horizontal_fov -= zoom_speed * -scroll_value;
-	/*
+	//horizontal_fov -= zoom_speed * -scroll_value;
+	
 	//Scroll up
 	if (scroll_value >  0) {
 		horizontal_fov +=  fov_diffdeg * scroll_value;
@@ -183,7 +183,7 @@ void ModuleCamera::Zoom(const float fov_diffdeg) {
 	//Scroll down
 	 if (scroll_value < 0) {
 		horizontal_fov -= fov_diffdeg * scroll_value;
-	}*/
+	}
 	
 	SetVerticalFOV(horizontal_fov, aspect_ratio);
 

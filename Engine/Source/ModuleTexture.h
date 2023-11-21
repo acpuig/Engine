@@ -10,6 +10,9 @@ public:
 	ModuleTexture();
 	~ModuleTexture();
 
-private: 
+	void Load(char texture_path);
+	void Draw();
 
+private: 
+	
 };
