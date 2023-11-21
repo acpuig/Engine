@@ -45,14 +45,13 @@ update_status ModuleInput::Update()
                     App->GetOpenGL()->WindowResized(sdlEvent.window.data1, sdlEvent.window.data2);
                 break;
         }
-
         //Sending Input Events to ImGui
         ImGui_ImplSDL2_ProcessEvent(&sdlEvent);
-
     }
 
     keyboard = SDL_GetKeyboardState(NULL);
-
+    mouse = SDL_GetMouseState(NULL,NULL);
+    
     return UPDATE_CONTINUE;
 }
 
@@ -62,8 +61,14 @@ bool ModuleInput::CleanUp()
 	LOG("Quitting SDL input event subsystem");
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
 	return true;
+    
 }
 
 const unsigned ModuleInput::GetKey(SDL_Scancode key) const {
     return keyboard[key];
+}
+
+const Uint32 ModuleInput::GetMouse() const {
+    mouse.
+    return mouse;  
 }
