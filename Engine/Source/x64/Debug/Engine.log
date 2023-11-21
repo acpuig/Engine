@@ -1,8 +1,4 @@
-﻿  Application.cpp
-  ModuleCamera.cpp
+﻿  ModuleCamera.cpp
 C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\ModuleCamera.cpp(48,30): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
-  ModuleInput.cpp
-  ModuleOpenGL.cpp
-  ModuleRenderExercise.cpp
-  Generando código...
+C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\ModuleCamera.cpp(175,17): warning C4244: 'inicializando': conversión de 'double' a 'int'; posible pérdida de datos
   Engine.vcxproj -> C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\x64\Debug\Engine.exe

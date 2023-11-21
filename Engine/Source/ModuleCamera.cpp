@@ -35,7 +35,7 @@ bool ModuleCamera::Init() {
 
 update_status  ModuleCamera::Update() {
 	MovementController(0.5);
-
+	Zoom(0.5);
 	return UPDATE_CONTINUE;
 }
 
@@ -103,15 +103,15 @@ void ModuleCamera::RotateFrustum(char axis, float angle, const float delta_time)
 	float3 oldUp = frustum.up.Normalized(); 
 
 	switch (axis){
-	case 'X': 
+	case 'X': 		 // Rotate around the X-axis (pitch)
 		frustum.front = rotation_Matrix.RotateX(angle * delta_time).Mul(oldFront);
 		frustum.up = rotation_Matrix.RotateX(angle * delta_time).Mul(oldUp);
 		break; 
-	case 'Y': 
+	case 'Y': 		// Rotate around the Y-axis (yaw)
 		frustum.front = rotation_Matrix.RotateY(angle * delta_time).Mul(oldFront);
 		frustum.up = rotation_Matrix.RotateY(angle * delta_time).Mul(oldUp);
 		break; 
-	case 'Z':
+	case 'Z':		// Rotate around the Z-axis (roll)
 		frustum.front = rotation_Matrix.RotateZ(angle * delta_time).Mul(oldFront);
 		frustum.up = rotation_Matrix.RotateZ(angle * delta_time).Mul(oldUp);
 		break; 
@@ -171,11 +171,20 @@ void ModuleCamera::Zoom(const float fov_diffdeg) {
 	if (horizontal_fov < minhoriz_fov) {
 		horizontal_fov = minhoriz_fov;
 	}
+
+	int zoom_speed = 0.5;
+	int scroll_value = App->GetInput()->GetMouse();
+	horizontal_fov -= zoom_speed * -scroll_value;
+	/*
+	//Scroll up
+	if (scroll_value >  0) {
+		horizontal_fov +=  fov_diffdeg * scroll_value;
+	} 
+	//Scroll down
+	 if (scroll_value < 0) {
+		horizontal_fov -= fov_diffdeg * scroll_value;
+	}*/
+	
 	SetVerticalFOV(horizontal_fov, aspect_ratio);
-	//Unit36 delta = 0; 
-
-	if (App->GetInput()->GetMouse(). <  1) {
-
-	}
 
 }

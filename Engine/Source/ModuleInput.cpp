@@ -44,6 +44,9 @@ update_status ModuleInput::Update()
                 if (sdlEvent.window.event == SDL_WINDOWEVENT_RESIZED || sdlEvent.window.event == SDL_WINDOWEVENT_SIZE_CHANGED)
                     App->GetOpenGL()->WindowResized(sdlEvent.window.data1, sdlEvent.window.data2);
                 break;
+            case SDL_MOUSEWHEEL:
+                 mouse_scroll = sdlEvent.wheel.y;
+
         }
         //Sending Input Events to ImGui
         ImGui_ImplSDL2_ProcessEvent(&sdlEvent);
@@ -68,7 +71,6 @@ const unsigned ModuleInput::GetKey(SDL_Scancode key) const {
     return keyboard[key];
 }
 
-const Uint32 ModuleInput::GetMouse() const {
-    mouse.
-    return mouse;  
+const int ModuleInput::GetMouse() const {
+    return int(mouse_scroll);
 }

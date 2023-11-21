@@ -17,10 +17,11 @@ public:
 	bool CleanUp();
 
 	const unsigned GetKey(SDL_Scancode key) const;
-	const Uint32 GetMouse() const;
+	const int GetMouse() const;
 
 
 private:
 	const Uint8 *keyboard = NULL;
 	 Uint32 mouse = NULL;
+	 Sint32 mouse_scroll;
 };
