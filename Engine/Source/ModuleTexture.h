@@ -4,18 +4,31 @@
 #include "DirectXTex/DirectXTex.h"
 
 
+struct Texture {
+	bool load = false ;
+	unsigned id;
+	const wchar_t* path;
+	unsigned width;
+	unsigned height;
+};
+
 
 class ModuleTexture : public Module {
-
 public: 
-	ModuleTexture();
-	~ModuleTexture();
 
-	void Load(char texture_path, char texture_type);
+	ModuleTexture(); 
 
+	bool Init();
+	Texture Load(const wchar_t* texture_path, char texture_type);
 	void Draw();
 
-private: 
-	
 
+	bool imageLoad = false;
+	DirectX::ScratchImage& imageData;
+	DirectX::TexMetadata imageMetadata;
+
+
+private: 
+	void LoadImage(const wchar_t* texture_path, char texture_type);
+	Texture LoadTexture(Texture texture);
 };

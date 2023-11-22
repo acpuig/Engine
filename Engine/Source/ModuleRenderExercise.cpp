@@ -7,6 +7,7 @@
 #include "ModuleOpenGL.h"
 #include "ModuleCamera.h"
 #include "ModuleDebugDraw.h"
+#include "ModuleTexture.h"
 
 #include <GL/glew.h>
 
@@ -25,10 +26,18 @@ ModuleRenderExercise::~ModuleRenderExercise()
 bool ModuleRenderExercise::Init() {
 	
 	// Generate VBO and bind vertex data
-	float vtx_data[] = { -1.0f, -1.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f };
+	//float vtx_data[] = { -1.0f, -1.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f };
+	float buffer_data[] = {
+		-1.0f, -1.0f, 0.0f, // ? v0 pos
+		 1.0f, -1.0f, 0.0f, // ? v1 pos
+		 0.0f, 1.0f, 0.0f, // ? v2 pos
+		0.0f, 1.0f, // ? v0 texcoord
+		 1.0f, 1.0f, // ? v1 texcoord
+		0.5f, 0.0f // ? v2 texcoord
+	};
 	glGenBuffers(1, &vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo); // set vbo active
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vtx_data), vtx_data, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(buffer_data), buffer_data, GL_STATIC_DRAW);
 	App->GetCamera()->Init();
 	helloProgram = App->GetProgram()->Init("default_vertex.glsl", "default_fragment.glsl");
 
@@ -37,7 +46,7 @@ bool ModuleRenderExercise::Init() {
 
 update_status ModuleRenderExercise::Update()
 {
-	RenderTriangle(vbo, helloProgram);
+	//RenderTriangle(vbo, helloProgram);
 
 
 	return UPDATE_CONTINUE;
@@ -48,7 +57,8 @@ update_status ModuleRenderExercise::PostUpdate()
 	int w, h;
 	SDL_GetWindowSize(App->GetWindow()->window, &w, &h);
 	App->GetDebugDraw()->Draw(App->GetCamera()->GetViewMatrix(), App->GetCamera()->GetProjectionMatrix(), w, h);
-
+	const wchar_t* imagePath = L"Test-image-Baboon.ppm";
+	App->GetTexture()->Load(imagePath , 'PPM');
 	return update_status();
 }
 
