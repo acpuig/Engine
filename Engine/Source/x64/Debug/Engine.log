@@ -45,6 +45,9 @@ C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Eng
   Compilando...
   TransformOps.cpp
   Clock.cpp
+  Mesh.cpp
+C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\Mesh.cpp(1,10): warning C4067: símbolos (token) inesperados después de la directiva del preprocesador; se esperaba una nueva línea
+  Model.cpp
   ModuleCamera.cpp
 C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\ModuleCamera.cpp(48,30): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
 C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\ModuleCamera.cpp(175,17): warning C4244: 'inicializando': conversión de 'double' a 'int'; posible pérdida de datos

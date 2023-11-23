@@ -21,12 +21,12 @@ public:
 	bool Init();
 	Texture Load(const wchar_t* texture_path, char texture_type);
 
+
+private: 
+
 	bool imageLoad = false;
 	DirectX::ScratchImage& imageData;
 	DirectX::TexMetadata imageMetadata;
-
-
-private: 
 	void LoadImage(const wchar_t* texture_path, char texture_type);
 	Texture LoadTexture(Texture texture);
 };

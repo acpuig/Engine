@@ -130,6 +130,8 @@
     </ClCompile>
     <ClCompile Include="ModuleCamera.cpp" />
     <ClCompile Include="ModuleTexture.cpp" />
+    <ClCompile Include="Model.cpp" />
+    <ClCompile Include="Mesh.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -364,6 +366,8 @@
     <ClInclude Include="Tinygltf\tiny_gltf.h">
       <Filter>Tinygltf</Filter>
     </ClInclude>
+    <ClInclude Include="Model.h" />
+    <ClInclude Include="Mesh.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ImGui">
