@@ -361,6 +361,9 @@
     <ClInclude Include="DirectXTex\DirectXTex\DirectXTex.h">
       <Filter>DirectXTex</Filter>
     </ClInclude>
+    <ClInclude Include="Tinygltf\tiny_gltf.h">
+      <Filter>Tinygltf</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ImGui">
@@ -386,6 +389,9 @@
     </Filter>
     <Filter Include="DirectXTex">
       <UniqueIdentifier>{303ca652-e045-4fb3-9de1-ca055b56ec4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tinygltf">
+      <UniqueIdentifier>{efb21eea-b4c4-4724-806e-04f336aaff3e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

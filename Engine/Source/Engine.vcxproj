@@ -99,7 +99,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.\imgui;.\SDL\include;glew-2.1.0\include;.\MathGeoLib\include;.\DebugDraw;.\DirectXTex</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\Tinygltf;.\imgui;.\SDL\include;glew-2.1.0\include;.\MathGeoLib\include;.\DebugDraw;.\DirectXTex</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -280,6 +280,7 @@
     <ClInclude Include="ModuleRenderExercise.h" />
     <ClInclude Include="ModuleTexture.h" />
     <ClInclude Include="ModuleWindow.h" />
+    <ClInclude Include="Tinygltf\tiny_gltf.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DirectXTex\DirectXTex\DirectXTex_Desktop_2019_Win10.vcxproj" />

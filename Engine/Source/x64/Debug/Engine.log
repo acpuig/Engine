@@ -1,13 +1,68 @@
 ﻿  Application.cpp
+  imgui.cpp
+  imgui_demo.cpp
+  imgui_draw.cpp
+  imgui_impl_opengl3.cpp
+  imgui_impl_sdl2.cpp
+  imgui_tables.cpp
+  imgui_widgets.cpp
+  log.cpp
+  Main.cpp
+  LCG.cpp
+  AABB.cpp
+  Capsule.cpp
+  Circle.cpp
+  Cone.cpp
+  Cylinder.cpp
+  Frustum.cpp
+  Line.cpp
+  LineSegment.cpp
+  OBB.cpp
+  Generando código...
+  Compilando...
+  Plane.cpp
+  Polygon.cpp
+  Polyhedron.cpp
+  Ray.cpp
+  Sphere.cpp
+  Triangle.cpp
+  TriangleMesh.cpp
+C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\MathGeoLib\include\Geometry\TriangleMesh.cpp(190,28): warning C4267: 'argumento': conversión de 'size_t' a 'int'; posible pérdida de datos
+  BitOps.cpp
+  float2.cpp
+  float3.cpp
+  float3x3.cpp
+  float3x4.cpp
+  float4.cpp
+  float4x4.cpp
+  MathFunc.cpp
+  MathLog.cpp
+  MathOps.cpp
+  Polynomial.cpp
+  Quat.cpp
+  SSEMath.cpp
+  Generando código...
+  Compilando...
+  TransformOps.cpp
+  Clock.cpp
+  ModuleCamera.cpp
+C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\ModuleCamera.cpp(48,30): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\ModuleCamera.cpp(175,17): warning C4244: 'inicializando': conversión de 'double' a 'int'; posible pérdida de datos
+  ModuleDebugDraw.cpp
+  ModuleEditor.cpp
+  ModuleInput.cpp
+  ModuleOpenGL.cpp
+  ModuleProgram.cpp
   ModuleRenderExercise.cpp
 C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\ModuleRenderExercise.cpp(61,43): warning C4305: 'argumento': truncamiento de 'int' a 'char'
 C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\ModuleRenderExercise.cpp(61,38): warning C4309: 'argumento': truncamiento de valor constante
   ModuleTexture.cpp
-C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\ModuleTexture.cpp(6,1): error C2530: 'ModuleTexture::imageData': se deben inicializar las referencias
-C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\ModuleTexture.cpp(39,13): warning C4553: "==": el resultado de la expresión no se usa. ¿Quiso decir "="?
+C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\ModuleTexture.cpp(7,1): error C2530: 'ModuleTexture::imageData': se deben inicializar las referencias
+C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\ModuleTexture.cpp(35,13): warning C4553: "==": el resultado de la expresión no se usa. ¿Quiso decir "="?
+C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\ModuleTexture.cpp(39,14): warning C4553: "==": el resultado de la expresión no se usa. ¿Quiso decir "="?
 C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\ModuleTexture.cpp(43,14): warning C4553: "==": el resultado de la expresión no se usa. ¿Quiso decir "="?
-C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\ModuleTexture.cpp(47,14): warning C4553: "==": el resultado de la expresión no se usa. ¿Quiso decir "="?
-C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\ModuleTexture.cpp(55,82): warning C4267: 'argumento': conversión de 'size_t' a 'GLint'; posible pérdida de datos
-C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\ModuleTexture.cpp(86,103): warning C4267: 'argumento': conversión de 'size_t' a 'GLsizei'; posible pérdida de datos
-C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\ModuleTexture.cpp(86,103): warning C4267: 'argumento': conversión de 'size_t' a 'GLint'; posible pérdida de datos
+C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\ModuleTexture.cpp(51,82): warning C4267: 'argumento': conversión de 'size_t' a 'GLint'; posible pérdida de datos
+C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\ModuleTexture.cpp(82,103): warning C4267: 'argumento': conversión de 'size_t' a 'GLsizei'; posible pérdida de datos
+C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\ModuleTexture.cpp(82,103): warning C4267: 'argumento': conversión de 'size_t' a 'GLint'; posible pérdida de datos
+  ModuleWindow.cpp
   Generando código...

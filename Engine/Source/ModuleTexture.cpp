@@ -1,5 +1,6 @@
 #include "ModuleTexture.h"
 #include <GL/glew.h>
+#include "DirectXTex/DirectXTex.h"
 
 
 ModuleTexture::ModuleTexture()
@@ -23,6 +24,7 @@ Texture ModuleTexture::Load(const wchar_t* path, char image_type) {
 
 	return texture; 
 }
+
 
 void ModuleTexture::LoadImage(const wchar_t* image_path, char image_type) {
 

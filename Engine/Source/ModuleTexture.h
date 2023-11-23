@@ -20,8 +20,6 @@ public:
 
 	bool Init();
 	Texture Load(const wchar_t* texture_path, char texture_type);
-	void Draw();
-
 
 	bool imageLoad = false;
 	DirectX::ScratchImage& imageData;

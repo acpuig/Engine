@@ -4,10 +4,10 @@
 #include "ModuleWindow.h"
 #include "ModuleCamera.h"
 #include "ModuleDebugDraw.h"
-
 #include "SDL.h"
 
 #include <GL/glew.h>
+#define TINYGLTF_IMPLEMENTATION
 
 
 ModuleOpenGL::ModuleOpenGL()
@@ -15,7 +15,6 @@ ModuleOpenGL::ModuleOpenGL()
 
 }
 
-// Destructor
 ModuleOpenGL::~ModuleOpenGL()
 {
 }
