@@ -58,7 +58,7 @@ update_status ModuleRenderExercise::PostUpdate()
 	SDL_GetWindowSize(App->GetWindow()->window, &w, &h);
 	App->GetDebugDraw()->Draw(App->GetCamera()->GetViewMatrix(), App->GetCamera()->GetProjectionMatrix(), w, h);
 	const wchar_t* imagePath = L"Test-image-Baboon.ppm";
-	App->GetTexture()->Load(imagePath , 'PPM');
+	//App->GetTexture()->Load(imagePath , 'PPM');
 	return update_status();
 }
 

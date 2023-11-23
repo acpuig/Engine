@@ -2,7 +2,7 @@
 #include <GL/glew.h>
 #include "DirectXTex/DirectXTex.h"
 
-
+/*
 ModuleTexture::ModuleTexture()
 {
 }
@@ -27,7 +27,7 @@ Texture ModuleTexture::Load(const wchar_t* path, char image_type) {
 
 
 void ModuleTexture::LoadImage(const wchar_t* image_path, char image_type) {
-
+	
 	switch (image_type)
 	{
 	case ('DDS'): DirectX::LoadFromDDSFile(image_path, DirectX::DDS_FLAGS_NONE, nullptr, imageData);
@@ -82,12 +82,12 @@ Texture ModuleTexture::LoadTexture(Texture texture) {
 		glTexImage2D(GL_TEXTURE_2D, i, internalFormat, mip->width, mip->height, 0, format, type, mip->pixels);
 	}
 
-	/*glTexImage2D(GL_TEXTURE_2D, imageMetadata.mipLevels, internalFormat, texture.width = imageMetadata.width,
-		texture.id = imageMetadata.height, 0, format, type, imageData.GetPixels());*/
+	glTexImage2D(GL_TEXTURE_2D, imageMetadata.mipLevels, internalFormat, texture.width = imageMetadata.width,
+		texture.id = imageMetadata.height, 0, format, type, imageData.GetPixels());
 
 	glGenerateMipmap(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, texture.id);
 	glDeleteTextures(1, &texture.id);
 	texture.load = true;
 	return texture; 
-}
+}*/

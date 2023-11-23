@@ -101,19 +101,23 @@ float4x4 ModuleCamera::LookAt(const float3& eye_position, const float3& target_p
 void ModuleCamera::RotateFrustum(char axis, float angle, const float delta_time) {
 	float3 oldFront = frustum.front.Normalized();
 	float3 oldUp = frustum.up.Normalized(); 
+	float3 oldRight = frustum.WorldRight().Normalized();
+	float3x3 aux, aux1; 
 
 	switch (axis){
 	case 'X': 		 // Rotate around the X-axis (pitch)
-		frustum.front = rotation_Matrix.RotateX(angle * delta_time).Mul(oldFront);
-		frustum.up = rotation_Matrix.RotateX(angle * delta_time).Mul(oldUp);
+		aux = rotation_Matrix.RotateZ(angle);
+		frustum.front = (aux).Mul(oldFront);
+		aux1 = rotation_Matrix.RotateY(angle);
+		frustum.up = (aux1).Mul(oldUp);
 		break; 
 	case 'Y': 		// Rotate around the Y-axis (yaw)
-		frustum.front = rotation_Matrix.RotateY(angle * delta_time).Mul(oldFront);
-		frustum.up = rotation_Matrix.RotateY(angle * delta_time).Mul(oldUp);
+		frustum.front = rotation_Matrix.RotateZ(angle).MulDir(oldFront);
+		frustum.WorldRight() = rotation_Matrix.RotateX(angle).MulDir(oldRight);
 		break; 
 	case 'Z':		// Rotate around the Z-axis (roll)
-		frustum.front = rotation_Matrix.RotateZ(angle * delta_time).Mul(oldFront);
-		frustum.up = rotation_Matrix.RotateZ(angle * delta_time).Mul(oldUp);
+		frustum.WorldRight() = rotation_Matrix.RotateX(angle).MulDir(oldRight);
+		frustum.up = rotation_Matrix.RotateY(angle).MulDir(oldUp);
 		break; 
 	}
 }
@@ -122,9 +126,8 @@ void ModuleCamera::RotateFrustum(char axis, float angle, const float delta_time)
 
 void  ModuleCamera::MovementController(const float delta_time) {
 
-	float movment_speed = 0.5f;
-	float rotation_speed = 0.5f;
-	float zoom_speed = 0.5f;
+	float movment_speed = 0.2f;
+	float rotation_speed = 0.2f;
 
 	if (App->GetInput()->GetKey(SDL_SCANCODE_W)) {
 		position += frustum.front * movment_speed * delta_time;
@@ -144,27 +147,30 @@ void  ModuleCamera::MovementController(const float delta_time) {
 	if (App->GetInput()->GetKey(SDL_SCANCODE_E)) {
 		position -= frustum.up * movment_speed * delta_time;
 	}
-	if (App->GetInput()->GetKey(SDL_SCANCODE_T)) { 
-		// Rotate around the Y-axis (yaw)
-		RotateFrustum('Y' , DegToRad(180), rotation_speed);
-	}
 	if (App->GetInput()->GetKey(SDL_SCANCODE_Y)) { 
-		 // Rotate around the X-axis (pitch)
-		RotateFrustum('X' , DegToRad(180), rotation_speed);
+		// Rotate around the Y-axis (yaw)
+		RotateFrustum('Y' , DegToRad(90), rotation_speed);
 	}
-	if (App->GetInput()->GetKey(SDL_SCANCODE_U)) {
+	if (App->GetInput()->GetKey(SDL_SCANCODE_X)) { 
+		 // Rotate around the X-axis (pitch)
+		RotateFrustum('X' , DegToRad(45), rotation_speed);
+	}
+	if (App->GetInput()->GetKey(SDL_SCANCODE_Z)) {
 		// Rotate around the Z-axis (roll)
-		RotateFrustum('Z', DegToRad(180), rotation_speed);
+		RotateFrustum('Z', DegToRad(90), rotation_speed);
 	}
 	SetPosition(position);
-	view_Matrix = LookAt(frustum.pos, frustum.pos + frustum.front, frustum.up);
+	//view_Matrix = LookAt(frustum.pos, frustum.pos + frustum.front, frustum.up);
 }
 
 
 void ModuleCamera::Zoom(const float fov_diffdeg) {
-	float minhoriz_fov = 1.0f; 
-	float maxhoiz_fov = 2.5f;
-	horizontal_fov = math::DegToRad(fov_diffdeg);
+	float minhoriz_fov = DegToRad(5); 
+	float maxhoiz_fov = DegToRad(180);
+	float angle = math::DegToRad(fov_diffdeg);
+
+	horizontal_fov = frustum.horizontalFov; 
+
 	if (horizontal_fov > maxhoiz_fov) {
 		horizontal_fov = maxhoiz_fov;
 	}
@@ -172,18 +178,12 @@ void ModuleCamera::Zoom(const float fov_diffdeg) {
 		horizontal_fov = minhoriz_fov;
 	}
 
-	int zoom_speed = 0.5;
+	float zoom_speed = 0.5;
 	int scroll_value = App->GetInput()->GetMouse();
-	//horizontal_fov -= zoom_speed * -scroll_value;
+	float aux = angle * zoom_speed * scroll_value;
+	horizontal_fov += angle*  zoom_speed * scroll_value;
 	
 	//Scroll up
-	if (scroll_value >  0) {
-		horizontal_fov +=  fov_diffdeg * scroll_value;
-	} 
-	//Scroll down
-	 if (scroll_value < 0) {
-		horizontal_fov -= fov_diffdeg * scroll_value;
-	}
 	
 	SetVerticalFOV(horizontal_fov, aspect_ratio);
 

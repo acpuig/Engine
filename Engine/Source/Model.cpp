@@ -2,7 +2,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "tiny_gltf.h"
-
+/*
 void Model::Load(const char* assetFileName)
 {
 	tinygltf::TinyGLTF gltfContext;
@@ -29,4 +29,4 @@ void Model::LoadMaterials(const tinygltf::Model& srcModel)
 		}
 		//textures.push_back(textureId);
 	}
-}
+}*/
