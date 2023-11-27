@@ -2,7 +2,7 @@
 #include <GL/glew.h>
 #include "DirectXTex/DirectXTex.h"
 
-/*
+
 ModuleTexture::ModuleTexture()
 {
 }
@@ -45,7 +45,7 @@ void ModuleTexture::LoadImage(const wchar_t* image_path, char image_type) {
 }
 
 Texture ModuleTexture::LoadTexture(Texture texture) {
-	glGenTextures(1, &texture.id);
+	//glGenTextures(1, &texture.id);
 	glBindTexture(GL_TEXTURE_2D, texture.id);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, imageMetadata.mipLevels - 1);
@@ -76,18 +76,22 @@ Texture ModuleTexture::LoadTexture(Texture texture) {
 	default:
 		assert(false && "Unsupported format");
 	}
-	for (size_t i = 0; i < imageMetadata.mipLevels; ++i)
-	{
-		const DirectX::Image* mip = imageData.GetImage(i, 0, 0);
-		glTexImage2D(GL_TEXTURE_2D, i, internalFormat, mip->width, mip->height, 0, format, type, mip->pixels);
+
+	if ( imageMetadata.mipLevels > 1 ) {
+		for (size_t i = 0; i < imageMetadata.mipLevels; ++i)
+		{
+			const DirectX::Image* mip = imageData.GetImage(i, 0, 0);
+			glTexImage2D(GL_TEXTURE_2D, i, internalFormat, mip->width, mip->height, 0, format, type, mip->pixels);
+		}
+
 	}
-
-	glTexImage2D(GL_TEXTURE_2D, imageMetadata.mipLevels, internalFormat, texture.width = imageMetadata.width,
-		texture.id = imageMetadata.height, 0, format, type, imageData.GetPixels());
-
-	glGenerateMipmap(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, texture.id);
-	glDeleteTextures(1, &texture.id);
+	else {
+		glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, texture.width = imageMetadata.width,
+			texture.id = imageMetadata.height, 0, format, type, imageData.GetPixels());
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	
+	glActiveTexture(GL_TEXTURE0);
 	texture.load = true;
 	return texture; 
-}*/
+}

@@ -94,31 +94,33 @@ float4x4 ModuleCamera::LookAt(const float3& eye_position, const float3& target_p
 	forward = forward.Normalized();
 	up = up.Normalized();
 
+	SetPosition(position);
 	float4x4 LookAtMatrix = float4x4({ right.x, up.x,-forward.x, position.x }, { right.y,up.y,-forward.y, position.y }, { right.z, up.z,-forward.z, position.z }, { 0,0,0,1 });
 	return LookAtMatrix;
 }
 
 void ModuleCamera::RotateFrustum(char axis, float angle, const float delta_time) {
 	float3 oldFront = frustum.front.Normalized();
-	float3 oldUp = frustum.up.Normalized(); 
+	float3 oldUp = frustum.up.Normalized();
 	float3 oldRight = frustum.WorldRight().Normalized();
-	float3x3 aux, aux1; 
+	float3x3 rotation_Matrix;
 
-	switch (axis){
-	case 'X': 		 // Rotate around the X-axis (pitch)
-		aux = rotation_Matrix.RotateZ(angle);
-		frustum.front = (aux).Mul(oldFront);
-		aux1 = rotation_Matrix.RotateY(angle);
-		frustum.up = (aux1).Mul(oldUp);
-		break; 
-	case 'Y': 		// Rotate around the Y-axis (yaw)
-		frustum.front = rotation_Matrix.RotateZ(angle).MulDir(oldFront);
-		frustum.WorldRight() = rotation_Matrix.RotateX(angle).MulDir(oldRight);
-		break; 
-	case 'Z':		// Rotate around the Z-axis (roll)
-		frustum.WorldRight() = rotation_Matrix.RotateX(angle).MulDir(oldRight);
-		frustum.up = rotation_Matrix.RotateY(angle).MulDir(oldUp);
-		break; 
+	switch (axis) {
+	case 'X': // Rotate around the X-axis (pitch)
+		rotation_Matrix = float3x3::RotateAxisAngle(float3(1.0f, 0.0f, 0.0f), -angle); // Invert the angle
+		frustum.front = rotation_Matrix.MulDir(oldFront);
+		frustum.up = rotation_Matrix.MulDir(oldUp);
+		break;
+	case 'Y': // Rotate around the Y-axis (yaw)
+		rotation_Matrix = float3x3::RotateAxisAngle(float3(0.0f, 1.0f, 0.0f), -angle); // Invert the angle
+		frustum.front = rotation_Matrix.MulDir(oldFront);
+		frustum.WorldRight() = rotation_Matrix.MulDir(oldRight);
+		break;
+	case 'Z': // Rotate around the Z-axis (roll)
+		rotation_Matrix = float3x3::RotateAxisAngle(float3(0.0f, 0.0f, 1.0f), -angle); // Invert the angle
+		frustum.WorldRight() = rotation_Matrix.MulDir(oldRight);
+		frustum.up = rotation_Matrix.MulDir(oldUp);
+		break;
 	}
 }
 
@@ -153,7 +155,7 @@ void  ModuleCamera::MovementController(const float delta_time) {
 	}
 	if (App->GetInput()->GetKey(SDL_SCANCODE_X)) { 
 		 // Rotate around the X-axis (pitch)
-		RotateFrustum('X' , DegToRad(45), rotation_speed);
+		RotateFrustum('X' , DegToRad(90), rotation_speed);
 	}
 	if (App->GetInput()->GetKey(SDL_SCANCODE_Z)) {
 		// Rotate around the Z-axis (roll)

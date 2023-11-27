@@ -1,3 +1,3 @@
 ﻿  ModuleCamera.cpp
-C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\ModuleCamera.cpp(48,30): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
-  Engine.vcxproj -> C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\x64\Debug\Engine.exe
+C:\Users\ariadnacp1\Documents\GitHub\Engine\Engine\Source\ModuleCamera.cpp(48,30): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  Engine.vcxproj -> C:\Users\ariadnacp1\Documents\GitHub\Engine\Engine\Source\x64\Debug\Engine.exe
