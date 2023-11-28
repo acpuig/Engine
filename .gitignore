@@ -7,3 +7,10 @@ Engine/Source/.vs/Engine/v16/.suo
 *.db
 *.db
 Engine/Source/.vs/Engine/v16/.suo
+Engine/Source/x64/Debug/ModuleCamera.obj
+*.obj
+*.tlog
+*.tlog
+*.pdb
+*.db
+Engine/Source/.vs/Engine/v16/.suo
