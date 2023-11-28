@@ -14,9 +14,13 @@ public:
 
 	update_status Update();
 
-	float4x4 GetViewMatrix() const;
-	float4x4 GetProjectionMatrix() const;
+	float4x4 GetViewMatrix() ;
+	float4x4 GetProjectionMatrix() ;
 	float4x4 GetModel() const;
+
+	float3x3 rotation_Matrix;
+	float4x4 view_Matrix;
+	float4x4 project_Matrix;
 
 	//void Rotation();
 
@@ -31,9 +35,6 @@ private:
 	float horizontal_fov;
 	float3 position;
 	float distance_NearFar;
-	float3x3 rotation_Matrix;
-	float4x4 view_Matrix;
-	float4x4 project_Matrix;
 
 
 	void SetAspectRatio(int screen_width, int screen_height);
