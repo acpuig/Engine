@@ -40,6 +40,7 @@ bool ModuleRenderExercise::Init() {
 	glBufferData(GL_ARRAY_BUFFER, sizeof(buffer_data), buffer_data, GL_STATIC_DRAW);
 	App->GetCamera()->Init();
 	helloProgram = App->GetProgram()->Init("default_vertex.glsl", "default_fragment.glsl");
+	textureID = App->GetTexture()->Load(L"Test-image-Baboon.ppm");
 
 	 return true;
 }
@@ -47,6 +48,7 @@ bool ModuleRenderExercise::Init() {
 update_status ModuleRenderExercise::Update()
 {
 	//RenderTriangle(vbo, helloProgram);
+	RenderQuad(textureID, helloProgram);
 
 
 	return UPDATE_CONTINUE;
@@ -57,8 +59,7 @@ update_status ModuleRenderExercise::PostUpdate()
 	int w, h;
 	SDL_GetWindowSize(App->GetWindow()->window, &w, &h);
 	App->GetDebugDraw()->Draw(App->GetCamera()->GetViewMatrix(), App->GetCamera()->GetProjectionMatrix(), w, h);
-	const wchar_t* imagePath = L"Test-image-Baboon.ppm";
-	//App->GetTexture()->Load(imagePath , 'PPM');
+
 	return update_status();
 }
 
@@ -72,6 +73,8 @@ bool ModuleRenderExercise::CleanUp()
 {
 	DestroyVBO(vbo);
 	glDeleteProgram(helloProgram);
+	glDeleteTextures(1, &textureID);
+
 	return true;
 }
 
@@ -110,4 +113,37 @@ void ModuleRenderExercise::RenderTriangle(unsigned vbo, unsigned program)
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 	// 1 triangle to draw = 3 vertices
 	glDrawArrays(GL_TRIANGLES, 0, 3);
+}
+
+void ModuleRenderExercise::RenderQuad(unsigned textureID, unsigned program) {
+	float4x4 model, view, proj;
+	view = App->GetCamera()->GetViewMatrix();
+	proj = App->GetCamera()->GetProjectionMatrix();
+	model = App->GetCamera()->GetModel();
+
+	glUseProgram(program);
+
+	glUniformMatrix4fv(glGetUniformLocation(program, "model"), 1, GL_TRUE, &model[0][0]);
+	glUniformMatrix4fv(glGetUniformLocation(program, "view"), 1, GL_TRUE, &view[0][0]);
+	glUniformMatrix4fv(glGetUniformLocation(program, "proj"), 1, GL_TRUE, &proj[0][0]);
+
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(1);
+
+	// Vertex positions
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+
+	// Texture coordinates
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)(sizeof(float) * 3 * 3));
+
+	// Bind the texture
+	glBindTexture(GL_TEXTURE_2D, textureID);
+
+	// Draw the quad (assuming you have 6 vertices for two triangles)
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glDisableVertexAttribArray(0);
+	glDisableVertexAttribArray(1);
 }

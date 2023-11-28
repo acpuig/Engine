@@ -2,8 +2,7 @@
 
 #include "Module.h"
 #include "Globals.h"
-
-//class ModuleRender;
+#include <GL/glew.h>
 
 
 class ModuleRenderExercise : public Module
@@ -20,10 +19,14 @@ public:
 	void RenderVBO(unsigned vbo, unsigned program);
 	void RenderTriangle(unsigned vbo, unsigned program);
 
+	void RenderQuad(unsigned textureID, unsigned program);
+
 	// Forward declaration
 
 	unsigned helloProgram;
 	unsigned vbo;
 
+private: 
+	GLuint textureID;
 
 };

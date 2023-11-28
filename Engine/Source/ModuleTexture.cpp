@@ -1,5 +1,4 @@
 #include "ModuleTexture.h"
-#include <GL/glew.h>
 #include "DirectXTex/DirectXTex.h"
 
 
@@ -11,51 +10,71 @@ bool ModuleTexture::Init() {
 
 	return true; 
 }
-Texture ModuleTexture::Load(const wchar_t* path, char image_type) {
+
+GLuint ModuleTexture::Load(const wchar_t* path) {
 	//1. Load image data with external library into CPU
 	Texture texture;
 	texture.path = path; 
-	LoadImage(path, image_type);
-	if (imageLoad == true) {
+	LoadImage(path);
+	if (imageLoad) {
 		//2. Create and load OpenGL texture into GPU
-		texture = LoadTexture(texture);
-	}
-	//3. Add texture coordinates(UVs) into VBO
+		texture.id = LoadTexture();
 
-	return texture; 
+		//3. Add texture coordinates(UVs) into VBO
+		texture.uvs = new float[imageMetadata.width * imageMetadata.height * 2];
+		for (unsigned i = 0; i < imageMetadata.width * imageMetadata.height; ++i) {
+			texture.uvs[2 * i] = static_cast<float>(i % imageMetadata.width) / static_cast<float>(imageMetadata.width - 1);
+			texture.uvs[2 * i + 1] = static_cast<float>(i / imageMetadata.width) / static_cast<float>(imageMetadata.height - 1);
+		}
+	}
+	//delete[] texture.uvs; // Add this line to avoid memory leaks
+
+	return texture.id; 
 }
 
 
-void ModuleTexture::LoadImage(const wchar_t* image_path, char image_type) {
-	
-	switch (image_type)
-	{
-	case ('DDS'): DirectX::LoadFromDDSFile(image_path, DirectX::DDS_FLAGS_NONE, nullptr, imageData);
+
+void ModuleTexture::LoadImage(const wchar_t* image_path){
+
+	// Try loading DDS
+	if (DirectX::LoadFromDDSFile(image_path, DirectX::DDS_FLAGS_NONE, nullptr, imageData) == S_OK) {
 		imageMetadata = imageData.GetMetadata();
-		imageLoad == true;
-		break;
-	case ('TGA'):  DirectX::LoadFromTGAFile(image_path, nullptr, imageData);
+		imageLoad = true;
+		return;
+	}
+
+	// If loading DDS fails, try loading TGA
+	if (DirectX::LoadFromTGAFile(image_path, nullptr, imageData) == S_OK) {
 		imageMetadata = imageData.GetMetadata();
-		 imageLoad == true;
-		break;
-	default:  DirectX::LoadFromWICFile(image_path, DirectX::WIC_FLAGS_NONE, nullptr, imageData);
+		imageLoad = true;
+		return;
+	}
+
+	// If loading TGA also fails, try loading using WIC
+	if (DirectX::LoadFromWICFile(image_path, DirectX::WIC_FLAGS_NONE, nullptr, imageData) == S_OK) {
 		imageMetadata = imageData.GetMetadata();
-		 imageLoad == true;
+		imageLoad = true;
 	}
 }
 
-Texture ModuleTexture::LoadTexture(Texture texture) {
-	//glGenTextures(1, &texture.id);
-	glBindTexture(GL_TEXTURE_2D, texture.id);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, imageMetadata.mipLevels - 1);
+GLuint ModuleTexture::LoadTexture() {
+	GLuint textureID;
+	glGenTextures(1, &textureID);
+	glBindTexture(GL_TEXTURE_2D, textureID);
+
+	// Set the texture parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	// Assuming you have loaded the texture data into imageData
 
 	GLenum internalFormat;
 	GLenum format;
 	GLenum type;
 
-	switch (imageMetadata.format)
-	{
+	switch (imageMetadata.format) {
 	case DXGI_FORMAT_R8G8B8A8_UNORM_SRGB:
 	case DXGI_FORMAT_R8G8B8A8_UNORM:
 		internalFormat = GL_RGBA8;
@@ -77,21 +96,26 @@ Texture ModuleTexture::LoadTexture(Texture texture) {
 		assert(false && "Unsupported format");
 	}
 
-	if ( imageMetadata.mipLevels > 1 ) {
-		for (size_t i = 0; i < imageMetadata.mipLevels; ++i)
-		{
+	if (imageMetadata.mipLevels > 1) {
+		// Assuming you have loaded mipmaps into imageData
+		for (size_t i = 0; i < imageMetadata.mipLevels; ++i) {
 			const DirectX::Image* mip = imageData.GetImage(i, 0, 0);
 			glTexImage2D(GL_TEXTURE_2D, i, internalFormat, mip->width, mip->height, 0, format, type, mip->pixels);
 		}
 
+		// Generate mipmaps for the texture with multiple mip levels
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	}
 	else {
-		glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, texture.width = imageMetadata.width,
-			texture.id = imageMetadata.height, 0, format, type, imageData.GetPixels());
+		// Assuming you have loaded the main texture into imageData
+		glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, imageMetadata.width, imageMetadata.height, 0, format, type, imageData.GetPixels());
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
-	
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+
 	glActiveTexture(GL_TEXTURE0);
-	texture.load = true;
-	return texture; 
+
+	return textureID;
 }

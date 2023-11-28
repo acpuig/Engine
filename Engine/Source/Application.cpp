@@ -20,12 +20,11 @@ Application::Application()
 	modules.push_back(render = new ModuleOpenGL());
 	modules.push_back(input = new ModuleInput());
 	modules.push_back(program = new ModuleProgram());
-	modules.push_back(triangle = new ModuleRenderExercise());
 	modules.push_back(editor = new ModuleEditor());
 	modules.push_back(camera = new ModuleCamera());
 	modules.push_back(debugdraw = new ModuleDebugDraw());
-	//modules.push_back(texture = new ModuleTexture());
-
+	modules.push_back(texture = new ModuleTexture());
+	modules.push_back(triangle = new ModuleRenderExercise());
 
 
 }

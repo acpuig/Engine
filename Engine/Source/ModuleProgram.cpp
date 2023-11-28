@@ -14,7 +14,6 @@ ModuleProgram::~ModuleProgram()
 {
 }
 
-
 unsigned ModuleProgram::Init(const char* defaultshader_file_name, const char* fragmentshader_file_name) {
 
     // Load and compile shaders
