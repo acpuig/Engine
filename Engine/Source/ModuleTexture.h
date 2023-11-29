@@ -19,7 +19,7 @@ public:
 
 	ModuleTexture(); 
 	bool Init();
-	GLuint Load(const wchar_t* texture_path);
+	GLuint Load(const wchar_t* texture_path, GLint wrapParam, GLint minParam, GLint magParam, bool mipmap);
 
 
 private: 
@@ -29,5 +29,5 @@ private:
 	DirectX::TexMetadata imageMetadata;
 
 	void LoadImage(const wchar_t* texture_path);
-	GLuint LoadTexture();
+	GLuint LoadTexture(GLint wrapParam, GLint minParam, GLint magParam, bool mipmap);
 };

@@ -1,4 +1,4 @@
-#include "Globals.h"
+﻿#include "Globals.h"
 #include "Application.h"
 #include "ModuleRenderExercise.h"
 #include "ModuleWindow.h"
@@ -28,33 +28,26 @@ bool ModuleRenderExercise::Init() {
 	// Generate VBO and bind vertex data
 	//float vtx_data[] = { -1.0f, -1.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f };
 	float buffer_data[] = {
-		-1.0f, -1.0f, 0.0f, // ? v0 pos
-		 1.0f, -1.0f, 0.0f, // ? v1 pos
-		 0.0f, 1.0f, 0.0f, // ? v2 pos
-		1.0f, 1.0f, 0.0f, // ? v0 pos
-		 -1.0f, 1.0f, 0.0f, // ? v1 pos
-		 0.0f, -1.0f, 0.0f, // ? v2 pos
+	-1.0f, -1.0f, 0.0f, // ← v0 pos
+	1.0f, -1.0f, 0.0f, // ← v1 pos
+	0.0f, 1.0f, 0.0f, // ← v2 pos
+	1.0f, 1.0f, 0.0f, // ? v0 pos
+	1.0f, -1.0f, 0.0f, // ? v1 pos
+	 0.0f, 1.0f, 0.0f, // ? v2 pos
+
 		0.0f, 1.0f, // ? v0 texcoord
 		 1.0f, 1.0f, // ? v1 texcoord
-		0.5f, 0.0f, // ? v2 texcoord
+		0.1f, 0.0f, // ? v2 texcoord
 		0.0f, 1.0f, // ? v0 texcoord
 		 1.0f, 1.0f, // ? v1 texcoord
 		0.5f, 0.0f // ? v2 texcoord
-	};/*
-	float buffer_data[] = {
-	1.0f, 1.0f, 0.0f, // ? v0 pos
-	 -1.0f, 1.0f, 0.0f, // ? v1 pos
-	 0.0f, -1.0f, 0.0f, // ? v2 pos
-	0.0f, 1.0f, // ? v0 texcoord
-	 1.0f, 1.0f, // ? v1 texcoord
-	0.5f, 0.0f // ? v2 texcoord
-	};*/
+	};
 	glGenBuffers(1, &vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo); // set vbo active
 	glBufferData(GL_ARRAY_BUFFER, sizeof(buffer_data), buffer_data, GL_STATIC_DRAW);
 	App->GetCamera()->Init();
 	helloProgram = App->GetProgram()->Init("default_vertex.glsl", "default_fragment.glsl");
-	textureID = App->GetTexture()->Load(L"Test-image-Baboon.ppm");
+	textureID = App->GetTexture()->Load(L"Test-image-Baboon.ppm", GL_REPEAT, GL_NEAREST, GL_LINEAR, false);
 
 	 return true;
 }

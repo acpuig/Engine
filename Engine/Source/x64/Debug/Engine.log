@@ -1,2 +1,4 @@
-﻿  ModuleRenderExercise.cpp
-  Engine.vcxproj -> C:\Users\ariadnacp1\Documents\GitHub\Engine\Engine\Source\x64\Debug\Engine.exe
+﻿  Mesh.cpp
+C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\Mesh.cpp(1,10): warning C4067: símbolos (token) inesperados después de la directiva del preprocesador; se esperaba una nueva línea
+C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\Mesh.cpp(66,24): warning C4553: "==": el resultado de la expresión no se usa. ¿Quiso decir "="?
+  Engine.vcxproj -> C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\x64\Debug\Engine.exe

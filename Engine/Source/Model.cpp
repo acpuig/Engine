@@ -1,10 +1,12 @@
 #include "Model.h"
 #include "Globals.h"
 #include "Application.h"
+#include "Mesh.h"
 #include "tiny_gltf.h"
-/*
+
+
 void Model::Load(const char* assetFileName)
-{
+{/*
 	tinygltf::TinyGLTF gltfContext;
 	tinygltf::Model model;
 	std::string error, warning;
@@ -13,8 +15,19 @@ void Model::Load(const char* assetFileName)
 	{
 		LOG("Error loading %s: %s", assetFileName, error.c_str());
 	}
-}
 
+	
+	for (const auto& srcMesh : model.meshes)
+	{
+		for (const auto& primitive : srcMesh.primitives)
+		{
+			Mesh* mesh = new Mesh;
+			mesh->Load(model, srcMesh, primitive);
+		}
+	}*/
+
+}
+/*
 void Model::LoadMaterials(const tinygltf::Model& srcModel)
 {
 	

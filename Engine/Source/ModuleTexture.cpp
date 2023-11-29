@@ -1,3 +1,5 @@
+#define TINYGLTF_IMPLEMENTATION
+
 #include "ModuleTexture.h"
 #include "DirectXTex/DirectXTex.h"
 
@@ -11,14 +13,14 @@ bool ModuleTexture::Init() {
 	return true; 
 }
 
-GLuint ModuleTexture::Load(const wchar_t* path) {
+GLuint ModuleTexture::Load(const wchar_t* path, GLint wrapParam, GLint minParam, GLint magParam, bool mipmap) {
 	//1. Load image data with external library into CPU
 	Texture texture;
 	texture.path = path; 
 	LoadImage(path);
 	if (imageLoad) {
 		//2. Create and load OpenGL texture into GPU
-		texture.id = LoadTexture();
+		texture.id = LoadTexture( wrapParam,  minParam,  magParam,  mipmap);
 
 		//3. Add texture coordinates(UVs) into VBO
 		texture.uvs = new float[imageMetadata.width * imageMetadata.height * 2];
@@ -57,16 +59,16 @@ void ModuleTexture::LoadImage(const wchar_t* image_path){
 	}
 }
 
-GLuint ModuleTexture::LoadTexture() {
+GLuint ModuleTexture::LoadTexture(GLint wrapParam, GLint minParam, GLint magParam, bool mipmap) {
 	GLuint textureID;
 	glGenTextures(1, &textureID);
 	glBindTexture(GL_TEXTURE_2D, textureID);
 
 	// Set the texture parameters
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrapParam);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrapParam);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minParam);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magParam);
 
 	// Assuming you have loaded the texture data into imageData
 
@@ -95,8 +97,8 @@ GLuint ModuleTexture::LoadTexture() {
 	default:
 		assert(false && "Unsupported format");
 	}
-
-	if (imageMetadata.mipLevels > 1) {
+	if(mipmap){
+	//if (imageMetadata.mipLevels > 1) {
 		// Assuming you have loaded mipmaps into imageData
 		for (size_t i = 0; i < imageMetadata.mipLevels; ++i) {
 			const DirectX::Image* mip = imageData.GetImage(i, 0, 0);

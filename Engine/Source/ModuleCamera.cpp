@@ -30,8 +30,14 @@ bool ModuleCamera::Init() {
 
 	rotation_Matrix = float3x3::identity;
 
-	view_Matrix = LookAt(frustum.pos, frustum.pos + frustum.front, frustum.up);
+	// Set the initial position and orientation of the camera
+	float3 cameraPosition = float3(0.0f, 4.0f, 8.0f); // Adjust the height as needed
+	float3 lookAtPoint = float3(0.0f, 0.0f, 0.0f);
+	float3 upVector = float3::unitY;
 
+
+	view_Matrix = LookAt(cameraPosition, lookAtPoint, upVector);
+	//view_Matrix = LookAt(float3(0.0f, 4.0f, 8.0f), float3(0.0f, 0.0f, 0.0f), float3::unitY);
 	return true;
 }
 
@@ -87,18 +93,16 @@ float4x4 ModuleCamera::GetModel() const {
 	return float4x4(model);
 }
 
+
 float4x4 ModuleCamera::LookAt(const float3& eye_position, const float3& target_position, const float3& up_position) {
 
-	float3 forward = target_position - eye_position;
-	float3 right = math::Cross(forward.Normalized(), up_position.Normalized());
-	float3 up = math::Cross(right.Normalized(), forward.Normalized());
-	position = eye_position;
-	right = right.Normalized();
-	forward = forward.Normalized();
-	up = up.Normalized();
+	float3 forward = (target_position - eye_position).Normalized();
+	float3 right = (up_position.Cross(forward)).Normalized();
+	float3 up = forward.Cross(right).Normalized();
+	SetPosition(eye_position);
 
-	SetPosition(position);
-	float4x4 LookAtMatrix = float4x4({ right.x, up.x,-forward.x, position.x }, { right.y,up.y,-forward.y, position.y }, { right.z, up.z,-forward.z, position.z }, { 0,0,0,1 });
+	float4x4 LookAtMatrix = float4x4({ right.x, up.x, -forward.x, eye_position.x }, { right.y, up.y, -forward.y, eye_position.y }, { right.z, up.z, -forward.z, eye_position.z }, { 0, 0, 0, 1 });
+	view_Matrix = LookAtMatrix; 
 	return LookAtMatrix;
 }
 
@@ -189,7 +193,6 @@ void ModuleCamera::Zoom(const float fov_diffdeg) {
 	horizontal_fov += angle*  zoom_speed * scroll_value;
 	
 	//Scroll up
-	
 	SetVerticalFOV(horizontal_fov, aspect_ratio);
 
 }

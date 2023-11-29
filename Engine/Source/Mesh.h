@@ -20,6 +20,7 @@ public:
 
 	void CreateVAO();
 	void DrawVAO();
+	void Draw();
 
 
 private:
@@ -27,4 +28,14 @@ private:
 	std::string name;
 	std::vector<float> vertices;  // Vertex attributes (positions, normals, texture coordinates, etc.)
 	std::vector<unsigned int> indices;  // Vertex indices
+	unsigned program;
+
+	unsigned vbo;
+	unsigned ebo;  
+	unsigned vao;
+
+	GLsizei vertexCount;  // Add this member variable
+	GLsizei indexCount;   // Assuming you have a member variable for index count too
+
+
 };

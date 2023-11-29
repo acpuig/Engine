@@ -97,9 +97,9 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.\Tinygltf;.\imgui;.\SDL\include;glew-2.1.0\include;.\MathGeoLib\include;.\DebugDraw;.\DirectXTex</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\Tinygltf\deps;.\Tinygltf\wasm;.\Tinygltf\tools;.\Tinygltf\tests;.\Tinygltf\models;.\Tinygltf\experimental;.\Tinygltf\examples;.\Tinygltf\cmake;.\Tinygltf;.\imgui;.\SDL\include;glew-2.1.0\include;.\MathGeoLib\include;.\DebugDraw;.\DirectXTex</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -130,7 +130,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>.\SDL\include;</AdditionalIncludeDirectories>
     </ClCompile>
@@ -284,6 +284,9 @@
     <ClInclude Include="ModuleRenderExercise.h" />
     <ClInclude Include="ModuleTexture.h" />
     <ClInclude Include="ModuleWindow.h" />
+    <ClInclude Include="Tinygltf\json.hpp" />
+    <ClInclude Include="Tinygltf\stb_image.h" />
+    <ClInclude Include="Tinygltf\stb_image_write.h" />
     <ClInclude Include="Tinygltf\tiny_gltf.h" />
   </ItemGroup>
   <ItemGroup>

@@ -368,6 +368,15 @@
     </ClInclude>
     <ClInclude Include="Model.h" />
     <ClInclude Include="Mesh.h" />
+    <ClInclude Include="Tinygltf\json.hpp">
+      <Filter>Tinygltf</Filter>
+    </ClInclude>
+    <ClInclude Include="Tinygltf\stb_image.h">
+      <Filter>Tinygltf</Filter>
+    </ClInclude>
+    <ClInclude Include="Tinygltf\stb_image_write.h">
+      <Filter>Tinygltf</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ImGui">

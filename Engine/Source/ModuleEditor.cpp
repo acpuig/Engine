@@ -57,7 +57,7 @@ update_status ModuleEditor::Update()
 	ImGui_ImplSDL2_NewFrame(App->GetWindow()->window);
 	ImGui::NewFrame();
 
-	ImGui::ShowDemoWindow();
+	//ImGui::ShowDemoWindow();
 
 	//Render frame before swapping buffers
 	ImGui::Render();
