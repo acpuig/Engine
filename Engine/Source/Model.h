@@ -1,8 +1,5 @@
 #pragma once
-#define TINYGLTF_NO_STB_IMAGE_WRITE
-#define TINYGLTF_NO_STB_IMAGE
-#define TINYGLTF_NO_EXTERNAL_IMAGE
-
+#include<list>
 #include "glew-2.1.0/include/GL/glew.h"
 #include <vector>
 #include <string>
@@ -17,5 +14,6 @@ public:
 	void LoadMaterials(const tinygltf::Model& srcModel);
 
 private:
+	//std::list<Texture*> modules;
 
 };

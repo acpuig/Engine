@@ -37,8 +37,10 @@ void Mesh::Load(const tinygltf::Model& model, const tinygltf::Mesh& mesh, const 
 		for (size_t i = 0; i < posAcc.count; ++i)
 		{
 			ptr[i] = *reinterpret_cast<const float3*>(bufferPos);
-			bufferPos += posView.byteStride;
+			//bufferPos += posView.byteStride;
+			bufferPos += sizeof(float) * 3;
 		}
+
 		glUnmapBuffer(GL_ARRAY_BUFFER);
 	}
 	//we will want to load more attributes such as normals or tangents DIAPO 24
