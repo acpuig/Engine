@@ -1,11 +1,12 @@
 #pragma once
-#define TINYGLTF_NO_STB_IMAGE_WRITE
-#define TINYGLTF_NO_STB_IMAGE
-#define TINYGLTF_NO_EXTERNAL_IMAGE
-#include "glew-2.1.0/include/GL/glew.h"#include <vector>
+#include <vector>
 #include <string>
-#include "tinygltf/tiny_gltf.h"
-
+namespace  tinygltf
+{
+	class Model;
+	struct Mesh;
+	struct Primitive;
+}
 /*
 struct Primitive {
 	std::map<std::string, int> attributes; // attributes data(positions, normals, texture coordinates)
@@ -35,8 +36,8 @@ private:
 	unsigned ebo;   //element buffer object
 	unsigned vao;	//vertex array object
 
-	GLsizei vertexCount;  // Add this member variable
-	GLsizei indexCount;   // Assuming you have a member variable for index count too
+	int vertexCount;  // Add this member variable
+	int indexCount;   // Assuming you have a member variable for index count too
 
 
 };

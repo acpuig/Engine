@@ -1,12 +1,15 @@
-#define TINYGLTF_NO_STB_IMAGE_WRITE
-#define TINYGLTF_NO_STB_IMAGE
-#define TINYGLTF_NO_EXTERNAL_IMAGE
 #include "Mesh.h"; 
 #include "Globals.h"
 #include "Application.h"
-
+#include "glew-2.1.0/include/GL/glew.h"
 #include "SDL.h"
 #include "MathGeoLib/include/MathGeoLib.h"
+#define TINYGLTF_IMPLEMENTATION
+
+#define TINYGLTF_NO_STB_IMAGE_WRITE
+#define TINYGLTF_NO_STB_IMAGE
+#define TINYGLTF_NO_EXTERNAL_IMAGE
+
 #include "tinygltf/tiny_gltf.h"
 
 

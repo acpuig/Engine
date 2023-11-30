@@ -47,12 +47,12 @@ update_status  ModuleCamera::Update() {
 	return UPDATE_CONTINUE;
 }
 
-void ModuleCamera::SetFOV(float fov_deg) {
+void ModuleCamera::SetFOV( float fov_deg) {
 	horizontal_fov = math::DegToRad(fov_deg);
 	SetVerticalFOV(horizontal_fov, aspect_ratio);
 }
 
-void ModuleCamera::SetAspectRatio(int screen_width, int screen_height) {
+void ModuleCamera::SetAspectRatio( int screen_width,  int screen_height) {
 	aspect_ratio = screen_width / screen_height;
 	SetVerticalFOV(horizontal_fov, aspect_ratio);
 }
@@ -61,7 +61,7 @@ void  ModuleCamera::SetVerticalFOV(float horiz_fov, float asp_ratio) {
 	frustum.verticalFov = 2.f * atanf(tanf(horiz_fov * 0.5f) / asp_ratio);
 }
 
-void ModuleCamera::SetPlaneDistances(const float near_dist, const float far_dist) {
+void ModuleCamera::SetPlaneDistances( float near_dist,  float far_dist) {
 	far_plane = far_dist;
 	near_plane = near_dist;
 	frustum.nearPlaneDistance = near_plane;
@@ -85,7 +85,7 @@ float4x4 ModuleCamera::GetProjectionMatrix()  {
 	return float4x4(project_Matrix);
 }
 
-float4x4 ModuleCamera::GetModel() const {
+float4x4 ModuleCamera::GetModel()  {
 	float4x4 model = float4x4::FromTRS(float3(2.0f, 0.0f, 0.0f),
 		float4x4::RotateZ(pi / 4.0f),
 		float3(2.0f, 1.0f, 1.0f));
