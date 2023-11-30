@@ -1,9 +1,8 @@
 #pragma once
 #include "Module.h"
 #include "Globals.h"
-#include <GL/glew.h>
-
-#include "DirectXTex/DirectXTex.h"
+#include "glew-2.1.0/include/GL/glew.h"
+#include "DirectXTex/DirectXTex/DirectXTex.h"
 
 struct Texture {
 	bool load = false ;

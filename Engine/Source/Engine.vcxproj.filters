@@ -130,8 +130,8 @@
     </ClCompile>
     <ClCompile Include="ModuleCamera.cpp" />
     <ClCompile Include="ModuleTexture.cpp" />
-    <ClCompile Include="Model.cpp" />
     <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="Model.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -366,7 +366,6 @@
     <ClInclude Include="Tinygltf\tiny_gltf.h">
       <Filter>Tinygltf</Filter>
     </ClInclude>
-    <ClInclude Include="Model.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Tinygltf\json.hpp">
       <Filter>Tinygltf</Filter>
@@ -377,6 +376,7 @@
     <ClInclude Include="Tinygltf\stb_image_write.h">
       <Filter>Tinygltf</Filter>
     </ClInclude>
+    <ClInclude Include="Model.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ImGui">

@@ -9,8 +9,7 @@
 #include "ModuleDebugDraw.h"
 #include "ModuleTexture.h"
 
-#include <GL/glew.h>
-
+#include "glew-2.1.0/include/GL/glew.h"
 
 
 ModuleRenderExercise::ModuleRenderExercise()
@@ -28,12 +27,12 @@ bool ModuleRenderExercise::Init() {
 	// Generate VBO and bind vertex data
 	//float vtx_data[] = { -1.0f, -1.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f };
 	float buffer_data[] = {
-	-1.0f, -1.0f, 0.0f, // ← v0 pos
-	1.0f, -1.0f, 0.0f, // ← v1 pos
-	0.0f, 1.0f, 0.0f, // ← v2 pos
-	1.0f, 1.0f, 0.0f, // ? v0 pos
-	1.0f, -1.0f, 0.0f, // ? v1 pos
-	 0.0f, 1.0f, 0.0f, // ? v2 pos
+	0.f, +1.0f, 0.0f, // ← v0 pos
+	0.0f, -1.0f, 0.0f, // ← v1 pos
+	1.0f, 0.0f, 0.0f, // ← v2 pos
+	0.f, 1.0f, 0.0f, // ? v0 pos
+	-1.0f, 0.0f, 0.0f, // ? v1 pos
+	 0.0f, -1.0f, 0.0f, // ? v2 pos
 
 		0.0f, 1.0f, // ? v0 texcoord
 		 1.0f, 1.0f, // ? v1 texcoord

@@ -1,8 +1,10 @@
 #pragma once
-#include <GL/glew.h>
-#include <vector>
+#define TINYGLTF_NO_STB_IMAGE_WRITE
+#define TINYGLTF_NO_STB_IMAGE
+#define TINYGLTF_NO_EXTERNAL_IMAGE
+#include "glew-2.1.0/include/GL/glew.h"#include <vector>
 #include <string>
-#include "tiny_gltf.h"
+#include "tinygltf/tiny_gltf.h"
 
 /*
 struct Primitive {
@@ -16,11 +18,10 @@ class Mesh {
 public:
 	void Load(const tinygltf::Model& model, const tinygltf::Mesh& mesh, const tinygltf::Primitive& primitive);
 	void LoadEBO(const tinygltf::Model& model, const tinygltf::Mesh& mesh, const tinygltf::Primitive& primitive);
-	void RenderEBO();
-
 	void CreateVAO();
-	void DrawVAO();
+	void Render();
 	void Draw();
+	void Cleanup();
 
 
 private:
@@ -30,9 +31,9 @@ private:
 	std::vector<unsigned int> indices;  // Vertex indices
 	unsigned program;
 
-	unsigned vbo;
-	unsigned ebo;  
-	unsigned vao;
+	unsigned vbo;	//vertex buffer object
+	unsigned ebo;   //element buffer object
+	unsigned vao;	//vertex array object
 
 	GLsizei vertexCount;  // Add this member variable
 	GLsizei indexCount;   // Assuming you have a member variable for index count too

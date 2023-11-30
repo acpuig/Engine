@@ -1,8 +1,7 @@
 #include "Module.h"
 #include "Globals.h"
 
-#include "MathGeoLib.h"
-
+#include "MathGeoLib/include/MathGeoLib.h"
 
 class ModuleCamera : public Module
 {
