@@ -18,15 +18,16 @@ public:
 	bool CleanUp();
 	void RenderVBO(unsigned vbo, unsigned program);
 	void RenderTriangle(unsigned vbo, unsigned program);
-
 	void RenderQuad(unsigned textureID, unsigned program);
 
 	// Forward declaration
 
-	unsigned helloProgram;
+	unsigned program;
 	unsigned vbo;
 
 private: 
 	GLuint textureID;
+
+
 
 };

@@ -1,5 +1,4 @@
 #include "Module.h"
-#include "Globals.h"
 
 #include "MathGeoLib/include/MathGeoLib.h"
 
@@ -13,9 +12,9 @@ public:
 
 	update_status Update();
 
-	float4x4 GetViewMatrix()  ;
-	float4x4 GetProjectionMatrix() ;
-	float4x4 GetModel() ;
+	 float4x4 GetViewMatrix()  ;
+	 float4x4 GetProjectionMatrix() ;
+	 float4x4 GetModel() ;
 
 
 	//void Rotation();

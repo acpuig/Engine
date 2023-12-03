@@ -1,19 +1,22 @@
 #pragma once
-#include<list>
-#include "glew-2.1.0/include/GL/glew.h"
 #include <vector>
-#include <string>
-
 namespace  tinygltf
 {
 	class Model;
 }
+// Placeholder for Texture and Mesh classes
+class Texture;
+class Mesh;
+
+
 class Model {
 public:
 	void Load(const char* assetFileName);
 	void LoadMaterials(const tinygltf::Model& srcModel);
+	void Draw();
 
 private:
-	//std::list<Texture*> modules;
+	std::vector<Texture*> textures;
+	std::vector<Mesh*> meshes;
 
 };

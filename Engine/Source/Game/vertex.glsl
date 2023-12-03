@@ -11,5 +11,6 @@ out vec2 uv0;
 void main()
 {
     gl_Position = proj * view * model * vec4(my_vertex_position, 1.0);
+    gl_PointSize = 10; 
     uv0 = vertex_uv0;
 }

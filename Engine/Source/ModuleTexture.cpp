@@ -3,7 +3,6 @@
 #include "ModuleTexture.h"
 #include "DirectXTex/DirectXTex/DirectXTex.h"
 
-
 ModuleTexture::ModuleTexture()
 {
 }
@@ -13,11 +12,14 @@ bool ModuleTexture::Init() {
 	return true; 
 }
 
-GLuint ModuleTexture::Load(const wchar_t* path, GLint wrapParam, GLint minParam, GLint magParam, bool mipmap) {
+Texture ModuleTexture::Load(const std::string& path, GLint wrapParam, GLint minParam, GLint magParam, bool mipmap) {
 	//1. Load image data with external library into CPU
 	Texture texture;
-	texture.path = path; 
-	LoadImage(path);
+	assert(!path.empty());
+	texture.path = path; // Dereference the pointer
+	const wchar_t* image_path = reinterpret_cast<const wchar_t*>(texture.path.c_str());
+	assert(image_path != nullptr);
+	LoadImage(image_path);
 	if (imageLoad) {
 		//2. Create and load OpenGL texture into GPU
 		texture.id = LoadTexture( wrapParam,  minParam,  magParam,  mipmap);
@@ -31,7 +33,7 @@ GLuint ModuleTexture::Load(const wchar_t* path, GLint wrapParam, GLint minParam,
 	}
 	//delete[] texture.uvs; // Add this line to avoid memory leaks
 
-	return texture.id; 
+	return texture; 
 }
 
 

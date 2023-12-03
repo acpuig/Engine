@@ -4,6 +4,8 @@
 #include "ModuleWindow.h"
 #include "ModuleCamera.h"
 #include "ModuleDebugDraw.h"
+#include "Model.h"
+
 #include "SDL.h"
 #include "glew-2.1.0/include/GL/glew.h"
 
@@ -50,6 +52,9 @@ bool ModuleOpenGL::Init()
 	glEnable(GL_CULL_FACE); // Enable cull backward faces
 	glFrontFace(GL_CCW); // Front faces will be counter clockwise*/f
 	return true;
+
+	model = new Model();
+	model->Load("Box.gltf");
 }
 
 update_status ModuleOpenGL::PreUpdate()
@@ -64,7 +69,7 @@ update_status ModuleOpenGL::PreUpdate()
 // Called every draw update
 update_status ModuleOpenGL::Update()
 {
-
+	//model->Draw(); 
 	return UPDATE_CONTINUE;
 }
 
@@ -94,3 +99,4 @@ void ModuleOpenGL::WindowResized(unsigned width, unsigned height)
 	SDL_GetWindowSize(App->GetWindow()->window, &w, &h);
 	glViewport(0, 0, w, h);
 }
+

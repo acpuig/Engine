@@ -1,6 +1,5 @@
 #pragma once
 #include "Module.h"
-#include "Globals.h"
 
 struct SDL_Texture;
 struct SDL_Renderer;
@@ -23,4 +22,6 @@ public:
 
 private:
 	void* context;
+	Model* model = nullptr;
+
 };

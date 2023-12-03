@@ -1,18 +1,9 @@
-﻿  Mesh.cpp
-C:\Users\ariadnacp1\Documents\GitHub\Engine\Engine\Source\Mesh.cpp(1,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\ariadnacp1\Documents\GitHub\Engine\Engine\Source\tinygltf\tiny_gltf.h(3039,17): warning C4018: '>=': signed/unsigned mismatch
-C:\Users\ariadnacp1\Documents\GitHub\Engine\Engine\Source\tinygltf\tiny_gltf.h(3134,17): warning C4018: '>=': signed/unsigned mismatch
-C:\Users\ariadnacp1\Documents\GitHub\Engine\Engine\Source\tinygltf\tiny_gltf.h(5187,60): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\ariadnacp1\Documents\GitHub\Engine\Engine\Source\Mesh.cpp(124,24): warning C4553: '==': result of expression not used; did you intend '='?
-  Model.cpp
-C:\Users\ariadnacp1\Documents\GitHub\Engine\Engine\Source\Model.cpp(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\ariadnacp1\Documents\GitHub\Engine\Engine\Source\Model.h(16,7): error C2039: 'list': is not a member of 'std'
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\string(24): message : see declaration of 'std'
-C:\Users\ariadnacp1\Documents\GitHub\Engine\Engine\Source\Model.h(16,11): error C2143: syntax error: missing ';' before '<'
-C:\Users\ariadnacp1\Documents\GitHub\Engine\Engine\Source\Model.h(16,11): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-C:\Users\ariadnacp1\Documents\GitHub\Engine\Engine\Source\Model.h(16,29): error C2238: unexpected token(s) preceding ';'
-  ModuleTexture.cpp
-C:\Users\ariadnacp1\Documents\GitHub\Engine\Engine\Source\ModuleTexture.cpp(105,104): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
-C:\Users\ariadnacp1\Documents\GitHub\Engine\Engine\Source\ModuleTexture.cpp(105,104): warning C4267: 'argument': conversion from 'size_t' to 'GLint', possible loss of data
-C:\Users\ariadnacp1\Documents\GitHub\Engine\Engine\Source\ModuleTexture.cpp(114,131): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
-  Generating Code...
+﻿  Model.cpp
+C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\Model.cpp(5,10): warning C4067: símbolos (token) inesperados después de la directiva del preprocesador; se esperaba una nueva línea
+C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\ModuleTexture.h(8,16): warning C4099: 'Texture': nombre de tipo visto anteriormente usando 'class' ahora se ve usando 'struct'
+C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\ModuleTexture.h(8): message : vea la declaración de 'Texture'
+  ModuleRenderExercise.cpp
+C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\Model.h(8,14): warning C4099: 'Texture': nombre de tipo visto anteriormente usando 'struct' ahora se ve usando 'class'
+C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\ModuleTexture.h(8): message : vea la declaración de 'Texture'
+  Generando código...
+  Engine.vcxproj -> C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\x64\Debug\Engine.exe

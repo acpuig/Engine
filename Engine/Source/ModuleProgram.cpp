@@ -17,8 +17,8 @@ ModuleProgram::~ModuleProgram()
 unsigned ModuleProgram::Init(const char* defaultshader_file_name, const char* fragmentshader_file_name) {
 
     // Load and compile shaders
-    const char* vertexShaderSource = App->GetProgram()->LoadShaderSource(defaultshader_file_name);
-    const char* fragmentShaderSource = App->GetProgram()->LoadShaderSource(fragmentshader_file_name);
+    const char* vertexShaderSource = App->GetProgram()->LoadShaderSource("vertex.glsl");
+    const char* fragmentShaderSource = App->GetProgram()->LoadShaderSource("fragment.glsl");
 
     unsigned vertexShader = App->GetProgram()->CompileShader(GL_VERTEX_SHADER, vertexShaderSource);
     unsigned fragmentShader = App->GetProgram()->CompileShader(GL_FRAGMENT_SHADER, fragmentShaderSource);
@@ -33,7 +33,13 @@ unsigned ModuleProgram::Init(const char* defaultshader_file_name, const char* fr
     return program;
 }
 
+void ModuleProgram::UseProgram() {
+    glUseProgram(program);
+}
 
+void ModuleProgram::SendToShader(const char* name,const float* data) {
+    glUniformMatrix4fv(glGetUniformLocation(program, name), 1, GL_TRUE, data);
+}
 
 char* ModuleProgram::LoadShaderSource(const char* shader_file_name)
 {

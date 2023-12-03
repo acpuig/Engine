@@ -8,8 +8,6 @@
 #include "Mesh.h"
 #include "ModuleTexture.h"
 
-#include "SDL.h"
-#include "MathGeoLib/include/MathGeoLib.h"
 #include "TinyGLTF/tiny_gltf.h"
 
 
@@ -24,7 +22,6 @@ void Model::Load(const char* assetFileName)
 	{
 		LOG("Error loading %s: %s", assetFileName, error.c_str());
 	}
-
 
 	for (const auto& srcMesh : model.meshes)
 	{
@@ -42,13 +39,28 @@ void Model::LoadMaterials(const tinygltf::Model& srcModel)
 {
 	for (const auto& srcMaterial : srcModel.materials)
 	{
-		unsigned int textureId = 0;
+		Texture textureId;
 		if (srcMaterial.pbrMetallicRoughness.baseColorTexture.index >= 0)
 		{
 			const tinygltf::Texture& texture = srcModel.textures[srcMaterial.pbrMetallicRoughness.baseColorTexture.index];
 			const tinygltf::Image& image = srcModel.images[texture.source];
-		//	textureId = (App->GetTexture()->Load(image.uri));
+			textureId = App->GetTexture()->Load(image.uri, GL_REPEAT, GL_NEAREST, GL_LINEAR, false);
 		}
-		//textures.push_back(textureId);
+		textures.push_back(&textureId);
+	}
+}
+
+void Model::Draw()
+{
+	tinygltf::Model model;
+
+	for (const auto& srcMesh : model.meshes)
+	{
+		for (const auto& srcMesh : srcMesh.primitives)
+		{
+			Mesh* mesh = new Mesh;
+			//mesh->Render();
+
+		}
 	}
 }

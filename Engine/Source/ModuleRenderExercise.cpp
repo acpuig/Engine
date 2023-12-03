@@ -8,6 +8,8 @@
 #include "ModuleCamera.h"
 #include "ModuleDebugDraw.h"
 #include "ModuleTexture.h"
+#include "Model.h"
+#include "Mesh.h"
 
 #include "glew-2.1.0/include/GL/glew.h"
 
@@ -41,21 +43,22 @@ bool ModuleRenderExercise::Init() {
 		 1.0f, 1.0f, // ? v1 texcoord
 		0.5f, 0.0f // ? v2 texcoord
 	};
-	glGenBuffers(1, &vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo); // set vbo active
-	glBufferData(GL_ARRAY_BUFFER, sizeof(buffer_data), buffer_data, GL_STATIC_DRAW);
+	//glGenBuffers(1, &vbo);
+	//glBindBuffer(GL_ARRAY_BUFFER, vbo); // set vbo active
+	//glBufferData(GL_ARRAY_BUFFER, sizeof(buffer_data), buffer_data, GL_STATIC_DRAW);
 	App->GetCamera()->Init();
-	helloProgram = App->GetProgram()->Init("default_vertex.glsl", "default_fragment.glsl");
-	textureID = App->GetTexture()->Load(L"Test-image-Baboon.ppm", GL_REPEAT, GL_NEAREST, GL_LINEAR, false);
+	program = App->GetProgram()->Init("default_vertex.glsl", "default_fragment.glsl");
+	//textureID = App->GetTexture()->Load("Test-image-Baboon.ppm", GL_REPEAT, GL_NEAREST, GL_LINEAR, false);
+	Model* model = new Model;
+	//model->Load("Box.gltf");
 
-	 return true;
+	return true;
 }
 
 update_status ModuleRenderExercise::Update()
 {
 	//RenderTriangle(vbo, helloProgram);
-	RenderQuad(textureID, helloProgram);
-
+	//RenderQuad(textureID, helloProgram);
 
 	return UPDATE_CONTINUE;
 }
@@ -65,7 +68,8 @@ update_status ModuleRenderExercise::PostUpdate()
 	int w, h;
 	SDL_GetWindowSize(App->GetWindow()->window, &w, &h);
 	App->GetDebugDraw()->Draw(App->GetCamera()->GetViewMatrix(), App->GetCamera()->GetProjectionMatrix(), w, h);
-
+	Mesh* mesh = new Mesh;
+	//mesh->Draw(helloProgram,vao)
 	return update_status();
 }
 
@@ -77,8 +81,8 @@ void ModuleRenderExercise::DestroyVBO(unsigned vbo)
 
 bool ModuleRenderExercise::CleanUp() 
 {
-	DestroyVBO(vbo);
-	glDeleteProgram(helloProgram);
+	//DestroyVBO(vbo);
+	glDeleteProgram(program);
 	glDeleteTextures(1, &textureID);
 
 	return true;

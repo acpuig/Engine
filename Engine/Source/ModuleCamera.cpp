@@ -76,7 +76,7 @@ void ModuleCamera::SetPosition(float3 pos) {
 }
 
 float4x4 ModuleCamera::GetViewMatrix()  {
-	view_Matrix = frustum.ViewMatrix();
+	view_Matrix = (frustum.ViewMatrix());
 	return float4x4(view_Matrix);
 }
 
@@ -85,7 +85,7 @@ float4x4 ModuleCamera::GetProjectionMatrix()  {
 	return float4x4(project_Matrix);
 }
 
-float4x4 ModuleCamera::GetModel()  {
+ float4x4 ModuleCamera::GetModel()  {
 	float4x4 model = float4x4::FromTRS(float3(2.0f, 0.0f, 0.0f),
 		float4x4::RotateZ(pi / 4.0f),
 		float3(2.0f, 1.0f, 1.0f));

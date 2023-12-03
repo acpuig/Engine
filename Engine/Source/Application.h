@@ -14,7 +14,8 @@ class ModuleEditor;
 class ModuleCamera;
 class ModuleDebugDraw;
 class ModuleTexture;
-
+class Model;
+class Mesh;
 
 class Application
 {
