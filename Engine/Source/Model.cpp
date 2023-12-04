@@ -60,6 +60,7 @@ void Model::Draw()
 
 	for (const auto& mesh : meshes) 
 	{
-		mesh->Render(textures);
+		mesh->Render();
+		mesh->Draw(textures); 
 	}
 }

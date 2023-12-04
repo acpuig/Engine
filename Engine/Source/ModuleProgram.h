@@ -1,6 +1,7 @@
 #pragma once
 #include "Module.h"
 #include "Globals.h"
+#include "glew-2.1.0/include/GL/glew.h"
 
 class ModuleProgram : public Module 
 {
@@ -13,7 +14,9 @@ public:
     bool Init();
     void UseProgram();
 
-    void SendToShader(const char* name, const float* data);
+    void SendToShaderMatrix4fv(const char* name, const float* data);
+
+    void SendToShaderUniform(const char* name, GLint iter);
 
 private: 
     unsigned int program;

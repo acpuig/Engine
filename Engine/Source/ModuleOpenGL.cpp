@@ -56,7 +56,7 @@ bool ModuleOpenGL::Init()
 
 	App->GetCamera()->Init();
 	cubeModel = new Model();
-	cubeModel->Load("Box.gltf");
+	cubeModel->Load("BoxTextured.gltf");
 	return true;
 
 

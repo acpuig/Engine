@@ -48,7 +48,7 @@ bool ModuleRenderExercise::Init() {
 	//glBufferData(GL_ARRAY_BUFFER, sizeof(buffer_data), buffer_data, GL_STATIC_DRAW);
 	//textureID = App->GetTexture()->Load("Test-image-Baboon.ppm", GL_REPEAT, GL_NEAREST, GL_LINEAR, false);
 
-	//Model* model = new Model;
+	//Model* model = new Model
 	//model->Load("Box.gltf");
 
 	return true;

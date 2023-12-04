@@ -28,29 +28,29 @@ void Mesh::CreateVBO(const tinygltf::Model& model, const tinygltf::Mesh& mesh, c
 	vertexCountNormal = 0;
 	const auto& itPos = primitive.attributes.find("POSITION");
 	const auto& itNormal = primitive.attributes.find("NORMAL");
-	//const auto& itTextCoord = primitive.attributes.find("TEXCOORD_0");
+	const auto& itTextCoord = primitive.attributes.find("TEXCOORD_0");
 
 	if (itPos != primitive.attributes.end()) //Checking if Position Attribute Exists
 	{
 		//DIAPO 20 - Load all the vertex positions
 		const tinygltf::Accessor& posAcc = model.accessors[itPos->second]; //Loading Vertex Positions
 		const tinygltf::Accessor& normalAcc = model.accessors[itNormal->second];
-		//const tinygltf::Accessor& textCoordAcc = model.accessors[itTextCoord->second];
+		const tinygltf::Accessor& textCoordAcc = model.accessors[itTextCoord->second];
 
 		vertexCountPos += static_cast<GLsizei>(posAcc.count);
 		vertexCountNormal += static_cast<GLsizei>(normalAcc.count);
-		//vertexCountTexCoord += static_cast<GLsizei>(textCoordAcc.count);
+		vertexCountTexCoord += static_cast<GLsizei>(textCoordAcc.count);
 
-		int numVertex = vertexCountPos + vertexCountNormal; 
-		unsigned vertex_size = (sizeof(float3) + sizeof(float3) /*+ sizeof(float2)*/);
+		numVertex = vertexCountPos + vertexCountNormal; 
+		unsigned vertex_size = (sizeof(float3) + sizeof(float3) + sizeof(float2));
 		unsigned buffer_size = vertex_size * numVertex ;
 
 		assert(posAcc.type == TINYGLTF_TYPE_VEC3);
 		assert(posAcc.componentType == GL_FLOAT);
 		assert(normalAcc.type == TINYGLTF_TYPE_VEC3);
 		assert(normalAcc.componentType == GL_FLOAT);
-		//assert(textCoordAcc.type == TINYGLTF_TYPE_VEC2);
-		//assert(textCoordAcc.componentType == GL_FLOAT);
+		assert(textCoordAcc.type == TINYGLTF_TYPE_VEC2);
+		assert(textCoordAcc.componentType == GL_FLOAT);
 
 		// retrieve the actual position data about the buffer view and the buffer - 
 		const tinygltf::BufferView& posView = model.bufferViews[posAcc.bufferView];
@@ -61,9 +61,9 @@ void Mesh::CreateVBO(const tinygltf::Model& model, const tinygltf::Mesh& mesh, c
 		const tinygltf::Buffer& normalBuffer = model.buffers[normalView.buffer];
 		const unsigned char* bufferNormal = &(normalBuffer.data[normalAcc.byteOffset + normalView.byteOffset]);
 
-		//const tinygltf::BufferView& texCoordView = model.bufferViews[textCoordAcc.bufferView];
-		//const tinygltf::Buffer& texCoordBuffer = model.buffers[texCoordView.buffer];
-		//const unsigned char* bufferTexCoord = &(texCoordBuffer.data[textCoordAcc.byteOffset + texCoordView.byteOffset]);
+		const tinygltf::BufferView& texCoordView = model.bufferViews[textCoordAcc.bufferView];
+		const tinygltf::Buffer& texCoordBuffer = model.buffers[texCoordView.buffer];
+		const unsigned char* bufferTexCoord = &(texCoordBuffer.data[textCoordAcc.byteOffset + texCoordView.byteOffset]);
 
 		//DIAPO 23 
 		//Vertex* ptr = reinterpret_cast<Vertex*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY)); //glMap -> glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 3 * posAcc.count, nullptr, GL_STATIC_DRAW);
@@ -79,11 +79,11 @@ void Mesh::CreateVBO(const tinygltf::Model& model, const tinygltf::Mesh& mesh, c
 				//Iterates through each vertex, and position data is copied from the model's buffer to the OpenGL buffer.
 				vertices[i].position = *reinterpret_cast<const float3*>(bufferPos);
 				vertices[i].normal = *reinterpret_cast<const float3*>(bufferNormal);
-				//ptr[i].texCoord = *reinterpret_cast<const float2*>(bufferTexCoord);
+				vertices[i].texCoord = *reinterpret_cast<const float2*>(bufferTexCoord);
 
 				bufferPos += sizeof(float3);
 				bufferNormal += sizeof(float3);
-				//bufferTexCoord += sizeof(float2);
+				bufferTexCoord += sizeof(float2);
 			}
 		//}
 		//Mapping Buffer to OpenGL Buffer Object:
@@ -131,40 +131,50 @@ void Mesh::CreateVAO()
 	glBindVertexArray(vao);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+
+	// Define layout in shader
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
 	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(float) * 3));
-	/*glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, stride, (void*)(sizeof(float) * (3 + 3))); // Texture coords*/
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(float3)));
+	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(float3) + sizeof(float2)));
 	glBindVertexArray(0);
+
 }
 
-void Mesh::Render( const std::vector<Texture>& textures) //Rendering with an EBO
+void Mesh::Render( ) //Rendering with an EBO
 {
 	//Draw
 	App->GetProgram()->UseProgram(); 
-	App->GetProgram()->SendToShader("model", &App->GetCamera()->GetModel()[0][0]); 
-	App->GetProgram()->SendToShader("view", &App->GetCamera()->GetViewMatrix()[0][0]);
-	App->GetProgram()->SendToShader("proj", &App->GetCamera()->GetProjectionMatrix()[0][0]);
-
-	// Bind texture
-	//glEnable(GL_TEXTURE_2D);
-	glActiveTexture(GL_TEXTURE0);
-	if (!textures.empty() && materialIndex < textures.size()) {
-		glBindTexture(GL_TEXTURE_2D, textures[materialIndex].id);
-	}
-
-	// Bind buffers and draw
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(float3)));
+	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(float3) + sizeof(float2)));
+
+	glDrawArrays(GL_TRIANGLES, 0, numVertex);
+	glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, 0);
+}
+
+void Mesh::Draw(const std::vector<Texture>& textures) //Rendering with an EBO
+{
+	App->GetProgram()->UseProgram();
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, textures[materialIndex].id); //Empty
+	App->GetProgram()->SendToShaderMatrix4fv("model", &App->GetCamera()->GetModel()[0][0]);
+	App->GetProgram()->SendToShaderMatrix4fv("view", &App->GetCamera()->GetViewMatrix()[0][0]);
+	App->GetProgram()->SendToShaderMatrix4fv("proj", &App->GetCamera()->GetProjectionMatrix()[0][0]);
+
+	App->GetProgram()->SendToShaderUniform("diffuse", 0);
 	glBindVertexArray(vao);
 	glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, nullptr);
-
-	//glUniform1i(glGetUniformLocation(program, "diffuse"), 0);
-
-//	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-
 }
+
 
 void Mesh::Cleanup()
 {

@@ -1,4 +1,7 @@
-﻿  ModuleOpenGL.cpp
-C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\Model.h(10,14): warning C4099: 'Texture': nombre de tipo visto anteriormente usando 'struct' ahora se ve usando 'class'
-C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\ModuleTexture.h(8): message : vea la declaración de 'Texture'
+﻿  Mesh.cpp
+C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\Mesh.cpp(1,10): warning C4067: símbolos (token) inesperados después de la directiva del preprocesador; se esperaba una nueva línea
+C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\tinygltf\tiny_gltf.h(3039,17): warning C4018: '>=': no coinciden signed/unsigned
+C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\tinygltf\tiny_gltf.h(3134,17): warning C4018: '>=': no coinciden signed/unsigned
+C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\tinygltf\tiny_gltf.h(5187,60): warning C4267: 'argumento': conversión de 'size_t' a 'int'; posible pérdida de datos
+C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\Mesh.cpp(122,24): warning C4553: "==": el resultado de la expresión no se usa. ¿Quiso decir "="?
   Engine.vcxproj -> C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\x64\Debug\Engine.exe

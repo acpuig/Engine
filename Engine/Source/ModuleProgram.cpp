@@ -24,23 +24,26 @@ bool ModuleProgram::Init() {
     unsigned fragmentShader = App->GetProgram()->CompileShader(GL_FRAGMENT_SHADER, fragmentShaderSource);
 
     // Link shaders into a program
-    unsigned program = App->GetProgram()->CreateProgram(vertexShader, fragmentShader);
+    program = App->GetProgram()->CreateProgram(vertexShader, fragmentShader);
 
     // Delete individual shaders
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
 
-    return program;
+    UseProgram(); 
+    return true;
 }
 
 void ModuleProgram::UseProgram() {
     glUseProgram(program);
 }
 
-void ModuleProgram::SendToShader(const char* name,const float* data) {
+void ModuleProgram::SendToShaderMatrix4fv(const char* name,const float* data) {
     glUniformMatrix4fv(glGetUniformLocation(program, name), 1, GL_TRUE, data);
 }
-
+void ModuleProgram::SendToShaderUniform(const char* name, GLint iter) {
+    glUniform1i(glGetUniformLocation(program, name), iter);
+}
 char* ModuleProgram::LoadShaderSource(const char* shader_file_name)
 {
     char* data = nullptr;

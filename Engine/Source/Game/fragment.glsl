@@ -1,11 +1,18 @@
-#version 330 core
+# version 330
+out vec4 color;
 
-uniform sampler2D mytexture;
+in vec3 normal;
+in vec3 frag_world_position;
+in vec2 tex_coord;
+
+uniform sampler2D texture;
 
 out vec4 color;
 in vec2 uv0;
 
 void main()
 {
- color = texture2D(mytexture, uv0);
+ vec3 texture_color = texture2D(texture, tex_coord).xyz;
+   color = vec4(texture_color.xyz, texture2D(texture, tex_coord).w);
+
 }

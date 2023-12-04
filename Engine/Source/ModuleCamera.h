@@ -15,8 +15,6 @@ public:
 	 float4x4 GetViewMatrix()  ;
 	 float4x4 GetProjectionMatrix() ;
 	 float4x4 GetModel() ;
-
-
 	//void Rotation();
 
 

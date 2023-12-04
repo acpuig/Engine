@@ -2,8 +2,8 @@
 
 #include <vector>
 #include <string>
-#include <Math/float3.h>
-#include <Math/float2.h>
+#include "MathGeoLib/include/Math/float3.h"
+#include "MathGeoLib/include/Math/float2.h"
 #include "ModuleTexture.h"
 
 
@@ -17,7 +17,8 @@ namespace  tinygltf
 class Mesh {
 public:
 	void Load(const tinygltf::Model& model, const tinygltf::Mesh& mesh, const tinygltf::Primitive& primitive);
-	void Render(const std::vector<Texture>& textures);
+	void Render();
+	void Draw(const std::vector<Texture>& textures);
 	void Cleanup();
 
 
@@ -35,11 +36,12 @@ private:
 
 	unsigned indexCount;
 	int materialIndex = NULL;
+	int numVertex;
 
 	struct Vertex {
 		float3 position;
 		float3 normal;
-		//float2 texCoord;
+		float2 texCoord;
 	};
 
 	void CreateVBO(const tinygltf::Model& model, const tinygltf::Mesh& mesh, const tinygltf::Primitive& primitive);
