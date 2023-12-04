@@ -2,15 +2,18 @@
 #define TINYGLTF_NO_STB_IMAGE
 #define TINYGLTF_NO_EXTERNAL_IMAGE
 
-#include "Model.h"; 
+#include "Model.h"
 #include "Globals.h"
 #include "Application.h"
 #include "Mesh.h"
 #include "ModuleTexture.h"
+#include "ModuleCamera.h"
 
 #include "TinyGLTF/tiny_gltf.h"
 
-
+bool Model::Init() {
+	return true;
+}
 void Model::Load(const char* assetFileName)
 {
 	assert(assetFileName != nullptr);
@@ -29,38 +32,34 @@ void Model::Load(const char* assetFileName)
 		{
 			Mesh* mesh = new Mesh;
 			mesh->Load(model, srcMesh, primitive);
+			meshes.push_back(mesh);
 		}
 	}
-
-
+	LoadMaterials(model);
 }
 
 void Model::LoadMaterials(const tinygltf::Model& srcModel)
 {
 	for (const auto& srcMaterial : srcModel.materials)
 	{
-		Texture textureId;
+		Texture textureMaterial;
 		if (srcMaterial.pbrMetallicRoughness.baseColorTexture.index >= 0)
 		{
 			const tinygltf::Texture& texture = srcModel.textures[srcMaterial.pbrMetallicRoughness.baseColorTexture.index];
 			const tinygltf::Image& image = srcModel.images[texture.source];
-			textureId = App->GetTexture()->Load(image.uri, GL_REPEAT, GL_NEAREST, GL_LINEAR, false);
+			textureMaterial = App->GetTexture()->Load(image.uri, GL_REPEAT, GL_NEAREST, GL_LINEAR, false);
 		}
-		textures.push_back(&textureId);
+		textures.push_back(textureMaterial);
 	}
 }
 
 void Model::Draw()
 {
-	tinygltf::Model model;
+	Mesh* mesh = new Mesh;
+	float4x4 modelMatrix = App->GetCamera()->GetModel();
 
-	for (const auto& srcMesh : model.meshes)
+	for (const auto& mesh : meshes) 
 	{
-		for (const auto& srcMesh : srcMesh.primitives)
-		{
-			Mesh* mesh = new Mesh;
-			//mesh->Render();
-
-		}
+		mesh->Render(textures);
 	}
 }

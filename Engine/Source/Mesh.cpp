@@ -24,6 +24,8 @@ void Mesh::Load(const tinygltf::Model& model, const tinygltf::Mesh& mesh, const 
 
 void Mesh::CreateVBO(const tinygltf::Model& model, const tinygltf::Mesh& mesh, const tinygltf::Primitive& primitive) 
 {
+	vertexCountPos = 0;
+	vertexCountNormal = 0;
 	const auto& itPos = primitive.attributes.find("POSITION");
 	const auto& itNormal = primitive.attributes.find("NORMAL");
 	//const auto& itTextCoord = primitive.attributes.find("TEXCOORD_0");
@@ -41,7 +43,7 @@ void Mesh::CreateVBO(const tinygltf::Model& model, const tinygltf::Mesh& mesh, c
 
 		int numVertex = vertexCountPos + vertexCountNormal; 
 		unsigned vertex_size = (sizeof(float3) + sizeof(float3) /*+ sizeof(float2)*/);
-		unsigned buffer_size = vertex_size * numVertex;
+		unsigned buffer_size = vertex_size * numVertex ;
 
 		assert(posAcc.type == TINYGLTF_TYPE_VEC3);
 		assert(posAcc.componentType == GL_FLOAT);
@@ -66,10 +68,11 @@ void Mesh::CreateVBO(const tinygltf::Model& model, const tinygltf::Mesh& mesh, c
 		//DIAPO 23 
 		//Vertex* ptr = reinterpret_cast<Vertex*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY)); //glMap -> glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 3 * posAcc.count, nullptr, GL_STATIC_DRAW);
 		Vertex* vertices = new Vertex[numVertex];
+		//std::vector<Vertex> vertices[numVertex];
 
-		GLenum error = glGetError();
-		if (error != GL_NO_ERROR) {
-
+		//GLenum error = glGetError();
+		//std::cerr << "OpenGL Error: " << error << std::endl;
+		//if (error != GL_NO_ERROR) {
 			//float3* ptr = reinterpret_cast<float3*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
 			for (size_t i = 0; i < posAcc.count; ++i)
 			{
@@ -82,7 +85,7 @@ void Mesh::CreateVBO(const tinygltf::Model& model, const tinygltf::Mesh& mesh, c
 				bufferNormal += sizeof(float3);
 				//bufferTexCoord += sizeof(float2);
 			}
-		}
+		//}
 		//Mapping Buffer to OpenGL Buffer Object:
 		glGenBuffers(1, &vbo);
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
@@ -137,60 +140,46 @@ void Mesh::CreateVAO()
 	glBindVertexArray(0);
 }
 
-void Mesh::Render(float4x4& model, Texture texture) //Rendering with an EBO
+void Mesh::Render( const std::vector<Texture>& textures) //Rendering with an EBO
 {
+	//Draw
 	App->GetProgram()->UseProgram(); 
 	App->GetProgram()->SendToShader("model", &App->GetCamera()->GetModel()[0][0]); 
 	App->GetProgram()->SendToShader("view", &App->GetCamera()->GetViewMatrix()[0][0]);
 	App->GetProgram()->SendToShader("proj", &App->GetCamera()->GetProjectionMatrix()[0][0]);
 
-	glEnable(GL_TEXTURE_2D);
-	glActiveTexture(0);
-	glBindTexture(GL_TEXTURE_2D, texture.id);
+	// Bind texture
+	//glEnable(GL_TEXTURE_2D);
+	glActiveTexture(GL_TEXTURE0);
+	if (!textures.empty() && materialIndex < textures.size()) {
+		glBindTexture(GL_TEXTURE_2D, textures[materialIndex].id);
+	}
 
+	// Bind buffers and draw
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glBindVertexArray(vao);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
 	glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, nullptr);
 
-	//Draw textures
-	/*// Position attribute
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, position));
+	//glUniform1i(glGetUniformLocation(program, "diffuse"), 0);
 
-	// Normal attribute
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, normal));
+//	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
 
-	// Texture coordinate attribute
-	//glEnableVertexAttribArray(2);
-	//glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, texCoord));*/
-
-	
 }
 
 void Mesh::Cleanup()
 {
-	if (vbo != 0)
-	{
-		glDisableVertexAttribArray(0);
-		glDisableVertexAttribArray(1);
-		glDisableVertexAttribArray(2);
-		glDeleteBuffers(1, &vbo);
-		vbo = 0;
-	}
+	glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	glBindTexture(GL_TEXTURE_2D, 0);
 
-	if (ebo != 0)
-	{
-		glDeleteBuffers(1, &ebo);
-		ebo = 0;
-	}
-
-	if (vao != 0)
-	{
-		glDeleteVertexArrays(1, &vao);
-		vao = 0;
-	}
+	// Disable texture unit
+	glDisable(GL_TEXTURE_2D);
+	glDisableVertexAttribArray(0);
+	glDisableVertexAttribArray(1);
+	//glDisableVertexAttribArray(2);
+	glDeleteBuffers(1, &vbo);
+	
 }
 
 

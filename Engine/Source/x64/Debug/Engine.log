@@ -1,9 +1,4 @@
-﻿  Model.cpp
-C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\Model.cpp(5,10): warning C4067: símbolos (token) inesperados después de la directiva del preprocesador; se esperaba una nueva línea
-C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\ModuleTexture.h(8,16): warning C4099: 'Texture': nombre de tipo visto anteriormente usando 'class' ahora se ve usando 'struct'
+﻿  ModuleOpenGL.cpp
+C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\Model.h(10,14): warning C4099: 'Texture': nombre de tipo visto anteriormente usando 'struct' ahora se ve usando 'class'
 C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\ModuleTexture.h(8): message : vea la declaración de 'Texture'
-  ModuleRenderExercise.cpp
-C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\Model.h(8,14): warning C4099: 'Texture': nombre de tipo visto anteriormente usando 'struct' ahora se ve usando 'class'
-C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\ModuleTexture.h(8): message : vea la declaración de 'Texture'
-  Generando código...
   Engine.vcxproj -> C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\x64\Debug\Engine.exe

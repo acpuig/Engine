@@ -10,7 +10,7 @@ public:
     ~ModuleProgram();
 
     // Function to create a program from vertex and fragment shader files
-    unsigned Init(const char* defaultshader_file_name, const char* fragmentshader_file_name);
+    bool Init();
     void UseProgram();
 
     void SendToShader(const char* name, const float* data);
@@ -23,4 +23,5 @@ private:
     char* LoadShaderSource(const char* shader_file_name);
     unsigned CompileShader(unsigned type, const char* source);
     unsigned CreateProgram(unsigned vtx_shader, unsigned frg_shader);
+    bool CleanUp() ;
 };

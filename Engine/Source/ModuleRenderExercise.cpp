@@ -46,10 +46,9 @@ bool ModuleRenderExercise::Init() {
 	//glGenBuffers(1, &vbo);
 	//glBindBuffer(GL_ARRAY_BUFFER, vbo); // set vbo active
 	//glBufferData(GL_ARRAY_BUFFER, sizeof(buffer_data), buffer_data, GL_STATIC_DRAW);
-	App->GetCamera()->Init();
-	program = App->GetProgram()->Init("default_vertex.glsl", "default_fragment.glsl");
 	//textureID = App->GetTexture()->Load("Test-image-Baboon.ppm", GL_REPEAT, GL_NEAREST, GL_LINEAR, false);
-	Model* model = new Model;
+
+	//Model* model = new Model;
 	//model->Load("Box.gltf");
 
 	return true;
@@ -68,7 +67,7 @@ update_status ModuleRenderExercise::PostUpdate()
 	int w, h;
 	SDL_GetWindowSize(App->GetWindow()->window, &w, &h);
 	App->GetDebugDraw()->Draw(App->GetCamera()->GetViewMatrix(), App->GetCamera()->GetProjectionMatrix(), w, h);
-	Mesh* mesh = new Mesh;
+	//Mesh* mesh = new Mesh;
 	//mesh->Draw(helloProgram,vao)
 	return update_status();
 }

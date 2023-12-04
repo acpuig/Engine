@@ -4,6 +4,8 @@
 #include "ModuleWindow.h"
 #include "ModuleCamera.h"
 #include "ModuleDebugDraw.h"
+#include "ModuleProgram.h"
+
 #include "Model.h"
 
 #include "SDL.h"
@@ -51,10 +53,13 @@ bool ModuleOpenGL::Init()
 	glEnable(GL_DEPTH_TEST); // Enable depth test
 	glEnable(GL_CULL_FACE); // Enable cull backward faces
 	glFrontFace(GL_CCW); // Front faces will be counter clockwise*/f
+
+	App->GetCamera()->Init();
+	cubeModel = new Model();
+	cubeModel->Load("Box.gltf");
 	return true;
 
-	model = new Model();
-	model->Load("Box.gltf");
+
 }
 
 update_status ModuleOpenGL::PreUpdate()
@@ -63,13 +68,14 @@ update_status ModuleOpenGL::PreUpdate()
 	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+
 	return UPDATE_CONTINUE;
 }
 
 // Called every draw update
 update_status ModuleOpenGL::Update()
 {
-	//model->Draw(); 
+	cubeModel->Draw();
 	return UPDATE_CONTINUE;
 }
 
@@ -87,7 +93,7 @@ update_status ModuleOpenGL::PostUpdate()
 bool ModuleOpenGL::CleanUp()
 {
 	LOG("Destroying renderer");
-
+	//App->GetProgram()->CleanUp(); 
 	//Destroy window
 	SDL_GL_DeleteContext(App->GetWindow()->window);
 	return true;

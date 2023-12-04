@@ -1,6 +1,7 @@
 #pragma once
 #include "Module.h"
 
+class Model;
 struct SDL_Texture;
 struct SDL_Renderer;
 struct SDL_Rect;
@@ -22,6 +23,6 @@ public:
 
 private:
 	void* context;
-	Model* model = nullptr;
+	Model* cubeModel;
 
 };

@@ -14,7 +14,7 @@ ModuleProgram::~ModuleProgram()
 {
 }
 
-unsigned ModuleProgram::Init(const char* defaultshader_file_name, const char* fragmentshader_file_name) {
+bool ModuleProgram::Init() {
 
     // Load and compile shaders
     const char* vertexShaderSource = App->GetProgram()->LoadShaderSource("vertex.glsl");
@@ -113,4 +113,9 @@ unsigned ModuleProgram::CreateProgram(unsigned vtx_shader, unsigned frg_shader)
     glDeleteShader(vtx_shader);
     glDeleteShader(frg_shader);
     return program_id;
+}
+
+bool ModuleProgram::CleanUp() {
+    glDeleteProgram(program);
+    return true; 
 }
