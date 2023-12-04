@@ -39,11 +39,15 @@ void ModuleProgram::UseProgram() {
 }
 
 void ModuleProgram::SendToShaderMatrix4fv(const char* name,const float* data) {
-    glUniformMatrix4fv(glGetUniformLocation(program, name), 1, GL_TRUE, data);
+    if(program != 0){
+        glUniformMatrix4fv(glGetUniformLocation(program, name), 1, GL_TRUE, data);
+    }
 }
 void ModuleProgram::SendToShaderUniform(const char* name, GLint iter) {
-    glUniform1i(glGetUniformLocation(program, name), iter);
-}
+    if (program != 0) {
+        glUniform1i(glGetUniformLocation(program, name), iter);
+    }
+  }
 char* ModuleProgram::LoadShaderSource(const char* shader_file_name)
 {
     char* data = nullptr;

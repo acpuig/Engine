@@ -35,7 +35,14 @@ void Model::Load(const char* assetFileName)
 			meshes.push_back(mesh);
 		}
 	}
-	LoadMaterials(model);
+}
+
+void Model::Draw()
+{
+	Mesh* mesh = new Mesh;
+	float4x4 modelMatrix = App->GetCamera()->GetModel();
+	mesh->Render(); 
+
 }
 
 void Model::LoadMaterials(const tinygltf::Model& srcModel)
@@ -47,20 +54,8 @@ void Model::LoadMaterials(const tinygltf::Model& srcModel)
 		{
 			const tinygltf::Texture& texture = srcModel.textures[srcMaterial.pbrMetallicRoughness.baseColorTexture.index];
 			const tinygltf::Image& image = srcModel.images[texture.source];
-			textureMaterial = App->GetTexture()->Load(image.uri, GL_REPEAT, GL_NEAREST, GL_LINEAR, false);
+			textureMaterial = App->GetTexture()->Load(image.uri, GL_REPEAT, GL_NEAREST, GL_LINEAR, true);
 		}
 		textures.push_back(textureMaterial);
-	}
-}
-
-void Model::Draw()
-{
-	Mesh* mesh = new Mesh;
-	float4x4 modelMatrix = App->GetCamera()->GetModel();
-
-	for (const auto& mesh : meshes) 
-	{
-		mesh->Render();
-		mesh->Draw(textures); 
 	}
 }

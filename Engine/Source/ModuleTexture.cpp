@@ -45,19 +45,16 @@ void ModuleTexture::LoadImage(const wchar_t* image_path){
 		imageMetadata = imageData.GetMetadata();
 		imageLoad = true;
 		return;
-	}
-
-	// If loading DDS fails, try loading TGA
-	if (DirectX::LoadFromTGAFile(image_path, nullptr, imageData) == S_OK) {
+	} 
+	if (DirectX::LoadFromTGAFile(image_path, nullptr, imageData) == S_OK) { // If loading DDS fails, try loading TGA
 		imageMetadata = imageData.GetMetadata();
 		imageLoad = true;
 		return;
 	}
-
-	// If loading TGA also fails, try loading using WIC
-	if (DirectX::LoadFromWICFile(image_path, DirectX::WIC_FLAGS_NONE, nullptr, imageData) == S_OK) {
+	if (DirectX::LoadFromWICFile(image_path, DirectX::WIC_FLAGS_NONE, nullptr, imageData) == S_OK){ // If loading TGA also fails, try loading using WIC
 		imageMetadata = imageData.GetMetadata();
 		imageLoad = true;
+		return; 
 	}
 }
 

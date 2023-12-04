@@ -130,7 +130,8 @@ void ModuleRenderExercise::RenderQuad(unsigned textureID, unsigned program) {
 	proj = App->GetCamera()->GetProjectionMatrix();
 	model = App->GetCamera()->GetModel();
 
-	glUseProgram(program);
+	
+	(program);
 
 	glUniformMatrix4fv(glGetUniformLocation(program, "model"), 1, GL_TRUE, &model[0][0]);
 	glUniformMatrix4fv(glGetUniformLocation(program, "view"), 1, GL_TRUE, &view[0][0]);

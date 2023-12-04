@@ -120,9 +120,9 @@ void ModuleCamera::RotateFrustum(char axis, float angle, const float delta_time)
 		frustum.up = rotation_Matrix.MulDir(oldUp);
 		break;
 	case 'Y': // Rotate around the Y-axis (yaw)
-		rotation_Matrix = float3x3::RotateAxisAngle(float3(0.0f, 1.0f, 0.0f), -angle); // Invert the angle
+		rotation_Matrix = float3x3::RotateY(-angle); // Invert the angle
 		frustum.front = rotation_Matrix.MulDir(oldFront);
-		frustum.WorldRight() = rotation_Matrix.MulDir(oldRight);
+		frustum.up = rotation_Matrix.MulDir(oldUp);
 		break;
 	case 'Z': // Rotate around the Z-axis (roll)
 		rotation_Matrix = float3x3::RotateAxisAngle(float3(0.0f, 0.0f, 1.0f), -angle); // Invert the angle
