@@ -1,6 +1,4 @@
-﻿  Mesh.cpp
-C:\Users\ariadnacp1\Documents\GitHub\Engine\Engine\Source\Mesh.cpp(1,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\ariadnacp1\Documents\GitHub\Engine\Engine\Source\tinygltf\tiny_gltf.h(3039,17): warning C4018: '>=': signed/unsigned mismatch
-C:\Users\ariadnacp1\Documents\GitHub\Engine\Engine\Source\tinygltf\tiny_gltf.h(3134,17): warning C4018: '>=': signed/unsigned mismatch
-C:\Users\ariadnacp1\Documents\GitHub\Engine\Engine\Source\tinygltf\tiny_gltf.h(5187,60): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+﻿  Model.cpp
+  ModuleCamera.cpp
+  Generating Code...
   Engine.vcxproj -> C:\Users\ariadnacp1\Documents\GitHub\Engine\Engine\Source\x64\Debug\Engine.exe

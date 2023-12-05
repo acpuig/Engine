@@ -25,6 +25,7 @@ void Model::Load(const char* assetFileName)
 	{
 		LOG("Error loading %s: %s", assetFileName, error.c_str());
 	}
+	LoadMaterials(model);
 
 	for (const auto& srcMesh : model.meshes)
 	{
@@ -41,11 +42,11 @@ void Model::Draw()
 {
 	if (!meshes.empty())
 	{
-		Mesh* mesh = meshes[0];
-		float4x4 modelMatrix = App->GetCamera()->GetModel();
-		mesh->Render();
+		for(Mesh* mesh : meshes){
+			float4x4 modelMatrix = App->GetCamera()->GetModel();
+			mesh->Render();
+		}
 	}
-
 }
 
 void Model::LoadMaterials(const tinygltf::Model& srcModel)

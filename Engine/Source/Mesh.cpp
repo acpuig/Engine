@@ -147,7 +147,6 @@ void Mesh::LoadEBO(const tinygltf::Model& model, const tinygltf::Mesh& mesh, con
 		 {
 			 const uint16_t* bufferInd = reinterpret_cast<const uint16_t*>(buffer);
 			 for (uint32_t i = 0; i < indAcc.count; ++i) ptr[i] = bufferInd[i];
-		 
 		 }
 		if (indAcc.componentType == TINYGLTF_PARAMETER_TYPE_UNSIGNED_BYTE) {
 			const uint8_t* bufferInd = reinterpret_cast<const uint8_t*>(buffer);
