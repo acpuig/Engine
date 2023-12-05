@@ -4,6 +4,7 @@
 #include "ModuleOpenGL.h"
 #include "SDL/include/SDL.h"
 #include "imgui/imgui_impl_sdl2.h"
+#include "Math/float2.h"
 
 ModuleInput::ModuleInput()
 {}
@@ -46,6 +47,12 @@ update_status ModuleInput::Update()
                 break;
             case SDL_MOUSEWHEEL:
                  mouse_scroll = sdlEvent.wheel.y;
+                 break;
+            case SDL_MOUSEMOTION:
+                // Update the mouse delta values
+                mouse_pos_x = sdlEvent.motion.xrel;
+                mouse_pos_y = sdlEvent.motion.yrel;
+                break; 
 
         }
         //Sending Input Events to ImGui
@@ -71,6 +78,13 @@ const unsigned ModuleInput::GetKey(SDL_Scancode key) const {
     return keyboard[key];
 }
 
-const int ModuleInput::GetMouse() const {
+const int ModuleInput::GetMouseScroll() const {
     return int(mouse_scroll);
+}
+
+const int ModuleInput::GetMousePosX() const {
+    return mouse_pos_x;
+}
+const int ModuleInput::GetMousePosY() const {
+    return mouse_pos_y;
 }

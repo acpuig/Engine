@@ -14,6 +14,8 @@ public:
     bool Init();
     void UseProgram();
 
+    unsigned int GetProgram();
+
     void SendToShaderMatrix4fv(const char* name, const float* data);
 
     void SendToShaderUniform(const char* name, GLint iter);

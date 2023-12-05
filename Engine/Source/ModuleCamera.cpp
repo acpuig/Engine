@@ -42,6 +42,17 @@ bool ModuleCamera::Init() {
 }
 
 update_status  ModuleCamera::Update() {
+	const float rotation_speed = 1.0f;
+
+	if (SDL_BUTTON(SDL_BUTTON_RIGHT)) {
+		int dx = App->GetInput()->GetMousePosX();
+		int dy = App->GetInput()->GetMousePosY();
+
+		// Update the camera rotation based on mouse movement
+		//RotateCameraWithMouse(dx, dy, rotation_speed);
+	}
+
+
 	MovementController(0.5);
 	Zoom(0.5);
 	return UPDATE_CONTINUE;
@@ -53,7 +64,7 @@ void ModuleCamera::SetFOV( float fov_deg) {
 }
 
 void ModuleCamera::SetAspectRatio( int screen_width,  int screen_height) {
-	aspect_ratio = screen_width / screen_height;
+	aspect_ratio = float(screen_width / screen_height);
 	SetVerticalFOV(horizontal_fov, aspect_ratio);
 }
 
@@ -94,6 +105,37 @@ float4x4 ModuleCamera::GetProjectionMatrix()  {
 	return float4x4(model);
 }
 
+ void ModuleCamera::RotateCameraWithMouse(int dx, int dy, float sensitivity) {
+	 // Adjust these values based on your desired sensitivity
+	 LOG("Mouse DeltaX: %d, DeltaY: %d\n", dx, dy);
+	 const float maxRotationX = math::pi / 2.0f;  // Limit rotation around X-axis to avoid flipping
+
+	 // Update the camera rotation matrix based on mouse movement
+	 float3x3 rotation = float3x3::RotateY(-dx * sensitivity) * float3x3::RotateAxisAngle(frustum.WorldRight(), -dy * sensitivity);
+
+	 // Apply the rotation to the camera's front, up, and right vectors
+	 frustum.front = rotation * frustum.front;
+	 frustum.up = rotation * frustum.up;
+	 frustum.WorldRight() = rotation * frustum.WorldRight();
+
+	 // Make sure the vectors are still orthogonal and normalized
+	 frustum.front.Normalize();
+	 frustum.up.Normalize();
+	 frustum.WorldRight().Normalize();
+
+	 // Limit rotation around X-axis to avoid flipping
+	 float dotUpFront = frustum.up.Dot(frustum.front);
+	 if (fabsf(dotUpFront) > math::eps) {
+		 float angle = acosf(math::Clamp(dotUpFront, -1.0f, 1.0f));
+		 if (angle > maxRotationX) {
+			 float correctionAngle = angle - maxRotationX;
+			 float3 rotationAxis = frustum.up.Cross(frustum.front).Normalized();
+			 frustum.up = float3x3::RotateAxisAngle(rotationAxis, -correctionAngle) * frustum.up;
+		 }
+	 }
+	 // Update the view matrix with the new orientation
+	 view_Matrix = frustum.ViewMatrix();
+ }
 
 float4x4 ModuleCamera::LookAt(const float3& eye_position, const float3& target_position, const float3& up_position) {
 
@@ -189,7 +231,7 @@ void ModuleCamera::Zoom(const float fov_diffdeg) {
 	}
 
 	float zoom_speed = 0.5;
-	int scroll_value = App->GetInput()->GetMouse();
+	int scroll_value = App->GetInput()->GetMouseScroll();
 	float aux = angle * zoom_speed * scroll_value;
 	horizontal_fov += angle*  zoom_speed * scroll_value;
 	

@@ -5,6 +5,7 @@
 #include "SDL.h"
 
 #include "glew-2.1.0/include/GL/glew.h"
+#include "ModuleRenderExercise.h"
 
 ModuleProgram::ModuleProgram()
 {
@@ -31,17 +32,28 @@ bool ModuleProgram::Init() {
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
 
-    UseProgram(); 
     return true;
 }
 
 void ModuleProgram::UseProgram() {
     glUseProgram(program);
+    GLenum error = glGetError();
+    if (error != GL_NO_ERROR) {
+        LOG("OpenGL Error before draw call: %d", error);
+    }
+}
+
+unsigned int ModuleProgram::GetProgram() {
+    return program;
 }
 
 void ModuleProgram::SendToShaderMatrix4fv(const char* name,const float* data) {
     if(program != 0){
         glUniformMatrix4fv(glGetUniformLocation(program, name), 1, GL_TRUE, data);
+        GLenum error = glGetError();
+        if (error != GL_NO_ERROR) {
+            LOG("OpenGL Error after glUniformMatrix4fv: %d", error);
+        }
     }
 }
 void ModuleProgram::SendToShaderUniform(const char* name, GLint iter) {

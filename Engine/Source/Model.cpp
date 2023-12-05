@@ -44,7 +44,6 @@ void Model::Draw()
 		Mesh* mesh = meshes[0];
 		float4x4 modelMatrix = App->GetCamera()->GetModel();
 		mesh->Render();
-		
 	}
 
 }

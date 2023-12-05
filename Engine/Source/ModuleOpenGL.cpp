@@ -55,6 +55,7 @@ bool ModuleOpenGL::Init()
 	glFrontFace(GL_CCW); // Front faces will be counter clockwise*/f
 
 	App->GetCamera()->Init();
+	App->GetProgram()->Init();
 	cubeModel = new Model();
 	cubeModel->Load("BoxTextured.gltf");
 

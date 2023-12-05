@@ -14,7 +14,6 @@
 #include "tinygltf/tiny_gltf.h"
 
 
-// initialize a VBO
 void Mesh::Load(const tinygltf::Model& model, const tinygltf::Mesh& mesh, const tinygltf::Primitive& primitive)
 {
 	CreateVBO(model, mesh, primitive);
@@ -67,7 +66,6 @@ void Mesh::CreateVBO(const tinygltf::Model& model, const tinygltf::Mesh& mesh, c
 		const unsigned char* bufferTexCoord = &(texCoordBuffer.data[textCoordAcc.byteOffset + texCoordView.byteOffset]);
 		
 		//DIAPO 23 
-		//Vertex* vertices = new Vertex[numVertex];
 		std::vector<Vertex> vertices; // Assuming Vertex is a structure that holds position, normal, and texCoord
 
 		for (size_t i = 0; i < posAcc.count; ++i)
@@ -80,10 +78,12 @@ void Mesh::CreateVBO(const tinygltf::Model& model, const tinygltf::Mesh& mesh, c
 
 			vertices.push_back(vertex);
 
+			// Move the buffer pointers to the next set of data
 			bufferPos += sizeof(float3);
 			bufferNormal += sizeof(float3);
 			bufferTexCoord += sizeof(float2);
 		}
+
 		//Mapping Buffer to OpenGL Buffer Object:
 		glGenBuffers(1, &vbo);
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
@@ -119,8 +119,8 @@ void Mesh::LoadEBO(const tinygltf::Model& model, const tinygltf::Mesh& mesh, con
 			const uint32_t* bufferInd = reinterpret_cast<const uint32_t*>(buffer);
 			for (uint32_t i = 0; i < indAcc.count; ++i) ptr[i] = bufferInd[i];
 		}
-		indAcc.componentType == TINYGLTF_PARAMETER_TYPE_UNSIGNED_SHORT;
-		indAcc.componentType == TINYGLTF_PARAMETER_TYPE_UNSIGNED_BYTE;
+		 if (indAcc.componentType == TINYGLTF_PARAMETER_TYPE_UNSIGNED_SHORT);
+		 if (indAcc.componentType == TINYGLTF_PARAMETER_TYPE_UNSIGNED_BYTE);
 		glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER); 
 	}
 }
@@ -141,7 +141,6 @@ void Mesh::CreateVAO()
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(float3)));
 	glEnableVertexAttribArray(2);
 	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(float3) + sizeof(float2)));
-	//glBindVertexArray(0);
 	glPopDebugGroup();
 
 }
@@ -149,13 +148,24 @@ void Mesh::CreateVAO()
 void Mesh::Render( ) //Rendering with an EBO
 {
 	glPushDebugGroup(GL_DEBUG_SOURCE_APPLICATION, 0, -1, "RenderMesh");
-	App->GetProgram()->UseProgram(); 
-	App->GetProgram()->SendToShaderMatrix4fv("model", &App->GetCamera()->GetModel()[0][0]);
-	App->GetProgram()->SendToShaderMatrix4fv("view", &App->GetCamera()->GetViewMatrix()[0][0]);
-	App->GetProgram()->SendToShaderMatrix4fv("proj", &App->GetCamera()->GetProjectionMatrix()[0][0]);
+	float4x4 model, view, proj;
+	view = App->GetCamera()->GetViewMatrix();
+	proj = App->GetCamera()->GetProjectionMatrix();
+	model = App->GetCamera()->GetModel();
+
+		//glUseProgram(program);
+	App->GetProgram()->UseProgram();
+
+	App->GetProgram()->SendToShaderMatrix4fv("model", &model[0][0]);
+	App->GetProgram()->SendToShaderMatrix4fv("view", &view[0][0]);
+	App->GetProgram()->SendToShaderMatrix4fv("proj", &proj[0][0]); 
 
 	glBindVertexArray(vao);
 
+	GLenum error = glGetError();
+	if (error != GL_NO_ERROR) {
+		LOG("OpenGL Error before draw call: %d", error);
+	}
 	glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, 0);
 
 	glPopDebugGroup();
