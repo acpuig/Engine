@@ -49,7 +49,7 @@ update_status  ModuleCamera::Update() {
 		int dy = App->GetInput()->GetMousePosY();
 
 		// Update the camera rotation based on mouse movement
-		RotateCameraWithMouse(dx, dy, rotation_speed);
+		//RotateCameraWithMouse(dx, dy, rotation_speed);
 	}
 	
 

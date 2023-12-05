@@ -1,4 +1,5 @@
-﻿  Model.cpp
-  ModuleCamera.cpp
-  Generating Code...
+﻿  ModuleTexture.cpp
+C:\Users\ariadnacp1\Documents\GitHub\Engine\Engine\Source\ModuleTexture.cpp(104,104): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+C:\Users\ariadnacp1\Documents\GitHub\Engine\Engine\Source\ModuleTexture.cpp(104,104): warning C4267: 'argument': conversion from 'size_t' to 'GLint', possible loss of data
+C:\Users\ariadnacp1\Documents\GitHub\Engine\Engine\Source\ModuleTexture.cpp(113,131): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
   Engine.vcxproj -> C:\Users\ariadnacp1\Documents\GitHub\Engine\Engine\Source\x64\Debug\Engine.exe

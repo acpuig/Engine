@@ -12,7 +12,6 @@ class Mesh;
 
 class Model {
 public:
-	bool Init();
 	void Load(const char* assetFileName);
 	void LoadMaterials(const tinygltf::Model& srcModel);
 	void Draw();

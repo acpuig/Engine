@@ -17,7 +17,7 @@ Texture ModuleTexture::Load(const std::string& path, GLint wrapParam, GLint minP
 	Texture texture;
 	assert(!path.empty());
 	texture.path = path; // Dereference the pointer
-	const wchar_t* image_path = reinterpret_cast<const wchar_t*>(texture.path.c_str());
+	const wchar_t* image_path = (const wchar_t*)(texture.path.c_str());
 	assert(image_path != nullptr);
 	LoadImage(image_path);
 	if (imageLoad) {

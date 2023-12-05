@@ -82,13 +82,7 @@ void Mesh::CreateVBO(const tinygltf::Model& model, const tinygltf::Mesh& mesh, c
 		bufferTexCoord = &(texCoordBuffer.data[textCoordAcc.byteOffset + texCoordView.byteOffset]);
 	}
 
-	//DIAPO 23 
 	 std::vector<Vertex> vertices; // Assuming Vertex is a structure that holds position, normal, and texCoord
-
-	//glGenBuffers(1, &vbo);
-	//glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * numVertex, nullptr, GL_STATIC_DRAW);
-	//Vertex* ptr = reinterpret_cast<Vertex*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
 
 	for (size_t i = 0; i < numVertex; ++i)
 	{
@@ -107,17 +101,10 @@ void Mesh::CreateVBO(const tinygltf::Model& model, const tinygltf::Mesh& mesh, c
 		bufferTexCoord += sizeof(float2);
 	}
 
-	//Mapping Buffer to OpenGL Buffer Object:
-	
-	//glUnmapBuffer(GL_ARRAY_BUFFER);
-
-
-
 	glGenBuffers(1, &vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * vertices.size(), vertices.data(), GL_STATIC_DRAW);
 
-		//delete[] vertices;
 }
 
 //Rendering separated arrays

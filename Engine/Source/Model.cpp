@@ -11,9 +11,7 @@
 
 #include "TinyGLTF/tiny_gltf.h"
 
-bool Model::Init() {
-	return true;
-}
+
 void Model::Load(const char* assetFileName)
 {
 	assert(assetFileName != nullptr);
