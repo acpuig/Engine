@@ -21,7 +21,7 @@ void Mesh::Load(const tinygltf::Model& model, const tinygltf::Mesh& mesh, const 
 	CreateVAO();
 }
 
-void Mesh::CreateVBO(const tinygltf::Model& model, const tinygltf::Mesh& mesh, const tinygltf::Primitive& primitive) 
+void Mesh::CreateVBO(const tinygltf::Model& model, const tinygltf::Mesh& mesh, const tinygltf::Primitive& primitive)
 {
 	vertexCountPos = 0;
 	vertexCountNormal = 0;
@@ -30,70 +30,94 @@ void Mesh::CreateVBO(const tinygltf::Model& model, const tinygltf::Mesh& mesh, c
 	const auto& itNormal = primitive.attributes.find("NORMAL");
 	const auto& itTextCoord = primitive.attributes.find("TEXCOORD_0");
 
+	const unsigned char* bufferPos = nullptr;
+	const unsigned char* bufferNormal = nullptr;
+	const unsigned char* bufferTexCoord = nullptr;
+
 	if (itPos != primitive.attributes.end()) //Checking if Position Attribute Exists
 	{
 		//DIAPO 20 - Load all the vertex positions
 		const tinygltf::Accessor& posAcc = model.accessors[itPos->second]; //Loading Vertex Positions
-		const tinygltf::Accessor& normalAcc = model.accessors[itNormal->second];
-		const tinygltf::Accessor& textCoordAcc = model.accessors[itTextCoord->second];
 
 		vertexCountPos += static_cast<GLsizei>(posAcc.count);
-		vertexCountNormal += static_cast<GLsizei>(normalAcc.count);
-		vertexCountTexCoord += static_cast<GLsizei>(textCoordAcc.count);
-
-		numVertex = vertexCountPos + vertexCountNormal + vertexCountTexCoord;
+		numVertex = vertexCountPos;
 		unsigned vertex_size = (sizeof(float3) + sizeof(float3) + sizeof(float2));
-		unsigned buffer_size = vertex_size * numVertex ;
+		unsigned buffer_size = vertex_size * numVertex;
 
 		assert(posAcc.type == TINYGLTF_TYPE_VEC3);
 		assert(posAcc.componentType == GL_FLOAT);
-		assert(normalAcc.type == TINYGLTF_TYPE_VEC3);
-		assert(normalAcc.componentType == GL_FLOAT);
-		assert(textCoordAcc.type == TINYGLTF_TYPE_VEC2);
-		assert(textCoordAcc.componentType == GL_FLOAT);
+
 
 		// retrieve the actual position data about the buffer view and the buffer - 
 		const tinygltf::BufferView& posView = model.bufferViews[posAcc.bufferView];
 		const tinygltf::Buffer& posBuffer = model.buffers[posView.buffer];
-		const unsigned char* bufferPos = &(posBuffer.data[posAcc.byteOffset + posView.byteOffset]);
+		bufferPos = &(posBuffer.data[posAcc.byteOffset + posView.byteOffset]);
+	}
+	if (itNormal != primitive.attributes.end()) //Checking if Normal Attribute Exists
+	{
+		const tinygltf::Accessor& normalAcc = model.accessors[itNormal->second];
+		vertexCountNormal += static_cast<GLsizei>(normalAcc.count);
+
+		assert(normalAcc.type == TINYGLTF_TYPE_VEC3);
+		assert(normalAcc.componentType == GL_FLOAT);
+		
 
 		const tinygltf::BufferView& normalView = model.bufferViews[normalAcc.bufferView];
 		const tinygltf::Buffer& normalBuffer = model.buffers[normalView.buffer];
-		const unsigned char* bufferNormal = &(normalBuffer.data[normalAcc.byteOffset + normalView.byteOffset]);
+		bufferNormal = &(normalBuffer.data[normalAcc.byteOffset + normalView.byteOffset]);
+
 		
+	}
+	if (itTextCoord != primitive.attributes.end())
+	{ //Checking if Tex Attribute Exists
+
+		const tinygltf::Accessor& textCoordAcc = model.accessors[itTextCoord->second];
+		vertexCountTexCoord += static_cast<GLsizei>(textCoordAcc.count);
+
+		assert(textCoordAcc.type == TINYGLTF_TYPE_VEC2);
+		assert(textCoordAcc.componentType == GL_FLOAT);
+
 		const tinygltf::BufferView& texCoordView = model.bufferViews[textCoordAcc.bufferView];
 		const tinygltf::Buffer& texCoordBuffer = model.buffers[texCoordView.buffer];
-		const unsigned char* bufferTexCoord = &(texCoordBuffer.data[textCoordAcc.byteOffset + texCoordView.byteOffset]);
-		
-		//DIAPO 23 
-		std::vector<Vertex> vertices; // Assuming Vertex is a structure that holds position, normal, and texCoord
-
-		for (size_t i = 0; i < posAcc.count; ++i)
-		{
-			// Use the loop index to access different positions in the 'vertices' array
-			Vertex vertex;
-			vertex.position = *reinterpret_cast<const float3*>(bufferPos);
-			vertex.normal = *reinterpret_cast<const float3*>(bufferNormal);
-			vertex.texCoord = *reinterpret_cast<const float2*>(bufferTexCoord);
-
-			vertices.push_back(vertex);
-
-			// Move the buffer pointers to the next set of data
-			bufferPos += sizeof(float3);
-			bufferNormal += sizeof(float3);
-			bufferTexCoord += sizeof(float2);
-		}
-
-		//Mapping Buffer to OpenGL Buffer Object:
-		glGenBuffers(1, &vbo);
-		glBindBuffer(GL_ARRAY_BUFFER, vbo);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * vertices.size(), vertices.data(), GL_STATIC_DRAW);
-
-
-		glUnmapBuffer(GL_ARRAY_BUFFER);
-		//delete[] vertices;
-
+		bufferTexCoord = &(texCoordBuffer.data[textCoordAcc.byteOffset + texCoordView.byteOffset]);
 	}
+
+	//DIAPO 23 
+	// std::vector<Vertex> vertices; // Assuming Vertex is a structure that holds position, normal, and texCoord
+
+	glGenBuffers(1, &vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * numVertex, nullptr, GL_STATIC_DRAW);
+	Vertex* ptr = reinterpret_cast<Vertex*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
+
+	for (size_t i = 0; i < numVertex; ++i)
+	{
+		// Use the loop index to access different positions in the 'vertices' array
+		Vertex vertex;
+		vertex.position = *reinterpret_cast<const float3*>(bufferPos);
+		vertex.normal = *reinterpret_cast<const float3*>(bufferNormal);
+		vertex.texCoord = *reinterpret_cast<const float2*>(bufferTexCoord);
+
+		ptr[i] = vertex;
+		// vertices.push_back(vertex);
+
+		// Move the buffer pointers to the next set of data
+		bufferPos += sizeof(float3);
+		bufferNormal += sizeof(float3);
+		bufferTexCoord += sizeof(float2);
+	}
+
+	//Mapping Buffer to OpenGL Buffer Object:
+	
+	glUnmapBuffer(GL_ARRAY_BUFFER);
+
+
+
+	//glGenBuffers(1, &vbo);
+	//glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	//glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * vertices.size(), vertices.data(), GL_STATIC_DRAW);
+
+		//delete[] vertices;
 }
 
 //Rendering separated arrays
@@ -119,9 +143,17 @@ void Mesh::LoadEBO(const tinygltf::Model& model, const tinygltf::Mesh& mesh, con
 			const uint32_t* bufferInd = reinterpret_cast<const uint32_t*>(buffer);
 			for (uint32_t i = 0; i < indAcc.count; ++i) ptr[i] = bufferInd[i];
 		}
-		 if (indAcc.componentType == TINYGLTF_PARAMETER_TYPE_UNSIGNED_SHORT);
-		 if (indAcc.componentType == TINYGLTF_PARAMETER_TYPE_UNSIGNED_BYTE);
-		glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER); 
+		 if (indAcc.componentType == TINYGLTF_PARAMETER_TYPE_UNSIGNED_SHORT)
+		 {
+			 const uint16_t* bufferInd = reinterpret_cast<const uint16_t*>(buffer);
+			 for (uint32_t i = 0; i < indAcc.count; ++i) ptr[i] = bufferInd[i];
+		 
+		 }
+		if (indAcc.componentType == TINYGLTF_PARAMETER_TYPE_UNSIGNED_BYTE) {
+			const uint8_t* bufferInd = reinterpret_cast<const uint8_t*>(buffer);
+			for (uint32_t i = 0; i < indAcc.count; ++i) ptr[i] = bufferInd[i];
+		}
+	glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER); 
 	}
 }
 

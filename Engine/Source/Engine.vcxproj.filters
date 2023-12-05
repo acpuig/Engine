@@ -406,6 +406,9 @@
     <Filter Include="MathGeoLib\ImGui">
       <UniqueIdentifier>{89fa452f-1fd5-4273-aca6-604149f2ec3a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="shaders">
+      <UniqueIdentifier>{a6b0ea18-3d7e-4c82-a76b-0e7da5900d5a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="MathGeoLib\include\Geometry\KDTree.inl">
@@ -428,6 +431,12 @@
     </None>
     <None Include="DirectXTex\DirectXTex\DirectXTex_Desktop_2019_Win10.vcxproj">
       <Filter>DirectXTex</Filter>
+    </None>
+    <None Include="Game\fragment.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="Game\vertex.glsl">
+      <Filter>shaders</Filter>
     </None>
   </ItemGroup>
 </Project>

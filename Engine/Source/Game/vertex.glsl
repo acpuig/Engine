@@ -7,8 +7,8 @@ uniform mat4 model;
 uniform mat4 view;
 uniform mat4 proj;
 
-out vec3 normal;
-out vec3 frag_world_position;
+// out vec3 normal;
+// out vec3 frag_world_position;
 out vec2 tex_coord;
 
 void main()
@@ -16,6 +16,6 @@ void main()
     gl_Position = proj * view * model * vec4(position, 1.0);
 
     tex_coord = in_tex_coord;
-    frag_world_position = vec3(model * vec4(position, 1.0));
-    normal = transpose(inverse(mat3(model))) * in_normal;
+//    frag_world_position = vec3(model * vec4(position, 1.0));
+//    normal = transpose(inverse(mat3(model))) * in_normal;
 }

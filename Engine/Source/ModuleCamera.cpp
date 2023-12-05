@@ -44,14 +44,14 @@ bool ModuleCamera::Init() {
 update_status  ModuleCamera::Update() {
 	const float rotation_speed = 1.0f;
 
-	if (SDL_BUTTON(SDL_BUTTON_RIGHT)) {
+	/*if (SDL_BUTTON(SDL_BUTTON_RIGHT)) {
 		int dx = App->GetInput()->GetMousePosX();
 		int dy = App->GetInput()->GetMousePosY();
 
 		// Update the camera rotation based on mouse movement
 		//RotateCameraWithMouse(dx, dy, rotation_speed);
 	}
-
+	*/
 
 	MovementController(0.5);
 	Zoom(0.5);
@@ -98,9 +98,9 @@ float4x4 ModuleCamera::GetProjectionMatrix()  {
 
  float4x4 ModuleCamera::GetModel()  {
 
-	float4x4 model = float4x4::FromTRS(float3(2.0f, 0.0f, 0.0f),
-		float4x4::RotateZ(pi / 4.0f),
-		float3(2.0f, 1.0f, 1.0f));
+	float4x4 model = float4x4::FromTRS(float3(0.0f, 0.0f, 0.0f),
+		float4x4::RotateZ(0.0f),
+		float3(1.0f, 1.0f, 1.0f));
 
 	return float4x4(model);
 }

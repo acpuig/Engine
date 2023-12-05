@@ -291,6 +291,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="DirectXTex\DirectXTex\DirectXTex_Desktop_2019_Win10.vcxproj" />
+    <None Include="Game\fragment.glsl" />
+    <None Include="Game\vertex.glsl" />
     <None Include="MathGeoLib\include\Geometry\KDTree.inl" />
     <None Include="MathGeoLib\include\Geometry\QuadTree.inl" />
     <None Include="MathGeoLib\include\Geometry\TriangleMesh_IntersectRay_AVX.inl" />
