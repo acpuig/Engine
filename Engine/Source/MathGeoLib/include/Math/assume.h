@@ -94,7 +94,8 @@ MATH_END_NAMESPACE
 #elif defined(ANDROID)
 
 #include <android/log.h>
-#define assume(x) do { if (!(x)) { __android_log_print(ANDROID_LOG_ERROR, "native-activity", "Assumption \"%s\" failed! in file %s, line %d!\n", #x, __FILE__, __LINE__); } } while(0)
+#define assume(x) do { if (!(x)) { __android_log_print(ANDROID_
+	_ERROR, "native-activity", "Assumption \"%s\" failed! in file %s, line %d!\n", #x, __FILE__, __LINE__); } } while(0)
 #ifdef assert
 #undef assert
 #endif

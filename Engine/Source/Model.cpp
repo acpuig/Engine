@@ -39,9 +39,13 @@ void Model::Load(const char* assetFileName)
 
 void Model::Draw()
 {
-	Mesh* mesh = new Mesh;
-	float4x4 modelMatrix = App->GetCamera()->GetModel();
-	mesh->Render(); 
+	if (!meshes.empty())
+	{
+		Mesh* mesh = meshes[0];
+		float4x4 modelMatrix = App->GetCamera()->GetModel();
+		mesh->Render();
+		
+	}
 
 }
 

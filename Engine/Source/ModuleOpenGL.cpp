@@ -56,10 +56,9 @@ bool ModuleOpenGL::Init()
 
 	App->GetCamera()->Init();
 	cubeModel = new Model();
-	cubeModel->Load("Box.gltf");
+	cubeModel->Load("BoxTextured.gltf");
+
 	return true;
-
-
 }
 
 update_status ModuleOpenGL::PreUpdate()
@@ -74,6 +73,9 @@ update_status ModuleOpenGL::PreUpdate()
 // Called every draw update
 update_status ModuleOpenGL::Update()
 {
+	// Note: Debug draw disables blending
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	cubeModel->Draw();
 	return UPDATE_CONTINUE;
 }

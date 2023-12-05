@@ -7,7 +7,6 @@ namespace  tinygltf
 	class Model;
 }
 // Placeholder for Texture and Mesh classes
-class Texture;
 class Mesh;
 
 

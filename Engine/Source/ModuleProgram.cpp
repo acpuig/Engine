@@ -26,6 +26,7 @@ bool ModuleProgram::Init() {
     // Link shaders into a program
     program = App->GetProgram()->CreateProgram(vertexShader, fragmentShader);
 
+    glValidateProgram(program);
     // Delete individual shaders
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
@@ -63,6 +64,9 @@ char* ModuleProgram::LoadShaderSource(const char* shader_file_name)
         fread(data, 1, size, file); // Read the file content into data
         data[size] = 0; // Add null-terminator to the end of data
         fclose(file); // Close the file
+    } else
+    {
+        LOG("Error loading shader source from file: %s", shader_file_name);
     }
 
     return data; // Return the loaded shader source
@@ -71,6 +75,12 @@ char* ModuleProgram::LoadShaderSource(const char* shader_file_name)
 unsigned ModuleProgram::CompileShader(unsigned type, const char* source)
 {
     unsigned shader_id = glCreateShader(type); // Create a shader object of specified type
+    if (shader_id == 0)
+    {
+        LOG("Error creating shader of type %d", type);
+        return 0;
+    }
+
     glShaderSource(shader_id, 1, &source, 0); // Load shader source into the shader object
     glCompileShader(shader_id); // Compile the shader
 
@@ -83,14 +93,19 @@ unsigned ModuleProgram::CompileShader(unsigned type, const char* source)
         glGetShaderiv(shader_id, GL_INFO_LOG_LENGTH, &len); // Get the length of the info log
 
         if (len > 0)
-        {
+        { 
             int written = 0;
             char* info = (char*)malloc(len); // Allocate memory for the info log
             glGetShaderInfoLog(shader_id, len, &written, info); // Get the info log
 
-            LOG("Log Info: %s", info); // Print the info log
+            LOG("Shader compilation error: %s", info);
             free(info); // Free the allocated memory for the info log
+
+        } else
+        {
+            LOG("Shader compilation error: No additional information available");
         }
+        LOG("Shader Source:\n%s", source);
     }
 
     return shader_id; // Return the shader object ID
@@ -99,6 +114,11 @@ unsigned ModuleProgram::CompileShader(unsigned type, const char* source)
 unsigned ModuleProgram::CreateProgram(unsigned vtx_shader, unsigned frg_shader)
 {
     unsigned program_id = glCreateProgram();
+    if (program_id == 0)
+    {
+        LOG("Error creating shader program");
+        return 0;
+    }
     glAttachShader(program_id, vtx_shader);
     glAttachShader(program_id, frg_shader);
     glLinkProgram(program_id);
@@ -115,7 +135,14 @@ unsigned ModuleProgram::CreateProgram(unsigned vtx_shader, unsigned frg_shader)
             glGetProgramInfoLog(program_id, len, &written, info);
             LOG("Program Log Info: %s", info);
             free(info);
+
+        } else
+        {
+            LOG("Program linking error: No additional information available");
         }
+        LOG("Vertex Shader Source:\n%s", App->GetProgram()->LoadShaderSource("vertex.glsl"));
+        LOG("Fragment Shader Source:\n%s", App->GetProgram()->LoadShaderSource("fragment.glsl"));
+
     }
     glDeleteShader(vtx_shader);
     glDeleteShader(frg_shader);
@@ -124,5 +151,6 @@ unsigned ModuleProgram::CreateProgram(unsigned vtx_shader, unsigned frg_shader)
 
 bool ModuleProgram::CleanUp() {
     glDeleteProgram(program);
+
     return true; 
 }

@@ -18,8 +18,7 @@ class Mesh {
 public:
 	void Load(const tinygltf::Model& model, const tinygltf::Mesh& mesh, const tinygltf::Primitive& primitive);
 	void Render();
-	void Draw(const std::vector<Texture>& textures);
-	void Cleanup();
+	void CleanUp();
 
 
 private:
@@ -34,7 +33,7 @@ private:
 	int vertexCountNormal;  
 	int vertexCountTexCoord;  
 
-	unsigned indexCount;
+	int indexCount;
 	int materialIndex = NULL;
 	int numVertex;
 
