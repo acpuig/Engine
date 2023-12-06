@@ -17,7 +17,7 @@ public:
 	void Draw();
 
 private:
-	std::vector<Texture> textures;
+	std::vector<GLuint> texturesID;
 	std::vector<Mesh*> meshes;
 
 };

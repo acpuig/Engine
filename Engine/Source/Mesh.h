@@ -17,7 +17,7 @@ namespace  tinygltf
 class Mesh {
 public:
 	void Load(const tinygltf::Model& model, const tinygltf::Mesh& mesh, const tinygltf::Primitive& primitive);
-	void Render();
+	void Render(GLuint textureMaterialID);
 	void CleanUp();
 
 

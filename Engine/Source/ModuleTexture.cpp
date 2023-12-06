@@ -2,6 +2,7 @@
 
 #include "ModuleTexture.h"
 #include "DirectXTex/DirectXTex/DirectXTex.h"
+#include <codecvt>
 
 ModuleTexture::ModuleTexture()
 {
@@ -12,14 +13,19 @@ bool ModuleTexture::Init() {
 	return true; 
 }
 
-Texture ModuleTexture::Load(const std::string& path, GLint wrapParam, GLint minParam, GLint magParam, bool mipmap) {
+GLuint ModuleTexture::Load(const std::string& path, GLint wrapParam, GLint minParam, GLint magParam, bool mipmap) {
 	//1. Load image data with external library into CPU
 	Texture texture;
 	assert(!path.empty());
 	texture.path = path; // Dereference the pointer
-	const wchar_t* image_path = (const wchar_t*)(texture.path.c_str());
-	assert(image_path != nullptr);
+
+	std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> converter;
+	const std::wstring wideString = converter.from_bytes(texture.path);
+	// Access the const wchar_t* from the wide string
+	const wchar_t* image_path = wideString.c_str();
+
 	LoadImage(image_path);
+
 	if (imageLoad) {
 		//2. Create and load OpenGL texture into GPU
 		texture.id = LoadTexture( wrapParam,  minParam,  magParam,  mipmap);
@@ -30,10 +36,10 @@ Texture ModuleTexture::Load(const std::string& path, GLint wrapParam, GLint minP
 			texture.uvs[2 * i] = static_cast<float>(i % imageMetadata.width) / static_cast<float>(imageMetadata.width - 1);
 			texture.uvs[2 * i + 1] = static_cast<float>(i / imageMetadata.width) / static_cast<float>(imageMetadata.height - 1);
 		}
+	}else {
+		assert(image_path = nullptr);
 	}
-	//delete[] texture.uvs; // Add this line to avoid memory leaks
-
-	return texture; 
+	return texture.id; 
 }
 
 
@@ -96,8 +102,8 @@ GLuint ModuleTexture::LoadTexture(GLint wrapParam, GLint minParam, GLint magPara
 	default:
 		assert(false && "Unsupported format");
 	}
-	if(mipmap){
-	//if (imageMetadata.mipLevels > 1) {
+	//if(mipmap){
+	if (imageMetadata.mipLevels > 1) {
 		// Assuming you have loaded mipmaps into imageData
 		for (size_t i = 0; i < imageMetadata.mipLevels; ++i) {
 			const DirectX::Image* mip = imageData.GetImage(i, 0, 0);
@@ -119,4 +125,5 @@ GLuint ModuleTexture::LoadTexture(GLint wrapParam, GLint minParam, GLint magPara
 	glActiveTexture(GL_TEXTURE0);
 
 	return textureID;
+
 }

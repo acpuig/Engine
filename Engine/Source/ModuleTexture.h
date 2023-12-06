@@ -19,7 +19,7 @@ public:
 
 	ModuleTexture(); 
 	bool Init();
-	Texture Load(const std::string& texture_path, GLint wrapParam, GLint minParam, GLint magParam, bool mipmap);
+	GLuint Load(const std::string& texture_path, GLint wrapParam, GLint minParam, GLint magParam, bool mipmap);
 
 
 private: 

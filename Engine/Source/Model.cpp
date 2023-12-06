@@ -40,9 +40,12 @@ void Model::Draw()
 {
 	if (!meshes.empty())
 	{
-		for(Mesh* mesh : meshes){
-			float4x4 modelMatrix = App->GetCamera()->GetModel();
-			mesh->Render();
+		for(GLuint textureMaterialID : texturesID){
+			for(Mesh* mesh : meshes){
+				mesh->Render(textureMaterialID);
+				float4x4 modelMatrix = App->GetCamera()->GetModel();
+
+			}
 		}
 	}
 }
@@ -51,13 +54,13 @@ void Model::LoadMaterials(const tinygltf::Model& srcModel)
 {
 	for (const auto& srcMaterial : srcModel.materials)
 	{
-		Texture textureMaterial;
+		GLuint textureMaterialID;
 		if (srcMaterial.pbrMetallicRoughness.baseColorTexture.index >= 0)
 		{
 			const tinygltf::Texture& texture = srcModel.textures[srcMaterial.pbrMetallicRoughness.baseColorTexture.index];
 			const tinygltf::Image& image = srcModel.images[texture.source];
-			textureMaterial = App->GetTexture()->Load(image.uri, GL_REPEAT, GL_NEAREST, GL_LINEAR, true);
+			textureMaterialID = App->GetTexture()->Load(image.uri, GL_REPEAT, GL_NEAREST, GL_LINEAR, true);
 		}
-		textures.push_back(textureMaterial);
+		texturesID.push_back(textureMaterialID);
 	}
 }

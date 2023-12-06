@@ -92,7 +92,6 @@ void Mesh::CreateVBO(const tinygltf::Model& model, const tinygltf::Mesh& mesh, c
 		vertex.normal = *reinterpret_cast<const float3*>(bufferNormal);
 		vertex.texCoord = *reinterpret_cast<const float2*>(bufferTexCoord);
 
-		//ptr[i] = vertex;
 		 vertices.push_back(vertex);
 
 		// Move the buffer pointers to the next set of data
@@ -133,11 +132,11 @@ void Mesh::LoadEBO(const tinygltf::Model& model, const tinygltf::Mesh& mesh, con
 		 if (indAcc.componentType == TINYGLTF_PARAMETER_TYPE_UNSIGNED_SHORT)
 		 {
 			 const uint16_t* bufferInd = reinterpret_cast<const uint16_t*>(buffer);
-			 for (uint32_t i = 0; i < indAcc.count; ++i) ptr[i] = bufferInd[i];
+			 for (uint16_t i = 0; i < indAcc.count; ++i) ptr[i] = bufferInd[i];
 		 }
 		if (indAcc.componentType == TINYGLTF_PARAMETER_TYPE_UNSIGNED_BYTE) {
 			const uint8_t* bufferInd = reinterpret_cast<const uint8_t*>(buffer);
-			for (uint32_t i = 0; i < indAcc.count; ++i) ptr[i] = bufferInd[i];
+			for (uint8_t i = 0; i < indAcc.count; ++i) ptr[i] = bufferInd[i];
 		}
 	glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER); 
 	}
@@ -153,17 +152,17 @@ void Mesh::CreateVAO()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
 
 	// Define layout in shader
-	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(0); //position
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(float3)));
-	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(float3) + sizeof(float2)));
+	glEnableVertexAttribArray(1); //normal
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(float3)));
+	glEnableVertexAttribArray(2); //Texture
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(float3) + sizeof(float3)));
 	glPopDebugGroup();
 
 }
 
-void Mesh::Render( ) //Rendering with an EBO
+void Mesh::Render(GLuint textureMaterialID) //Rendering with an EBO
 {
 	glPushDebugGroup(GL_DEBUG_SOURCE_APPLICATION, 0, -1, "RenderMesh");
 	float4x4 model, view, proj;
@@ -178,13 +177,21 @@ void Mesh::Render( ) //Rendering with an EBO
 	App->GetProgram()->SendToShaderMatrix4fv("view", &view[0][0]);
 	App->GetProgram()->SendToShaderMatrix4fv("proj", &proj[0][0]); 
 
+	glEnable(GL_TEXTURE_2D);
+	//glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, textureMaterialID);
+
 	glBindVertexArray(vao);
 
 	GLenum error = glGetError();
 	if (error != GL_NO_ERROR) {
 		LOG("OpenGL Error before draw call: %d", error);
 	}
+
 	glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, 0);
+	glBindVertexArray(0); // Unbind VAO
+	glBindTexture(GL_TEXTURE_2D, 0); // Unbind texture
+	glDisable(GL_TEXTURE_2D); // Disable texture unit
 
 	glPopDebugGroup();
 }

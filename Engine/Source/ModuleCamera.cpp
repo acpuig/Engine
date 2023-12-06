@@ -100,6 +100,7 @@ float4x4 ModuleCamera::GetProjectionMatrix()  {
 
 	float4x4 model = float4x4::FromTRS(float3(0.0f, 0.0f, 0.0f),
 		float4x4::RotateZ(0.0f),
+		//float3(1.0f, 1.0f, 1.0f));
 		float3(40.0f, 40.0f, 40.0f));
 
 	return float4x4(model);
