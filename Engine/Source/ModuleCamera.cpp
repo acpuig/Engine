@@ -3,6 +3,7 @@
 #include "ModuleCamera.h"
 #include "ModuleInput.h"
 #include "ModuleWindow.h"
+#include "MathGeoLib/include/MathGeoLib.h"
 
 ModuleCamera::ModuleCamera()
 {
@@ -21,7 +22,7 @@ bool ModuleCamera::Init() {
 
 	SetFOV(90.0f);
 	SetPlaneDistances(0.1f, 100.0f);
-	SetPosition(float3(0.0f, 0.0f, 10.0f));
+	SetPosition(float3(0.0f, 0.0f, 0.0f));
 
 	frustum.front = -float3::unitZ;
 	frustum.up = float3::unitY;
@@ -30,31 +31,30 @@ bool ModuleCamera::Init() {
 
 	rotation_Matrix = float3x3::identity;
 
-	// Set the initial position and orientation of the camera
-	float3 cameraPosition = float3(0.0f, 4.0f, 8.0f); // Adjust the height as needed
+	// Set the initial position and orientation of the camera	
 	float3 lookAtPoint = float3(0.0f, 0.0f, 0.0f);
+	float3 cameraPosition = lookAtPoint +  float3(0.0f, 4.0f, 8.0f); // Adjust the height as needed
 	float3 upVector = float3::unitY;
+	float inclination_angle = math::DegToRad(180.0f);  // Inclination angle in degrees
 
-
-	view_Matrix = LookAt(cameraPosition, lookAtPoint, upVector);
+	LookAt(cameraPosition, lookAtPoint, upVector, inclination_angle);
 	//view_Matrix = LookAt(float3(0.0f, 4.0f, 8.0f), float3(0.0f, 0.0f, 0.0f), float3::unitY);
 	return true;
 }
 
 update_status  ModuleCamera::Update() {
-	const float rotation_speed = 1.0f;
+	const float rotation_speed = 0.50f;
+	const float3 lookAtPoint = float3(0.0f, 0.0f, 0.0f);
 
-	if (SDL_BUTTON(SDL_BUTTON_RIGHT)) {
-		int dx = App->GetInput()->GetMousePosX();
-		int dy = App->GetInput()->GetMousePosY();
+	int dx = App->GetInput()->GetMousePosX();
+	int dy = App->GetInput()->GetMousePosY();
 
-		// Update the camera rotation based on mouse movement
-		//RotateCameraWithMouse(dx, dy, rotation_speed);
+	if ((App->GetInput()->GetMouseButtonRight() == true)) {
+		//Orbit(dx, dy, rotation_speed, lookAtPoint);
 	}
-	
 
 	MovementController(0.5);
-	Zoom(0.5);
+	//Zoom(0.5);
 	return UPDATE_CONTINUE;
 }
 
@@ -101,81 +101,63 @@ float4x4 ModuleCamera::GetProjectionMatrix()  {
 	float4x4 model = float4x4::FromTRS(float3(0.0f, 0.0f, 0.0f),
 		float4x4::RotateZ(0.0f),
 		//float3(1.0f, 1.0f, 1.0f));
-		float3(40.0f, 40.0f, 40.0f));
+		float3(20.0f, 20.0f, 20.0f));
+
+		//float3(80.0f, 80.0f, 80.0f));
 
 	return float4x4(model);
 }
 
- void ModuleCamera::RotateCameraWithMouse(int dx, int dy, float sensitivity) {
-	 // Adjust these values based on your desired sensitivity
-	 LOG("Mouse DeltaX: %d, DeltaY: %d\n", dx, dy);
-	 const float maxRotationX = math::pi / 2.0f;  // Limit rotation around X-axis to avoid flipping
+ void ModuleCamera::LookAt(const float3& eye_position, const float3& target_position, float3& up_position, const float inclination_angle) {
+	 // Calculate the new forward, right, and up vectors
+	 float3 forward = (target_position - eye_position).Normalized();
+	 float3 right = up_position.Cross(forward).Normalized();
 
-	 // Update the camera rotation matrix based on mouse movement
-	 float3x3 rotation = float3x3::RotateY(-dx * sensitivity) * float3x3::RotateAxisAngle(frustum.WorldRight(), -dy * sensitivity);
+	 // Apply inclination rotation around the right axis
+	 float3x3 inclination_rotation = float3x3::RotateAxisAngle(right, inclination_angle);
+	 forward = inclination_rotation * forward;
+	 up_position = inclination_rotation * up_position;
+	 up_position = forward.Cross(right).Normalized();
 
-	 // Apply the rotation to the camera's front, up, and right vectors
-	 frustum.front = rotation * frustum.front;
-	 frustum.up = rotation * frustum.up;
-	 frustum.WorldRight() = rotation * frustum.WorldRight();
+	 // Set the new frustum orientation
+	 frustum.front = -forward;
+	 frustum.up = -up_position;
 
-	 // Make sure the vectors are still orthogonal and normalized
-	 frustum.front.Normalize();
-	 frustum.up.Normalize();
-	 frustum.WorldRight().Normalize();
+	 // Set the new position
+	 SetPosition(eye_position);
 
-	 // Limit rotation around X-axis to avoid flipping
-	 float dotUpFront = frustum.up.Dot(frustum.front);
-	 if (fabsf(dotUpFront) > math::eps) {
-		 float angle = acosf(math::Clamp(dotUpFront, -1.0f, 1.0f));
-		 if (angle > maxRotationX) {
-			 float correctionAngle = angle - maxRotationX;
-			 float3 rotationAxis = frustum.up.Cross(frustum.front).Normalized();
-			 frustum.up = float3x3::RotateAxisAngle(rotationAxis, -correctionAngle) * frustum.up;
-		 }
-	 }
-	 // Update the view matrix with the new orientation
-	 view_Matrix = frustum.ViewMatrix();
+	 // Update the view matrix
+	 view_Matrix = float4x4({ right.x, up_position.x, -forward.x, eye_position.x }, { right.y, up_position.y, -forward.y, eye_position.y }, { right.z, up_position.z, -forward.z, eye_position.z }, { 0, 0, 0, 1 });
+
+}
+
+ // Function to update the camera position in an orbit around a target point
+ void ModuleCamera::Orbit(int dx, int dy, float rotation_speed, const float3& lookAtPoint)
+ {
+	 
+	// Calculate the rotation angles based on mouse movement
+	float yaw = -dx * rotation_speed;
+	float pitch = dy * rotation_speed;
+
+	// Update the rotation matrix based on the calculated angles
+	float3x3 yawRotation = float3x3::RotateAxisAngle(float3::unitY, math::DegToRad(yaw));
+	float3x3 pitchRotation = float3x3::RotateAxisAngle(rotation_Matrix * float3::unitX, math::DegToRad(pitch));
+
+	rotation_Matrix = pitchRotation * yawRotation;
+
+	// Update the frustum orientation
+	frustum.front = -(rotation_Matrix * float3::unitZ).Normalized();
+	frustum.up = (rotation_Matrix * float3::unitY).Normalized();
+
+	// Orbit around the lookAtPoint while maintaining the y-coordinate
+	float3 orbitOffset = rotation_Matrix * float3(0.0f, 0.0f, orbit_radius);
+	position = lookAtPoint + float3(orbitOffset.x, position.y, orbitOffset.z);
+	frustum.pos = position;
+
+	// Update the view matrix
+	view_Matrix = frustum.ViewMatrix();
+	 
  }
-
-float4x4 ModuleCamera::LookAt(const float3& eye_position, const float3& target_position, const float3& up_position) {
-
-	float3 forward = (target_position - eye_position).Normalized();
-	float3 right = (up_position.Cross(forward)).Normalized();
-	float3 up = forward.Cross(right).Normalized();
-	SetPosition(eye_position);
-
-	float4x4 LookAtMatrix = float4x4({ right.x, up.x, -forward.x, eye_position.x }, { right.y, up.y, -forward.y, eye_position.y }, { right.z, up.z, -forward.z, eye_position.z }, { 0, 0, 0, 1 });
-	view_Matrix = LookAtMatrix; 
-	return LookAtMatrix;
-}
-
-void ModuleCamera::RotateFrustum(char axis, float angle, const float delta_time) {
-	float3 oldFront = frustum.front.Normalized();
-	float3 oldUp = frustum.up.Normalized();
-	float3 oldRight = frustum.WorldRight().Normalized();
-	float3x3 rotation_Matrix;
-
-	switch (axis) {
-	case 'X': // Rotate around the X-axis (pitch)
-		rotation_Matrix = float3x3::RotateAxisAngle(float3(1.0f, 0.0f, 0.0f), -angle); // Invert the angle
-		frustum.front = rotation_Matrix.MulDir(oldFront);
-		frustum.up = rotation_Matrix.MulDir(oldUp);
-		break;
-	case 'Y': // Rotate around the Y-axis (yaw)
-		rotation_Matrix = float3x3::RotateY(-angle); // Invert the angle
-		frustum.front = rotation_Matrix.MulDir(oldFront);
-		frustum.up = rotation_Matrix.MulDir(oldUp);
-		break;
-	case 'Z': // Rotate around the Z-axis (roll)
-		rotation_Matrix = float3x3::RotateAxisAngle(float3(0.0f, 0.0f, 1.0f), -angle); // Invert the angle
-		frustum.WorldRight() = rotation_Matrix.MulDir(oldRight);
-		frustum.up = rotation_Matrix.MulDir(oldUp);
-		break;
-	}
-}
-
-
 
 void  ModuleCamera::MovementController(const float delta_time) {
 
@@ -239,4 +221,29 @@ void ModuleCamera::Zoom(const float fov_diffdeg) {
 	//Scroll up
 	SetVerticalFOV(horizontal_fov, aspect_ratio);
 
+}
+
+void ModuleCamera::RotateFrustum(char axis, float angle, const float delta_time) {
+	float3 oldFront = frustum.front.Normalized();
+	float3 oldUp = frustum.up.Normalized();
+	float3 oldRight = frustum.WorldRight().Normalized();
+	float3x3 rotation_Matrix;
+
+	switch (axis) {
+	case 'X': // Rotate around the X-axis (pitch)
+		rotation_Matrix = float3x3::RotateAxisAngle(float3(1.0f, 0.0f, 0.0f), -angle); // Invert the angle
+		frustum.front = rotation_Matrix.MulDir(oldFront);
+		frustum.up = rotation_Matrix.MulDir(oldUp);
+		break;
+	case 'Y': // Rotate around the Y-axis (yaw)
+		rotation_Matrix = float3x3::RotateY(-angle); // Invert the angle
+		frustum.front = rotation_Matrix.MulDir(oldFront);
+		frustum.up = rotation_Matrix.MulDir(oldUp);
+		break;
+	case 'Z': // Rotate around the Z-axis (roll)
+		rotation_Matrix = float3x3::RotateAxisAngle(float3(0.0f, 0.0f, 1.0f), -angle); // Invert the angle
+		frustum.WorldRight() = rotation_Matrix.MulDir(oldRight);
+		frustum.up = rotation_Matrix.MulDir(oldUp);
+		break;
+	}
 }

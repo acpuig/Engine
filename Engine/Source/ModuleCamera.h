@@ -1,6 +1,11 @@
 #include "Module.h"
 
-#include "MathGeoLib/include/MathGeoLib.h"
+#include "MathGeoLib/include/Math/float3.h"
+#include "MathGeoLib/include/Math/float4x4.h"
+#include "MathGeoLib/include/Math/float3x3.h"
+#include "MathGeoLib/include/Geometry/Frustum.h"
+
+
 
 class ModuleCamera : public Module
 {
@@ -15,14 +20,14 @@ public:
 	 float4x4 GetViewMatrix()  ;
 	 float4x4 GetProjectionMatrix() ;
 	 float4x4 GetModel() ;
-	 void RotateCameraWithMouse(int dx, int dy, float sensitivity);
-	//void Rotation();
+	// void RotateCameraWithMouse(int dx, int dy, float sensitivity);
 
 
 private:
 	Frustum frustum;
 	float near_plane;
 	float far_plane;
+	float delta_time = 0.5f;
 
 	float3x3 rotation_Matrix;
 	float4x4 view_Matrix;
@@ -33,6 +38,7 @@ private:
 	float horizontal_fov;
 	float3 position;
 	float distance_NearFar;
+	float orbit_radius = 8.0f;
 
 
 	void SetAspectRatio(const int screen_width, const int screen_height);
@@ -42,8 +48,9 @@ private:
 	void SetVerticalFOV(float horiz_fov, float asp_ratio);
 
 	void RotateFrustum(char axis, float angle, const float delta_time);
+	void Orbit(int dx, int dy, float rotation_speed, const float3& lookAtPoint);
 	void MovementController(const float delta_time);
 
-	float4x4 LookAt(const float3& eye_position, const float3& target_position, const float3& up_position);
+	void LookAt(const float3& eye_position, const float3& target_position,  float3& up_position, const float inclination_angle);
 	void Zoom(const float fov_diffdeg);
 };

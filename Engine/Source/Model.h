@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include "ModuleTexture.h"
+#include "glew-2.1.0/include/GL/glew.h"
 
 namespace  tinygltf
 {
@@ -14,6 +14,7 @@ class Model {
 public:
 	void Load(const char* assetFileName);
 	void LoadMaterials(const tinygltf::Model& srcModel);
+	void CleanUp();
 	void Draw();
 
 private:

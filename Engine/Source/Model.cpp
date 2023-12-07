@@ -29,11 +29,27 @@ void Model::Load(const char* assetFileName)
 	{
 		for (const auto& primitive : srcMesh.primitives)
 		{
-			Mesh* mesh = new Mesh;
-			mesh->Load(model, srcMesh, primitive);
-			meshes.push_back(mesh);
+			//if(model.meshes[0] == srcMesh){
+				Mesh* mesh = new Mesh;
+				mesh->Load(model, srcMesh, primitive);
+				meshes.push_back(mesh);
+				//mesh->CleanUp();
+
+			//}
 		}
 	}
+//	for (const auto& srcMesh : model.meshes)
+//	{
+//		for (const auto& primitive : srcMesh.primitives)
+	//	{
+	//		if (model.meshes[1] == srcMesh) {
+		//		Mesh* mesh = new Mesh;
+		//		mesh->Load(model, srcMesh, primitive);
+		//		meshes.push_back(mesh);
+				//mesh->CleanUp()
+			//}
+		//}
+	//}
 }
 
 void Model::Draw()
@@ -44,7 +60,6 @@ void Model::Draw()
 			for(Mesh* mesh : meshes){
 				mesh->Render(textureMaterialID);
 				float4x4 modelMatrix = App->GetCamera()->GetModel();
-
 			}
 		}
 	}
@@ -63,4 +78,16 @@ void Model::LoadMaterials(const tinygltf::Model& srcModel)
 		}
 		texturesID.push_back(textureMaterialID);
 	}
+}
+
+void Model::CleanUp() {
+	for (Mesh* mesh : meshes) {
+		mesh->CleanUp(); 
+	}
+	meshes.clear(); 
+	for (GLuint textureMaterialID : texturesID) {
+		glDeleteTextures(1, &textureMaterialID);
+
+	}
+	texturesID.clear(); 
 }

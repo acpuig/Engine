@@ -7,8 +7,6 @@
 #include "ModuleProgram.h"
 
 #include "Model.h"
-
-#include "SDL.h"
 #include "glew-2.1.0/include/GL/glew.h"
 
 ModuleOpenGL::ModuleOpenGL()
@@ -40,14 +38,6 @@ bool ModuleOpenGL::Init()
 	//Init the GLEW library
  	GLenum err = glewInit();
 	// … check for errors
-	LOG("Using Glew %s", glewGetString(GLEW_VERSION));
-	// Should be 2.0
-
-	//Detect current hardware and driver capabilities
-	LOG("Vendor: %s", glGetString(GL_VENDOR));
-	LOG("Renderer: %s", glGetString(GL_RENDERER));
-	LOG("OpenGL version supported %s", glGetString(GL_VERSION));
-	LOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 
 	//Initialize global states
 	glEnable(GL_DEPTH_TEST); // Enable depth test
@@ -57,9 +47,30 @@ bool ModuleOpenGL::Init()
 	App->GetCamera()->Init();
 	App->GetProgram()->Init();
 
+	hardwareData.glew = (unsigned char*)glewGetString(GLEW_VERSION);
+	hardwareData.glsl = (unsigned char*)glGetString(GL_SHADING_LANGUAGE_VERSION);
+	hardwareData.opengl = (unsigned char*)glGetString(GL_VERSION);
+
+	hardwareData.brand = (unsigned char*)glGetString(GL_VENDOR);
+	hardwareData.gpu = (unsigned char*)glGetString(GL_RENDERER);
+
+	//Detect current hardware and driver capabilities
+	LOG("Vendor: %s", glGetString(GL_VENDOR));
+	LOG("Renderer: %s", glGetString(GL_RENDERER));
+
+	LOG("Using Glew %s", glewGetString(GLEW_VERSION));
+	LOG("OpenGL version supported %s", glGetString(GL_VERSION));
+	LOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
+
+
 
 	return true;
 }
+
+HardwareDetection ModuleOpenGL::GetHardwareData() {
+	return hardwareData;
+}
+
 
 update_status ModuleOpenGL::PreUpdate()
 {
@@ -89,6 +100,7 @@ update_status ModuleOpenGL::PostUpdate()
 	App->GetDebugDraw()->Draw(App->GetCamera()->GetViewMatrix(), App->GetCamera()->GetProjectionMatrix(), w, h);
 	//change backbuffer y front buffer 
 	SDL_GL_SwapWindow(App->GetWindow()->window);
+
 	return UPDATE_CONTINUE;
 }
 

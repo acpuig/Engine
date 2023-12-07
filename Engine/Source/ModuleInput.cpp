@@ -6,7 +6,7 @@
 #include "imgui/imgui_impl_sdl2.h"
 #include "Math/float2.h"
 
-ModuleInput::ModuleInput()
+ModuleInput::ModuleInput() 
 {}
 
 // Destructor
@@ -54,13 +54,28 @@ update_status ModuleInput::Update()
                 mouse_pos_y = sdlEvent.motion.yrel;
                 break; 
 
+            case SDL_MOUSEBUTTONDOWN:
+                if (sdlEvent.button.button == SDL_BUTTON_LEFT)
+                    mouse_button_left = true;  // Left button pressed
+                else if (sdlEvent.button.button == SDL_BUTTON_RIGHT)
+                    mouse_button_right = true;  // Right button pressed
+                break;
+
+            case SDL_MOUSEBUTTONUP:
+                if (sdlEvent.button.button == SDL_BUTTON_LEFT)
+                    mouse_button_left = false;  // Left button released
+                else if (sdlEvent.button.button == SDL_BUTTON_RIGHT)
+                    mouse_button_right = false;  // Right button released
+                break;
+
         }
         //Sending Input Events to ImGui
         ImGui_ImplSDL2_ProcessEvent(&sdlEvent);
     }
 
     keyboard = SDL_GetKeyboardState(NULL);
-    mouse = SDL_GetMouseState(NULL,NULL);
+    //mouse = SDL_GetMouseState(NULL,NULL);
+
     
     return UPDATE_CONTINUE;
 }
@@ -87,4 +102,12 @@ const int ModuleInput::GetMousePosX() const {
 }
 const int ModuleInput::GetMousePosY() const {
     return mouse_pos_y;
+}
+
+bool ModuleInput::GetMouseButtonRight() const {
+    return mouse_button_right;
+}
+
+bool ModuleInput::GetMouseButtonLeft() const {
+    return mouse_button_left;
 }

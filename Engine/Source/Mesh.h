@@ -1,10 +1,9 @@
 #pragma once
 
-#include <vector>
 #include <string>
 #include "MathGeoLib/include/Math/float3.h"
 #include "MathGeoLib/include/Math/float2.h"
-#include "ModuleTexture.h"
+#include "glew-2.1.0/include/GL/glew.h"
 
 
 namespace  tinygltf
@@ -25,17 +24,17 @@ private:
 
 	std::string name;
 
-	unsigned  vbo;	//vertex buffer object
-	unsigned ebo;   //element buffer object
-	unsigned vao;	//vertex array object
+	unsigned vbo = NULL;; 	//vertex buffer object
+	unsigned ebo = NULL;;   //element buffer object
+	unsigned vao = NULL;;	//vertex array object
 
-	int vertexCountPos;  
-	int vertexCountNormal;  
-	int vertexCountTexCoord;  
+	int vertexCountPos = NULL;
+	int vertexCountNormal = NULL;
+	int vertexCountTexCoord = NULL;
 
-	int indexCount;
+	int indexCount = NULL;
 	int materialIndex = NULL;
-	int numVertex;
+	int numVertex = NULL;
 
 	struct Vertex {
 		float3 position;

@@ -13,7 +13,14 @@ struct Texture {
 	unsigned height;
 	float* uvs;
 };
+/*
+namespace  DirectX
+{
+	class ScratchImage;
+	struct TexMetadata;
 
+}
+*/
 class ModuleTexture : public Module {
 public: 
 

@@ -3,8 +3,7 @@
 #include "Application.h"
 #include "ModuleCamera.h"
 #include "ModuleProgram.h"
-#include "glew-2.1.0/include/GL/glew.h"
-#include "MathGeoLib/include/MathGeoLib.h"
+
 #define TINYGLTF_IMPLEMENTATION
 
 #define TINYGLTF_NO_STB_IMAGE_WRITE
@@ -198,17 +197,33 @@ void Mesh::Render(GLuint textureMaterialID) //Rendering with an EBO
 
 void Mesh::CleanUp()
 {
+	if (ebo != 0) {
+	glDeleteBuffers(1, &ebo);
+	ebo = 0;
+	}
+
+	if (vbo != 0) {
+	glDeleteBuffers(1, &vbo);
+	vbo = 0;
+	}
+
+	if (vao != 0) {
+	glDeleteVertexArrays(1, &vao);
+	vao = 0;
+	}
+
+	// Unbind VAO, VBO, and EBO
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	glBindTexture(GL_TEXTURE_2D, 0);
 
-	// Disable texture unit
+	// Unbind and disable texture
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, 0);
 	glDisable(GL_TEXTURE_2D);
+
+	// Disable vertex attributes
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
 	glDisableVertexAttribArray(2);
-	glDeleteBuffers(1, &vbo);
-	glDeleteBuffers(1, &ebo);
-	glDeleteVertexArrays(1, &vao);
 }

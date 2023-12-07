@@ -1,2 +1,5 @@
-﻿  ModuleCamera.cpp
+﻿  ModuleEditor.cpp
+C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\ModuleEditor.cpp(46,45): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\ModuleEditor.cpp(48,35): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\ModuleEditor.cpp(66,7): warning C4101: 'title': variable local sin referencia
   Engine.vcxproj -> C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\x64\Debug\Engine.exe
