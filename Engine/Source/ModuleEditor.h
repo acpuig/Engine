@@ -37,12 +37,15 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 
+
+
 private:
 	InfoMenu info; 
 	void* context;
-	void Histogram();
 	void RequestBrowser(const char* link);
+	void MainMenu();
 	void Draw();
+	void ConfigWindow();
 	bool quit = false;
 
 };

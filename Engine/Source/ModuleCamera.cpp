@@ -65,8 +65,15 @@ void ModuleCamera::SetFOV( float fov_deg) {
 
 void ModuleCamera::SetAspectRatio( int screen_width,  int screen_height) {
 	aspect_ratio = float(screen_width / screen_height);
-	SetVerticalFOV(horizontal_fov, aspect_ratio);
+	frustum.verticalFov = math::pi / 4.0f;
+	frustum.horizontalFov = 2.f * atanf(tanf(frustum.verticalFov * 0.5f) * aspect_ratio);
 }
+
+void ModuleCamera::WindowResized(unsigned int screen_width, unsigned int screen_height)
+{
+	SetAspectRatio(screen_width, screen_height);
+}
+
 
 void  ModuleCamera::SetVerticalFOV(float horiz_fov, float asp_ratio) {
 	frustum.verticalFov = 2.f * atanf(tanf(horiz_fov * 0.5f) / asp_ratio);
@@ -96,17 +103,15 @@ float4x4 ModuleCamera::GetProjectionMatrix()  {
 	return float4x4(project_Matrix);
 }
 
- float4x4 ModuleCamera::GetModel()  {
-
-	float4x4 model = float4x4::FromTRS(float3(0.0f, 0.0f, 0.0f),
-		float4x4::RotateZ(0.0f),
-		//float3(1.0f, 1.0f, 1.0f));
-		float3(20.0f, 20.0f, 20.0f));
-
-		//float3(80.0f, 80.0f, 80.0f));
-
-	return float4x4(model);
+void ModuleCamera::SetModel(float3 scaleVector)  {
+	 model = float4x4::FromTRS(float3(0.0f, 0.0f, 0.0f),
+	float4x4::RotateZ(0.0f), scaleVector); 
 }
+
+ float4x4 ModuleCamera::GetModel() {
+	 return float4x4(model);
+ }
+
 
  void ModuleCamera::LookAt(const float3& eye_position, const float3& target_position, float3& up_position, const float inclination_angle) {
 	 // Calculate the new forward, right, and up vectors

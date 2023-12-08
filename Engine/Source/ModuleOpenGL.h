@@ -1,5 +1,7 @@
 #pragma once
 #include "Module.h"
+#include "MathGeoLib/include/Math/float4.h"
+#include <vector>
 
 class Model;
 struct SDL_Texture;
@@ -28,12 +30,29 @@ public:
 	update_status Update();
 	update_status PostUpdate();
 
+
+
+	float modelScale = 1.0f;
+
 	void* GetContext() const {return context;}
 	bool CleanUp();
-	void WindowResized(unsigned width, unsigned height);
+	void MenuConfigWindow();
+	void MenuConfigModels();
+	void MenuConfigApp();
+	void WindowResized(int width, int height);
+
+	std::vector<float> fps_log;
+	std::vector<float> ms_log;
 
 private:
 	void* context;
-	Model* cubeModel;
+	Model* model;
 	HardwareDetection hardwareData;
+	bool cubeModel = false;
+	bool bakerModel = true;
+
+	void Histogram();
+
+	float4 clearColor;
+
 };

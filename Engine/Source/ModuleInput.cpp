@@ -1,10 +1,12 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleInput.h"
+#include "ModuleWindow.h"
 #include "ModuleOpenGL.h"
+
 #include "SDL/include/SDL.h"
 #include "imgui/imgui_impl_sdl2.h"
-#include "Math/float2.h"
+#include "MathGeoLib/include/Math/float2.h"
 
 ModuleInput::ModuleInput() 
 {}
@@ -43,7 +45,7 @@ update_status ModuleInput::Update()
                 return UPDATE_STOP;
             case SDL_WINDOWEVENT:
                 if (sdlEvent.window.event == SDL_WINDOWEVENT_RESIZED || sdlEvent.window.event == SDL_WINDOWEVENT_SIZE_CHANGED)
-                    App->GetOpenGL()->WindowResized(sdlEvent.window.data1, sdlEvent.window.data2);
+                    App->GetWindow()->WindowNewSize();
                 break;
             case SDL_MOUSEWHEEL:
                  mouse_scroll = sdlEvent.wheel.y;

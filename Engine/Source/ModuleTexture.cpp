@@ -1,7 +1,6 @@
 #define TINYGLTF_IMPLEMENTATION m
 
 #include "ModuleTexture.h"
-//#include "DirectXTex/DirectXTex/DirectXTex.h"
 #include <codecvt>
 
 ModuleTexture::ModuleTexture()

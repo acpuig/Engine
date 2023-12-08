@@ -59,17 +59,6 @@ bool ModuleEditor::Init()
 	return true;
 }
 
-
-
-void ModuleEditor::Histogram()
-{
-	char title[25];
-	//sprintf_s(title, 25, "Framerate %.1f", fps_log[fps_log.size() - 1]);
-	//ImGui::PlotHistogram("##framerate", &fps_log[0], fps_log.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
-	//sprintf_s(title, 25, "Milliseconds %0.1f%", ms_log[ms_log.size() - 1]);
-	//ImGui::PlotHistogram("##framerate", &ms_log[0], ms_log.size(), 0, title, 0.0f, 40.0f, ImVec2(310, 100));
-}
-
 update_status ModuleEditor::PreUpdate()
 {
 	//New Frame
@@ -115,6 +104,43 @@ bool ModuleEditor::CleanUp()
 }
 
 void ModuleEditor::Draw() {
+
+	ConfigWindow();
+	MainMenu();
+
+}
+
+void ModuleEditor::ConfigWindow() {
+
+	ImGui::Begin("Configuration");
+
+	//a. A graph for the frames per second
+	if (ImGui::CollapsingHeader("Application")) {
+		App->GetOpenGL()->MenuConfigApp();
+
+	}
+	//b. Configuration for all variables on each module (OpenGL, window, input and textures)
+	if (ImGui::CollapsingHeader("Window")) {
+		App->GetWindow()->MenuConfigWindow();
+	}
+	//There must be information output with FPS graph, memory consumption, hardware detection and software versions(SDL, OpenGL, Devil)
+	if (ImGui::CollapsingHeader("Information")){
+		ImGui::Text("SDL Version: %d.%d.%d ", info.sdlVersion.major, info.sdlVersion.minor, info.sdlVersion.patch);
+		static const ImVec4 pink = ImVec4(1.0f, 0.0f, 1.0f, 1.0f);
+		ImGui::TextColored(pink, "------Software------");
+		ImGui::Text("OpenGL Version: %s ",info.openglVersion.opengl);
+		ImGui::Text("Glew Version: %s ", info.openglVersion.glew);
+		ImGui::Text("GLSL Version: %s ", info.openglVersion.glsl);
+
+		ImGui::TextColored(pink, "------Hardware------");
+		ImGui::Text("GPU: %s ", info.openglVersion.gpu);
+		ImGui::Text("Brand: %s ", info.openglVersion.brand);
+	}
+	ImGui::End();
+
+}
+
+void ModuleEditor::MainMenu() {
 	if (ImGui::BeginMainMenuBar()) {
 		if (ImGui::BeginMenu("About")) {
 			//		RequestBrowser();
@@ -124,10 +150,10 @@ void ModuleEditor::Draw() {
 		if (ImGui::BeginMenu("GitHub")) {
 
 			if (ImGui::MenuItem("Documentation")) {
-			//	RequestBrowser();
+				//	RequestBrowser();
 			}
 			if (ImGui::MenuItem("Report a Bug")) {
-			//	RequestBrowser();
+				//	RequestBrowser();
 			}
 			ImGui::EndMenu();
 		}
@@ -148,3 +174,4 @@ void ModuleEditor::Draw() {
 void ModuleEditor::RequestBrowser(const char* link) {
 	ShellExecute(0, 0, link, 0, 0, SW_SHOW);
 }
+

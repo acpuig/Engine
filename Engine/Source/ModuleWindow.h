@@ -23,12 +23,40 @@ public:
 
 	SDL_Surface* GetScreenSurface();
 
+	void SetWindowBrightness(float brightness);
+
+	void SetFullScreen(bool fullscreen);
+
+	void WindowNewSize();
+
+	void SetResizable(bool resizable);
+
+	void SetBorderless(bool borderless);
+
+	void SetFullDesktop();
+
+	void MenuConfigWindow();
+
+	void GetMonitorResolution();
+
 public:
 	//The window we'll be rendering to
 	SDL_Window* window = nullptr;
 
 	//The surface contained by the window
 	SDL_Surface* screen_surface = nullptr;
+	float brightness = 1.0f;
+	bool fullscreen = false;
+	bool resizable = false;
+	bool borderless = false;
+	bool fulldesktop = false;
+
+	int width;
+	int height; 
+
+	int maxWidth;
+	int maxHeight;
+
 };
 
 #endif // __ModuleWindow_H__

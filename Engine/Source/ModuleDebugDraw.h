@@ -20,8 +20,8 @@ public:
 	update_status   Update();
 	bool            CleanUp();
 
-    void            Draw(const float4x4& view, const float4x4& 
-        , unsigned width, unsigned height);
+    void            Draw(const float4x4& view, const float4x4& , unsigned width, unsigned height);
+    void MenuConfigitems();
 private:
 
     static DDRenderInterfaceCoreGL* implementation;

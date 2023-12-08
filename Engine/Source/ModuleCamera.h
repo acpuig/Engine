@@ -19,8 +19,10 @@ public:
 
 	 float4x4 GetViewMatrix()  ;
 	 float4x4 GetProjectionMatrix() ;
-	 float4x4 GetModel() ;
+	 void SetModel(float3 scaleVector) ;
 	// void RotateCameraWithMouse(int dx, int dy, float sensitivity);
+	 float4x4 GetModel();
+	 void WindowResized(unsigned int screen_width, unsigned int screen_height);
 
 
 private:
@@ -32,6 +34,7 @@ private:
 	float3x3 rotation_Matrix;
 	float4x4 view_Matrix;
 	float4x4 project_Matrix;
+	float4x4 model;
 
 
 	float aspect_ratio;
