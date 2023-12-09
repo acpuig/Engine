@@ -18,10 +18,14 @@ public:
 
 	const unsigned GetKey(SDL_Scancode key) const;
 	const int GetMouseScroll() const;
+	const bool GetScroll() const;
 	const int GetMousePosX() const;
 	const int GetMousePosY() const;
 	bool GetMouseButtonRight() const;
 	bool GetMouseButtonLeft() const;
+
+	// Agrega esta función en ModuleInput.h
+	void ResetMouseScroll();
 
 
 private:
@@ -32,5 +36,6 @@ private:
 	 int mouse_pos_y;
 	 bool mouse_button_right = false;
 	 bool mouse_button_left = false;
+	 bool scroll;
 
 };

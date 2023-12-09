@@ -52,10 +52,6 @@ bool ModuleEditor::Init()
 	info.openglVersion.brand = App->GetOpenGL()->GetHardwareData().brand;
 	info.openglVersion.gpu = App->GetOpenGL()->GetHardwareData().gpu;
 
-
-	//about.gpu = App->renderer->GetGpuData();
-	//about.gl = App->renderer->GetGlVersion();
-
 	return true;
 }
 
@@ -134,6 +130,9 @@ void ModuleEditor::ConfigWindow() {
 		ImGui::TextColored(pink, "------Hardware------");
 		ImGui::Text("GPU: %s ", info.openglVersion.gpu);
 		ImGui::Text("Brand: %s ", info.openglVersion.brand);
+	}
+	if (ImGui::CollapsingHeader("Models")) {
+		App->GetOpenGL()->MenuConfigModels();
 	}
 	ImGui::End();
 

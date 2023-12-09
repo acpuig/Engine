@@ -48,6 +48,7 @@ update_status ModuleInput::Update()
                     App->GetWindow()->WindowNewSize();
                 break;
             case SDL_MOUSEWHEEL:
+                scroll = true; 
                  mouse_scroll = sdlEvent.wheel.y;
                  break;
             case SDL_MOUSEMOTION:
@@ -99,6 +100,10 @@ const int ModuleInput::GetMouseScroll() const {
     return int(mouse_scroll);
 }
 
+const bool ModuleInput::GetScroll() const {
+    return (scroll);
+}
+
 const int ModuleInput::GetMousePosX() const {
     return mouse_pos_x;
 }
@@ -112,4 +117,12 @@ bool ModuleInput::GetMouseButtonRight() const {
 
 bool ModuleInput::GetMouseButtonLeft() const {
     return mouse_button_left;
+}
+
+
+// Implementa esta función en ModuleInput.cpp
+void ModuleInput::ResetMouseScroll()
+{
+    scroll = false;
+    mouse_scroll = 0;
 }

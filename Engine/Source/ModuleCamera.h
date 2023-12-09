@@ -5,7 +5,12 @@
 #include "MathGeoLib/include/Math/float3x3.h"
 #include "MathGeoLib/include/Geometry/Frustum.h"
 
-
+enum class ZoomLevel
+{
+    Close,
+    Mid,
+    Far
+};
 
 class ModuleCamera : public Module
 {
@@ -16,6 +21,7 @@ public:
 	bool Init();
 
 	update_status Update();
+	ZoomLevel currentZoomLevel = ZoomLevel::Mid;
 
 	 float4x4 GetViewMatrix()  ;
 	 float4x4 GetProjectionMatrix() ;
@@ -23,13 +29,14 @@ public:
 	// void RotateCameraWithMouse(int dx, int dy, float sensitivity);
 	 float4x4 GetModel();
 	 void WindowResized(unsigned int screen_width, unsigned int screen_height);
-
+	 float3 ScreenToWorldPoint(int screen_x, int screen_y);
 
 private:
 	Frustum frustum;
 	float near_plane;
 	float far_plane;
 	float delta_time = 0.5f;
+	float zoomSpeed;
 
 	float3x3 rotation_Matrix;
 	float4x4 view_Matrix;
@@ -55,5 +62,6 @@ private:
 	void MovementController(const float delta_time);
 
 	void LookAt(const float3& eye_position, const float3& target_position,  float3& up_position, const float inclination_angle);
-	void Zoom(const float fov_diffdeg);
+	void Zoom();
+	void Reset();
 };

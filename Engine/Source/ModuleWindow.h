@@ -54,6 +54,9 @@ public:
 	int width;
 	int height; 
 
+	int originalWidth;
+	int originalHeight;
+
 	int maxWidth;
 	int maxHeight;
 

@@ -20,7 +20,6 @@ bool ModuleCamera::Init() {
 
 	frustum.type = FrustumType::PerspectiveFrustum;
 
-	SetFOV(90.0f);
 	SetPlaneDistances(0.1f, 100.0f);
 	SetPosition(float3(0.0f, 0.0f, 0.0f));
 
@@ -42,21 +41,36 @@ bool ModuleCamera::Init() {
 	return true;
 }
 
-update_status  ModuleCamera::Update() {
+void ModuleCamera::Reset() {
+
+	frustum.front = -float3::unitZ;
+	frustum.up = float3::unitY;
+	frustum.verticalFov = math::pi / 4.0f;
+	frustum.horizontalFov = 2.f * atanf(tanf(frustum.verticalFov * 0.5f) * aspect_ratio);
+
+	rotation_Matrix = float3x3::identity;
+
+	// Set the initial position and orientation of the camera	
+	float3 lookAtPoint = float3(0.0f, 0.0f, 0.0f);
+	float3 upVector = float3::unitY;
+	float inclination_angle = math::DegToRad(180.0f);  // Inclination angle in degrees
+
+	LookAt(frustum.pos, lookAtPoint, upVector, inclination_angle);
+	//view_Matrix = LookAt(float3(0.0f, 4.0f, 8.0f), float3(0.0f, 0.0f, 0.0f), float3::unitY);
+}
+update_status ModuleCamera::Update() {
 	const float rotation_speed = 0.50f;
 	const float3 lookAtPoint = float3(0.0f, 0.0f, 0.0f);
 
 	int dx = App->GetInput()->GetMousePosX();
 	int dy = App->GetInput()->GetMousePosY();
 
-	if ((App->GetInput()->GetMouseButtonRight() == true)) {
-		//Orbit(dx, dy, rotation_speed, lookAtPoint);
-	}
-
 	MovementController(0.5);
-	//Zoom(0.5);
+	Zoom();
 	return UPDATE_CONTINUE;
 }
+
+
 
 void ModuleCamera::SetFOV( float fov_deg) {
 	horizontal_fov = math::DegToRad(fov_deg);
@@ -65,6 +79,8 @@ void ModuleCamera::SetFOV( float fov_deg) {
 
 void ModuleCamera::SetAspectRatio( int screen_width,  int screen_height) {
 	aspect_ratio = static_cast<float>(screen_width) / static_cast<float>(screen_height);
+	//aspect_ratio =(float)((screen_width) /(screen_height));
+
 	frustum.verticalFov = math::pi / 4.0f;
 	frustum.horizontalFov = 2.f * atanf(tanf(frustum.verticalFov * 0.5f) * aspect_ratio);
 }
@@ -78,7 +94,6 @@ void ModuleCamera::WindowResized(unsigned int screen_width, unsigned int screen_
 void  ModuleCamera::SetVerticalFOV(float horiz_fov, float asp_ratio) {
 	frustum.verticalFov = 2.f * atanf(tanf(horiz_fov * 0.5f) / asp_ratio);
 	//frustum.verticalFov = math::pi / 4.0f;
-
 }
 
 void ModuleCamera::SetPlaneDistances( float near_dist,  float far_dist) {
@@ -107,7 +122,7 @@ float4x4 ModuleCamera::GetProjectionMatrix()  {
 
 void ModuleCamera::SetModel(float3 scaleVector)  {
 	 model = float4x4::FromTRS(float3(0.0f, 0.0f, 0.0f),
-	float4x4::RotateZ(0.0f), scaleVector  /** float3(2.0f,1.0f,1.0f)*/); 
+	float4x4::RotateZ(0.0f), scaleVector); 
 }
 
  float4x4 ModuleCamera::GetModel() {
@@ -138,38 +153,10 @@ void ModuleCamera::SetModel(float3 scaleVector)  {
 
 }
 
- // Function to update the camera position in an orbit around a target point
- void ModuleCamera::Orbit(int dx, int dy, float rotation_speed, const float3& lookAtPoint)
- {
-	 
-	// Calculate the rotation angles based on mouse movement
-	float yaw = -dx * rotation_speed;
-	float pitch = dy * rotation_speed;
-
-	// Update the rotation matrix based on the calculated angles
-	float3x3 yawRotation = float3x3::RotateAxisAngle(float3::unitY, math::DegToRad(yaw));
-	float3x3 pitchRotation = float3x3::RotateAxisAngle(rotation_Matrix * float3::unitX, math::DegToRad(pitch));
-
-	rotation_Matrix = pitchRotation * yawRotation;
-
-	// Update the frustum orientation
-	frustum.front = -(rotation_Matrix * float3::unitZ).Normalized();
-	frustum.up = (rotation_Matrix * float3::unitY).Normalized();
-
-	// Orbit around the lookAtPoint while maintaining the y-coordinate
-	float3 orbitOffset = rotation_Matrix * float3(0.0f, 0.0f, orbit_radius);
-	position = lookAtPoint + float3(orbitOffset.x, position.y, orbitOffset.z);
-	frustum.pos = position;
-
-	// Update the view matrix
-	view_Matrix = frustum.ViewMatrix();
-	 
- }
-
 void  ModuleCamera::MovementController(const float delta_time) {
 
 	float movment_speed = 0.2f;
-	float rotation_speed = 0.2f;
+	float rotation_speed = 0.0002f;
 
 	if (App->GetInput()->GetKey(SDL_SCANCODE_W)) {
 		position += frustum.front * movment_speed * delta_time;
@@ -189,46 +176,64 @@ void  ModuleCamera::MovementController(const float delta_time) {
 	if (App->GetInput()->GetKey(SDL_SCANCODE_E)) {
 		position -= frustum.up * movment_speed * delta_time;
 	}
-	if (App->GetInput()->GetKey(SDL_SCANCODE_Y)) { 
-		// Rotate around the Y-axis (yaw)
-		RotateFrustum('Y' , DegToRad(90), rotation_speed);
+	if (App->GetInput()->GetKey(SDL_SCANCODE_F)) {
+		float3  lookAtPoint = float3(0.0f, 0.0f, 0.0f);
+		float3 upVector = float3::unitY;
+		float inclination_angle = math::DegToRad(180.0f);  
+		LookAt(frustum.pos, lookAtPoint, upVector, inclination_angle);
 	}
-	if (App->GetInput()->GetKey(SDL_SCANCODE_X)) { 
+	if (App->GetInput()->GetKey(SDL_SCANCODE_R)) {
+		Reset();
+	}
+	if (App->GetInput()->GetKey(SDL_SCANCODE_RIGHT)) { 
+		// Rotate around the Y-axis (yaw)
+		RotateFrustum('Y' , DegToRad(5), rotation_speed);
+	}
+	if (App->GetInput()->GetKey(SDL_SCANCODE_LEFT)) {
+		// Rotate around the Y-axis (yaw)
+		RotateFrustum('Y', -DegToRad(5), rotation_speed);
+	}
+	if (App->GetInput()->GetKey(SDL_SCANCODE_DOWN)) {
+		// Rotate around the X-axis (pitch)
+		RotateFrustum('X', DegToRad(5), rotation_speed);
+	}
+	if (App->GetInput()->GetKey(SDL_SCANCODE_UP)) { 
 		 // Rotate around the X-axis (pitch)
-		RotateFrustum('X' , DegToRad(90), rotation_speed);
+		RotateFrustum('X' , -DegToRad(5), rotation_speed);
 	}
 	if (App->GetInput()->GetKey(SDL_SCANCODE_Z)) {
 		// Rotate around the Z-axis (roll)
-		RotateFrustum('Z', DegToRad(90), rotation_speed);
+		RotateFrustum('Z', DegToRad(5), rotation_speed);
 	}
 	SetPosition(position);
-	//view_Matrix = LookAt(frustum.pos, frustum.pos + frustum.front, frustum.up);
 }
 
+void ModuleCamera::Zoom() {
+	float minHorizFov = DegToRad(20);
+	float maxHorizFov = DegToRad(90);
+	const float zoom_speed = 0.1f;  // Ajusta la velocidad de zoom según sea necesario
 
-void ModuleCamera::Zoom(const float fov_diffdeg) {
-	float minhoriz_fov = DegToRad(5); 
-	float maxhoiz_fov = DegToRad(180);
-	float angle = math::DegToRad(fov_diffdeg);
+	int scrollValue = App->GetInput()->GetMouseScroll();
 
-	horizontal_fov = frustum.horizontalFov; 
+	if (scrollValue != 0)
+	{
+		// Calcula el factor de zoom basado en el desplazamiento del mouse
+		float zoom_factor = 1.0f + scrollValue * zoom_speed;
 
-	if (horizontal_fov > maxhoiz_fov) {
-		horizontal_fov = maxhoiz_fov;
+		// Aplica el zoom al frustum
+		frustum.horizontalFov /= zoom_factor;
+		frustum.verticalFov /= zoom_factor;
+
+		// Ajusta las distancias de los planos según sea necesario
+		SetPlaneDistances(near_plane, far_plane);
+
+		// Actualiza la matriz de proyección con el nuevo fov
+		project_Matrix = frustum.ProjectionMatrix();
+		App->GetInput()->ResetMouseScroll();
+
 	}
-	if (horizontal_fov < minhoriz_fov) {
-		horizontal_fov = minhoriz_fov;
-	}
-
-	float zoom_speed = 0.5;
-	int scroll_value = App->GetInput()->GetMouseScroll();
-	float aux = angle * zoom_speed * scroll_value;
-	horizontal_fov += angle*  zoom_speed * scroll_value;
-	
-	//Scroll up
-	SetVerticalFOV(horizontal_fov, aspect_ratio);
-
 }
+
 
 void ModuleCamera::RotateFrustum(char axis, float angle, const float delta_time) {
 	float3 oldFront = frustum.front.Normalized();

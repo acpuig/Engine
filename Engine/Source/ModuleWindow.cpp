@@ -45,11 +45,11 @@ bool ModuleWindow::Init()
 		{
 			flags |= SDL_WINDOW_RESIZABLE;
 		}
-		width = SCREEN_WIDTH;
-		height = SCREEN_HEIGHT; 
-		//width = (int)(maxWidth);
-		//height = (int)(maxHeight);
-		window = SDL_CreateWindow(TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);
+		originalWidth = SCREEN_WIDTH;
+		originalHeight = SCREEN_HEIGHT;
+		width = (int)(maxWidth);
+		height = (int)(maxHeight);
+		window = SDL_CreateWindow(TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, originalWidth, originalHeight, flags);
 
 		if(window == NULL)
 		{
@@ -98,12 +98,15 @@ void ModuleWindow::SetWindowBrightness(float brightness)
 //Fullscreen
 void ModuleWindow::SetFullScreen(bool fullscreen)
 {
-	if (fullscreen)
+	if (fullscreen){
+		SDL_GetWindowSize(window, &originalWidth, &originalHeight);
 		SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
-	else
+	}else{
 		SDL_SetWindowFullscreen(window, 0);
+		SDL_SetWindowSize(window, originalWidth, originalHeight);
+		App->GetCamera()->WindowResized(originalWidth,originalHeight);
+	}
 	SDL_UpdateWindowSurface(window);
-
 }
 
 void ModuleWindow::WindowNewSize() 
@@ -140,21 +143,19 @@ void ModuleWindow::MenuConfigWindow() {
 	if (ImGui::SliderFloat("Brightness", &brightness, 0.0f, 1.0f)) {
 		SetWindowBrightness(brightness);
 	} 
-	if (ImGui::Checkbox("Full Screen", &fullscreen)) {
-		SetFullScreen(fullscreen);
+	if (fullscreen == false) {
+		if (ImGui::Checkbox("Full Screen", &fullscreen)) {
+			SetFullScreen(fullscreen);
+		} 
+		ImGui::Separator();
+		if (ImGui::Checkbox("Resizable", &resizable)) {
+			SetResizable(resizable);
+		}
 		ImGui::SameLine();
-
-	}else if (ImGui::Checkbox("Resizable", &resizable)) {
-		SetResizable(resizable);
-
-	}else if (ImGui::Checkbox("Borderless", &borderless)) {
-		SetBorderless(borderless);
-		ImGui::SameLine();
-
-	}else if (ImGui::Checkbox("Full Desktop", &fulldesktop)) {
-		SetFullDesktop();
+		if (ImGui::Checkbox("Borderless", &borderless)) {
+			SetBorderless(borderless);
+		}
 	}
-
 	ImGui::Separator();
 }
 

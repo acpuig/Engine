@@ -85,10 +85,10 @@ update_status ModuleOpenGL::PreUpdate()
 		App->GetCamera()->SetModel(scaledPosition);
 		model->Load("BakerHouse.gltf");
 	}
-	else if (cubeModel){
-		float3 scaledPosition = float3(2.0f, 2.0f, 2.0f) * modelScale;
+	 if (cubeModel){
+		float3 scaledPosition = float3(0.01f, 0.01f, 0.01f) * modelScale;
 		App->GetCamera()->SetModel(scaledPosition);
-		model->Load("BoxTextured.gltf");
+		model->Load("Duck.gltf");
 	}
 
 	//Screen color
@@ -150,23 +150,14 @@ void ModuleOpenGL::WindowResized(int width, int height)
 	glViewport(0, 0, width, height);
 }
 
-/*void ModuleOpenGL::MenuConfigWindow() {
-	ImGui::Text("Background Color");
-	ImGui::ColorPicker3("", &clearColor[0]);
-	ImGui::Separator();
-
-}*/
-
 void ModuleOpenGL::MenuConfigModels() {
 	ImGui::Text("Model to Show:");
-	if (ImGui::Checkbox("Cube Model", &cubeModel)) {
+	if (ImGui::Checkbox("Duck Model", &cubeModel)) {
 		bakerModel = false;
-		model->CleanUp();
 	}
 	ImGui::SameLine();
 	if (ImGui::Checkbox("Baker Model", &bakerModel)) {
 		cubeModel = false;
-		model->CleanUp();
 	}
 	ImGui::SliderFloat("Model Scale", &modelScale, 0.1f, 10.0f);
 	if (ImGui::Button("Reset Model Scale"))
