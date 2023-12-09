@@ -15,6 +15,7 @@
 
 void Mesh::Load(const tinygltf::Model& model, const tinygltf::Mesh& mesh, const tinygltf::Primitive& primitive)
 {
+	CleanUp(); 
 	CreateVBO(model, mesh, primitive);
 	LoadEBO(model, mesh, primitive);
 	CreateVAO();
@@ -218,8 +219,7 @@ void Mesh::CleanUp()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 	// Unbind and disable texture
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, 0);
+	glBindTextureUnit(0, 0);
 	glDisable(GL_TEXTURE_2D);
 
 	// Disable vertex attributes

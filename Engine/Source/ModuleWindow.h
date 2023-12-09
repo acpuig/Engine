@@ -44,7 +44,7 @@ public:
 	SDL_Window* window = nullptr;
 
 	//The surface contained by the window
-	SDL_Surface* screen_surface = nullptr;
+	SDL_Surface* screenSurface = nullptr;
 	float brightness = 1.0f;
 	bool fullscreen = false;
 	bool resizable = false;

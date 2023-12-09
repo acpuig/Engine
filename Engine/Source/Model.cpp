@@ -24,7 +24,7 @@ void Model::Load(const char* assetFileName)
 		LOG("Error loading %s: %s", assetFileName, error.c_str());
 	}
 	LoadMaterials(model);
-
+	
 	for (const auto& srcMesh : model.meshes)
 	{
 		for (const auto& primitive : srcMesh.primitives)
@@ -87,7 +87,6 @@ void Model::CleanUp() {
 	meshes.clear(); 
 	for (GLuint textureMaterialID : texturesID) {
 		glDeleteTextures(1, &textureMaterialID);
-
 	}
 	texturesID.clear(); 
 }

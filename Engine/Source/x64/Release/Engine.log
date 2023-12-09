@@ -1,91 +1,22 @@
 ﻿  Application.cpp
-  imgui.cpp
-  imgui_demo.cpp
-  imgui_draw.cpp
-  imgui_impl_opengl3.cpp
-  imgui_impl_sdl2.cpp
-  imgui_tables.cpp
-  imgui_widgets.cpp
-  log.cpp
-  Main.cpp
-  LCG.cpp
-  AABB.cpp
-  Capsule.cpp
-  Circle.cpp
-  Cone.cpp
-  Cylinder.cpp
-  Frustum.cpp
-  Line.cpp
-  LineSegment.cpp
-  OBB.cpp
-  Compilando...
-  Plane.cpp
-  Polygon.cpp
-  Polyhedron.cpp
-  Ray.cpp
-  Sphere.cpp
-  Triangle.cpp
-  TriangleMesh.cpp
-C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\MathGeoLib\include\Geometry\TriangleMesh.cpp(190,28): warning C4267: 'argumento': conversión de 'size_t' a 'int'; posible pérdida de datos
-  BitOps.cpp
-  float2.cpp
-  float3.cpp
-  float3x3.cpp
-  float3x4.cpp
-  float4.cpp
-  float4x4.cpp
-  MathFunc.cpp
-  MathLog.cpp
-  MathOps.cpp
-  Polynomial.cpp
-  Quat.cpp
-  SSEMath.cpp
-  Compilando...
-  TransformOps.cpp
-  Clock.cpp
-  Mesh.cpp
-C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\Mesh.cpp(1,10): warning C4067: símbolos (token) inesperados después de la directiva del preprocesador; se esperaba una nueva línea
-C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\tinygltf\tiny_gltf.h(3039,17): warning C4018: '>=': no coinciden signed/unsigned
-C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\tinygltf\tiny_gltf.h(3134,17): warning C4018: '>=': no coinciden signed/unsigned
-C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\tinygltf\tiny_gltf.h(5187,60): warning C4267: 'argumento': conversión de 'size_t' a 'int'; posible pérdida de datos
-  Model.cpp
   ModuleCamera.cpp
-  ModuleDebugDraw.cpp
   ModuleEditor.cpp
 C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\ModuleEditor.cpp(46,45): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
 C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\ModuleEditor.cpp(48,35): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
   ModuleInput.cpp
   ModuleOpenGL.cpp
+C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\ModuleOpenGL.cpp(136,108): warning C4267: 'argumento': conversión de 'size_t' a 'int'; posible pérdida de datos
+C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\ModuleOpenGL.cpp(143,105): warning C4267: 'argumento': conversión de 'size_t' a 'int'; posible pérdida de datos
   ModuleProgram.cpp
   ModuleRenderExercise.cpp
   ModuleTexture.cpp
-C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\ModuleTexture.cpp(109,104): warning C4267: 'argumento': conversión de 'size_t' a 'GLsizei'; posible pérdida de datos
-C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\ModuleTexture.cpp(109,104): warning C4267: 'argumento': conversión de 'size_t' a 'GLint'; posible pérdida de datos
-C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\ModuleTexture.cpp(118,131): warning C4267: 'argumento': conversión de 'size_t' a 'GLsizei'; posible pérdida de datos
+C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\ModuleTexture.cpp(103,104): warning C4267: 'argumento': conversión de 'size_t' a 'GLsizei'; posible pérdida de datos
+C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\ModuleTexture.cpp(103,104): warning C4267: 'argumento': conversión de 'size_t' a 'GLint'; posible pérdida de datos
+C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\ModuleTexture.cpp(112,131): warning C4267: 'argumento': conversión de 'size_t' a 'GLsizei'; posible pérdida de datos
   ModuleWindow.cpp
-DirectXTex.lib(DirectXTexDDS.obj) : error LNK2038: se detectaron diferencias para '_ITERATOR_DEBUG_LEVEL': el valor '2' no coincide con el valor '0' en Application.obj
-DirectXTex.lib(DirectXTexDDS.obj) : error LNK2038: se detectaron diferencias para 'RuntimeLibrary': el valor 'MDd_DynamicDebug' no coincide con el valor 'MD_DynamicRelease' en Application.obj
-DirectXTex.lib(DirectXTexTGA.obj) : error LNK2038: se detectaron diferencias para '_ITERATOR_DEBUG_LEVEL': el valor '2' no coincide con el valor '0' en Application.obj
-DirectXTex.lib(DirectXTexTGA.obj) : error LNK2038: se detectaron diferencias para 'RuntimeLibrary': el valor 'MDd_DynamicDebug' no coincide con el valor 'MD_DynamicRelease' en Application.obj
-DirectXTex.lib(DirectXTexWIC.obj) : error LNK2038: se detectaron diferencias para '_ITERATOR_DEBUG_LEVEL': el valor '2' no coincide con el valor '0' en Application.obj
-DirectXTex.lib(DirectXTexWIC.obj) : error LNK2038: se detectaron diferencias para 'RuntimeLibrary': el valor 'MDd_DynamicDebug' no coincide con el valor 'MD_DynamicRelease' en Application.obj
-DirectXTex.lib(DirectXTexImage.obj) : error LNK2038: se detectaron diferencias para '_ITERATOR_DEBUG_LEVEL': el valor '2' no coincide con el valor '0' en Application.obj
-DirectXTex.lib(DirectXTexImage.obj) : error LNK2038: se detectaron diferencias para 'RuntimeLibrary': el valor 'MDd_DynamicDebug' no coincide con el valor 'MD_DynamicRelease' en Application.obj
-DirectXTex.lib(DirectXTexUtil.obj) : error LNK2038: se detectaron diferencias para '_ITERATOR_DEBUG_LEVEL': el valor '2' no coincide con el valor '0' en Application.obj
-DirectXTex.lib(DirectXTexUtil.obj) : error LNK2038: se detectaron diferencias para 'RuntimeLibrary': el valor 'MDd_DynamicDebug' no coincide con el valor 'MD_DynamicRelease' en Application.obj
-DirectXTex.lib(DirectXTexConvert.obj) : error LNK2038: se detectaron diferencias para '_ITERATOR_DEBUG_LEVEL': el valor '2' no coincide con el valor '0' en Application.obj
-DirectXTex.lib(DirectXTexConvert.obj) : error LNK2038: se detectaron diferencias para 'RuntimeLibrary': el valor 'MDd_DynamicDebug' no coincide con el valor 'MD_DynamicRelease' en Application.obj
-DirectXTex.lib(DirectXTexMipMaps.obj) : error LNK2038: se detectaron diferencias para '_ITERATOR_DEBUG_LEVEL': el valor '2' no coincide con el valor '0' en Application.obj
-DirectXTex.lib(DirectXTexMipMaps.obj) : error LNK2038: se detectaron diferencias para 'RuntimeLibrary': el valor 'MDd_DynamicDebug' no coincide con el valor 'MD_DynamicRelease' en Application.obj
-DirectXTex.lib(DirectXTexCompress.obj) : error LNK2038: se detectaron diferencias para '_ITERATOR_DEBUG_LEVEL': el valor '2' no coincide con el valor '0' en Application.obj
-DirectXTex.lib(DirectXTexCompress.obj) : error LNK2038: se detectaron diferencias para 'RuntimeLibrary': el valor 'MDd_DynamicDebug' no coincide con el valor 'MD_DynamicRelease' en Application.obj
-DirectXTex.lib(BC.obj) : error LNK2038: se detectaron diferencias para '_ITERATOR_DEBUG_LEVEL': el valor '2' no coincide con el valor '0' en Application.obj
-DirectXTex.lib(BC.obj) : error LNK2038: se detectaron diferencias para 'RuntimeLibrary': el valor 'MDd_DynamicDebug' no coincide con el valor 'MD_DynamicRelease' en Application.obj
-DirectXTex.lib(BC4BC5.obj) : error LNK2038: se detectaron diferencias para '_ITERATOR_DEBUG_LEVEL': el valor '2' no coincide con el valor '0' en Application.obj
-DirectXTex.lib(BC4BC5.obj) : error LNK2038: se detectaron diferencias para 'RuntimeLibrary': el valor 'MDd_DynamicDebug' no coincide con el valor 'MD_DynamicRelease' en Application.obj
-DirectXTex.lib(BC6HBC7.obj) : error LNK2038: se detectaron diferencias para '_ITERATOR_DEBUG_LEVEL': el valor '2' no coincide con el valor '0' en Application.obj
-DirectXTex.lib(BC6HBC7.obj) : error LNK2038: se detectaron diferencias para 'RuntimeLibrary': el valor 'MDd_DynamicDebug' no coincide con el valor 'MD_DynamicRelease' en Application.obj
-LINK : warning LNK4098: la biblioteca predeterminada'MSVCRTD' entra en conflicto con otras bibliotecas; use la biblioteca /NODEFAULTLIB:biblioteca
-DirectXTex.lib(DirectXTexMipMaps.obj) : error LNK2001: símbolo externo __imp__invalid_parameter sin resolver
-DirectXTex.lib(DirectXTexMipMaps.obj) : error LNK2001: símbolo externo __imp__CrtDbgReport sin resolver
-C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\x64\Release\Engine.exe : fatal error LNK1120: 2 externos sin resolver
+  Generando código
+  981 of 6132 functions (16.0%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    251 functions had inline decision re-evaluated but remain unchanged
+  Generación de código finalizada
+  Engine.vcxproj -> C:\Users\Ariadna\OneDrive\Escritorio\Engine\Engine-main\Engine\Source\Engine\Engine\Source\x64\Release\Engine.exe

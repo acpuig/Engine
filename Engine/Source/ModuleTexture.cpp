@@ -28,13 +28,7 @@ GLuint ModuleTexture::Load(const std::string& path, GLint wrapParam, GLint minPa
 	if (imageLoad) {
 		//2. Create and load OpenGL texture into GPU
 		texture.id = LoadTexture( wrapParam,  minParam,  magParam,  mipmap);
-
-		//3. Add texture coordinates(UVs) into VBO
-		texture.uvs = new float[imageMetadata.width * imageMetadata.height * 2];
-		for (unsigned i = 0; i < imageMetadata.width * imageMetadata.height; ++i) {
-			texture.uvs[2 * i] = static_cast<float>(i % imageMetadata.width) / static_cast<float>(imageMetadata.width - 1);
-			texture.uvs[2 * i + 1] = static_cast<float>(i / imageMetadata.width) / static_cast<float>(imageMetadata.height - 1);
-		}
+		
 	}else {
 		assert(image_path = nullptr);
 	}

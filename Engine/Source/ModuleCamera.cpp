@@ -64,7 +64,7 @@ void ModuleCamera::SetFOV( float fov_deg) {
 }
 
 void ModuleCamera::SetAspectRatio( int screen_width,  int screen_height) {
-	aspect_ratio = float(screen_width / screen_height);
+	aspect_ratio = static_cast<float>(screen_width) / static_cast<float>(screen_height);
 	frustum.verticalFov = math::pi / 4.0f;
 	frustum.horizontalFov = 2.f * atanf(tanf(frustum.verticalFov * 0.5f) * aspect_ratio);
 }
@@ -77,6 +77,8 @@ void ModuleCamera::WindowResized(unsigned int screen_width, unsigned int screen_
 
 void  ModuleCamera::SetVerticalFOV(float horiz_fov, float asp_ratio) {
 	frustum.verticalFov = 2.f * atanf(tanf(horiz_fov * 0.5f) / asp_ratio);
+	//frustum.verticalFov = math::pi / 4.0f;
+
 }
 
 void ModuleCamera::SetPlaneDistances( float near_dist,  float far_dist) {
@@ -105,7 +107,7 @@ float4x4 ModuleCamera::GetProjectionMatrix()  {
 
 void ModuleCamera::SetModel(float3 scaleVector)  {
 	 model = float4x4::FromTRS(float3(0.0f, 0.0f, 0.0f),
-	float4x4::RotateZ(0.0f), scaleVector); 
+	float4x4::RotateZ(0.0f), scaleVector  /** float3(2.0f,1.0f,1.0f)*/); 
 }
 
  float4x4 ModuleCamera::GetModel() {

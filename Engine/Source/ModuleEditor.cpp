@@ -66,15 +66,14 @@ update_status ModuleEditor::PreUpdate()
 	ImGui_ImplSDL2_NewFrame(App->GetWindow()->window);
 	ImGui::NewFrame();
 
-	Draw();
 	return UPDATE_CONTINUE;
 }
 
 // Called every draw update
 update_status ModuleEditor::Update()
 {
-	ImGui::ShowDemoWindow();
-
+	//ImGui::ShowDemoWindow();
+	Draw();
 	//Render frame before swapping buffers
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

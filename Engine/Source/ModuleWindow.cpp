@@ -33,8 +33,7 @@ bool ModuleWindow::Init()
 	else
 	{
 		//Create window
-		GetMonitorResolution();
-
+		//GetMonitorResolution();
 
 		Uint32 flags = SDL_WINDOW_SHOWN |  SDL_WINDOW_OPENGL;
 
@@ -46,7 +45,8 @@ bool ModuleWindow::Init()
 		{
 			flags |= SDL_WINDOW_RESIZABLE;
 		}
-
+		width = SCREEN_WIDTH;
+		height = SCREEN_HEIGHT; 
 		//width = (int)(maxWidth);
 		//height = (int)(maxHeight);
 		window = SDL_CreateWindow(TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);
@@ -59,7 +59,8 @@ bool ModuleWindow::Init()
 		else
 		{
 			//Get window surface
-			screen_surface = SDL_GetWindowSurface(window);
+			SDL_UpdateWindowSurface(window);
+			screenSurface = SDL_GetWindowSurface(window);
 		}
 	}
 
@@ -83,7 +84,7 @@ bool ModuleWindow::CleanUp()
 }
 
 SDL_Surface* ModuleWindow::GetScreenSurface() {
-	return screen_surface;
+	return screenSurface;
 }
 
 //Brightness
@@ -108,9 +109,9 @@ void ModuleWindow::SetFullScreen(bool fullscreen)
 void ModuleWindow::WindowNewSize() 
 {
 	SDL_UpdateWindowSurface(window);
-	screen_surface = SDL_GetWindowSurface(window);
-	App->GetOpenGL()->WindowResized(screen_surface->w, screen_surface->h);
-	App->GetCamera()->WindowResized(screen_surface->w, screen_surface->h);
+	screenSurface = SDL_GetWindowSurface(window);
+	App->GetOpenGL()->WindowResized(screenSurface->w, screenSurface->h);
+	App->GetCamera()->WindowResized(screenSurface->w, screenSurface->h);
 }
 
 //Resizable
