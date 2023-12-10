@@ -1,3 +1,7 @@
+# Motor Engine UPC
+Engine developed for the master Advanced Programming for AAA Video Games at UPC.  The goal of this release was to deliver a geometry viewer.  
+![image](https://github.com/acpuig/Engine/assets/83670087/a51c392f-5c7f-4f4d-9da4-643f88d52740)
+
 ## Camera Motion
 
 Camera Motion Control:
@@ -16,4 +20,5 @@ Camera Rotation:
  
 Zoom (Zoom):
  - The mouse wheel controls the zoom. Scrolling the wheel up zooms out, and scrolling the wheel down zooms in.
+
 
