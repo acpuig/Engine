@@ -44,7 +44,6 @@ private:
     ModuleWindow* window = nullptr;
     ModuleInput* input = nullptr;
     ModuleProgram* program = nullptr;
-    ModuleRenderExercise* triangle = nullptr;
     ModuleEditor* editor = nullptr;
     ModuleCamera* camera = nullptr;
     ModuleDebugDraw* debugdraw = nullptr;

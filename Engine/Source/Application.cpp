@@ -5,7 +5,6 @@
 #include "ModuleOpenGL.h"
 #include "ModuleInput.h"
 #include "ModuleProgram.h"
-#include "ModuleRenderExercise.h"
 #include "ModuleEditor.h"
 #include "ModuleCamera.h"
 #include "ModuleDebugDraw.h"
@@ -24,7 +23,6 @@ Application::Application()
 	modules.push_back(camera = new ModuleCamera());
 	modules.push_back(debugdraw = new ModuleDebugDraw());
 	modules.push_back(texture = new ModuleTexture());
-	//modules.push_back(triangle = new ModuleRenderExercise());
 }
 
 Application::~Application()
