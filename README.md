@@ -1,18 +1,19 @@
-# Engine
- 
-Control del Movimiento de la Cámara:
- · Las teclas W y S controlan el movimiento hacia adelante y hacia atrás, respectivamente.
- · Las teclas A y D controlan el movimiento lateral izquierdo y derecho, respectivamente.
- · Las teclas Q y E controlan el movimiento hacia arriba y hacia abajo, respectivamente.
- 
-Restablecimiento de la Cámara:
- · La tecla R restablece la orientación de la cámara.
- 
-Rotación de la Cámara:
- · Las teclas de flecha izquierda y derecha realizan rotaciones alrededor del eje Y (yaw).
+## Camera Motion
 
-Operación "Mirar a":
- · La tecla F realiza una operación de "mirar a".
+Camera Motion Control:
+ - The W and S keys control forward and backward movement, respectively.
+ - The A and D keys control left and right lateral movement, respectively.
+ - The Q and E keys control upward and downward movement, respectively.
+ 
+Camera Reset:
+ - The R key resets the camera orientation.
+ 
+Camera Rotation:
+ - The left and right arrow keys perform rotations around the Y-axis (yaw).
+
+"Look at" operation:
+ - The F key performs a "look at" operation.
  
 Zoom (Zoom):
- · La rueda del ratón controla el zoom. Al desplazar la rueda hacia arriba, se aleja, y al desplazarla hacia abajo, se acerca.
+ - The mouse wheel controls the zoom. Scrolling the wheel up zooms out, and scrolling the wheel down zooms in.
+
