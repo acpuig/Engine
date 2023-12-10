@@ -6,16 +6,20 @@ namespace  tinygltf
 {
 	class Model;
 }
-// Placeholder for Texture and Mesh classes
 class Mesh;
-
 
 class Model {
 public:
+
 	void Load(const char* assetFileName);
 	void LoadMaterials(const tinygltf::Model& srcModel);
 	void CleanUp();
+	void MenuConfigTexture();
 	void Draw();
+
+	 GLint wrap;
+	 GLint mag;
+	 GLint min;
 
 private:
 	std::vector<GLuint> texturesID;

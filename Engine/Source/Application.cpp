@@ -25,8 +25,6 @@ Application::Application()
 	modules.push_back(debugdraw = new ModuleDebugDraw());
 	modules.push_back(texture = new ModuleTexture());
 	//modules.push_back(triangle = new ModuleRenderExercise());
-
-
 }
 
 Application::~Application()

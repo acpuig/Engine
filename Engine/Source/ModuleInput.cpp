@@ -59,16 +59,16 @@ update_status ModuleInput::Update()
 
             case SDL_MOUSEBUTTONDOWN:
                 if (sdlEvent.button.button == SDL_BUTTON_LEFT)
-                    mouse_button_left = true;  // Left button pressed
+                    mouse_button_left = true;  
                 else if (sdlEvent.button.button == SDL_BUTTON_RIGHT)
-                    mouse_button_right = true;  // Right button pressed
+                    mouse_button_right = true;  
                 break;
 
             case SDL_MOUSEBUTTONUP:
                 if (sdlEvent.button.button == SDL_BUTTON_LEFT)
-                    mouse_button_left = false;  // Left button released
+                    mouse_button_left = false;  
                 else if (sdlEvent.button.button == SDL_BUTTON_RIGHT)
-                    mouse_button_right = false;  // Right button released
+                    mouse_button_right = false; 
                 break;
 
         }
@@ -77,7 +77,6 @@ update_status ModuleInput::Update()
     }
 
     keyboard = SDL_GetKeyboardState(NULL);
-    //mouse = SDL_GetMouseState(NULL,NULL);
 
     
     return UPDATE_CONTINUE;
@@ -119,8 +118,6 @@ bool ModuleInput::GetMouseButtonLeft() const {
     return mouse_button_left;
 }
 
-
-// Implementa esta función en ModuleInput.cpp
 void ModuleInput::ResetMouseScroll()
 {
     scroll = false;

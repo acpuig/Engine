@@ -46,7 +46,8 @@ MATH_BEGIN_NAMESPACE
 
 #if defined(__native_client__) || defined(NPAPI)
 
-extern void PrintToConsole(MathLogChannel channel, const char *str); ///< Implemented in gfxapi to route access to application instance.
+extern void PrintTo
+e(MathLogChannel channel, const char *str); ///< Implemented in gfxapi to route access to application instance.
 
 #elif defined(ANDROID)
 

@@ -23,8 +23,6 @@ public:
 	const int GetMousePosY() const;
 	bool GetMouseButtonRight() const;
 	bool GetMouseButtonLeft() const;
-
-	// Agrega esta función en ModuleInput.h
 	void ResetMouseScroll();
 
 

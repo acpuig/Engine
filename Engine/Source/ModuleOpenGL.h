@@ -36,7 +36,6 @@ public:
 
 	void* GetContext() const {return context;}
 	bool CleanUp();
-	void MenuConfigWindow();
 	void MenuConfigModels();
 	void MenuConfigApp();
 	void WindowResized(int width, int height);

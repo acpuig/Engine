@@ -42,7 +42,6 @@ bool ModuleOpenGL::Init()
 	// … check for errors
 	clearColor = float4(0.0f, 0.0f, 0.0f, 1.0f);
 
-
 	//Initialize global states
 	glEnable(GL_DEPTH_TEST); // Enable depth test
 	glEnable(GL_CULL_FACE); // Enable cull backward faces
@@ -65,9 +64,6 @@ bool ModuleOpenGL::Init()
 	LOG("Using Glew %s", glewGetString(GLEW_VERSION));
 	LOG("OpenGL version supported %s", glGetString(GL_VERSION));
 	LOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
-
-	//Init Variables
-
 
 	return true;
 }
@@ -92,7 +88,6 @@ update_status ModuleOpenGL::PreUpdate()
 	}
 
 	//Screen color
-//	glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 	glClearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -109,6 +104,8 @@ update_status ModuleOpenGL::PreUpdate()
 // Called every draw update
 update_status ModuleOpenGL::Update()
 {
+	SDL_Surface* screen_surface = App->GetWindow()->GetScreenSurface();
+	App->GetDebugDraw()->Draw(App->GetCamera()->GetViewMatrix(), App->GetCamera()->GetProjectionMatrix(), screen_surface->w, screen_surface->h);
 	// Note: Debug draw disables blending
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -118,12 +115,7 @@ update_status ModuleOpenGL::Update()
 
 update_status ModuleOpenGL::PostUpdate()
 {
-	int w, h;
-	SDL_GetWindowSize(App->GetWindow()->window, &w, &h);
-	App->GetDebugDraw()->Draw(App->GetCamera()->GetViewMatrix(), App->GetCamera()->GetProjectionMatrix(), w, h);
-	//change backbuffer y front buffer 
 	SDL_GL_SwapWindow(App->GetWindow()->window);
-
 	return UPDATE_CONTINUE;
 }
 
@@ -178,8 +170,6 @@ void ModuleOpenGL::MenuConfigApp() {
 	ImGui::Separator();
 
 	Histogram();
-
-
 	/*
 	if (ImGui::CollapsingHeader("Window Resizing"))
 	{

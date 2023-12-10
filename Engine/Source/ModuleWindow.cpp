@@ -93,8 +93,7 @@ void ModuleWindow::SetWindowBrightness(float brightness)
 	SDL_SetWindowBrightness(window, brightness);
 }
 
-//width
-//height 
+
 //Fullscreen
 void ModuleWindow::SetFullScreen(bool fullscreen)
 {
@@ -147,10 +146,9 @@ void ModuleWindow::MenuConfigWindow() {
 		if (ImGui::Checkbox("Full Screen", &fullscreen)) {
 			SetFullScreen(fullscreen);
 		} 
-		ImGui::Separator();
-		if (ImGui::Checkbox("Resizable", &resizable)) {
+		/*if (ImGui::Checkbox("Resizable", &resizable)) {
 			SetResizable(resizable);
-		}
+		}*/
 		ImGui::SameLine();
 		if (ImGui::Checkbox("Borderless", &borderless)) {
 			SetBorderless(borderless);
@@ -163,7 +161,6 @@ void ModuleWindow::GetMonitorResolution()
 {
 	RECT monitor;
 	const HWND desktop_handle = GetDesktopWindow();
-	// Get the size of screen to the variable desktop
 	GetWindowRect(desktop_handle, &monitor);
 	maxWidth = monitor.right;
 	maxHeight = monitor.bottom;

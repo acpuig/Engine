@@ -6,11 +6,9 @@
 class ModuleProgram : public Module 
 {
 public:
-    // Constructor and Destructor
     ModuleProgram();
     ~ModuleProgram();
 
-    // Function to create a program from vertex and fragment shader files
     bool Init();
     void UseProgram();
 

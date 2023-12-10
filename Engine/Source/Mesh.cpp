@@ -13,6 +13,7 @@
 #include "tinygltf/tiny_gltf.h"
 
 
+
 void Mesh::Load(const tinygltf::Model& model, const tinygltf::Mesh& mesh, const tinygltf::Primitive& primitive)
 {
 	CleanUp(); 
@@ -47,8 +48,6 @@ void Mesh::CreateVBO(const tinygltf::Model& model, const tinygltf::Mesh& mesh, c
 		assert(posAcc.type == TINYGLTF_TYPE_VEC3);
 		assert(posAcc.componentType == GL_FLOAT);
 
-
-		// retrieve the actual position data about the buffer view and the buffer - 
 		const tinygltf::BufferView& posView = model.bufferViews[posAcc.bufferView];
 		const tinygltf::Buffer& posBuffer = model.buffers[posView.buffer];
 		bufferPos = &(posBuffer.data[posAcc.byteOffset + posView.byteOffset]);
@@ -60,17 +59,13 @@ void Mesh::CreateVBO(const tinygltf::Model& model, const tinygltf::Mesh& mesh, c
 
 		assert(normalAcc.type == TINYGLTF_TYPE_VEC3);
 		assert(normalAcc.componentType == GL_FLOAT);
-		
 
 		const tinygltf::BufferView& normalView = model.bufferViews[normalAcc.bufferView];
 		const tinygltf::Buffer& normalBuffer = model.buffers[normalView.buffer];
 		bufferNormal = &(normalBuffer.data[normalAcc.byteOffset + normalView.byteOffset]);
-
-		
 	}
-	if (itTextCoord != primitive.attributes.end())
-	{ //Checking if Tex Attribute Exists
-
+	if (itTextCoord != primitive.attributes.end())  //Checking if Tex Attribute Exists
+	{
 		const tinygltf::Accessor& textCoordAcc = model.accessors[itTextCoord->second];
 		vertexCountTexCoord += static_cast<GLsizei>(textCoordAcc.count);
 
@@ -86,15 +81,14 @@ void Mesh::CreateVBO(const tinygltf::Model& model, const tinygltf::Mesh& mesh, c
 
 	for (size_t i = 0; i < numVertex; ++i)
 	{
-		// Use the loop index to access different positions in the 'vertices' array
 		Vertex vertex;
 		vertex.position = *reinterpret_cast<const float3*>(bufferPos);
 		vertex.normal = *reinterpret_cast<const float3*>(bufferNormal);
 		vertex.texCoord = *reinterpret_cast<const float2*>(bufferTexCoord);
 
-		 vertices.push_back(vertex);
+		vertices.push_back(vertex);
 
-		// Move the buffer pointers to the next set of data
+		// Move the buffer to the next set of data
 		bufferPos += sizeof(float3);
 		bufferNormal += sizeof(float3);
 		bufferTexCoord += sizeof(float2);
@@ -106,10 +100,8 @@ void Mesh::CreateVBO(const tinygltf::Model& model, const tinygltf::Mesh& mesh, c
 
 }
 
-//Rendering separated arrays
 void Mesh::LoadEBO(const tinygltf::Model& model, const tinygltf::Mesh& mesh, const tinygltf::Primitive& primitive)
 {
-
 	if (primitive.indices >= 0)
 	{
 		glGenBuffers(1, &ebo);
@@ -170,7 +162,6 @@ void Mesh::Render(GLuint textureMaterialID) //Rendering with an EBO
 	proj = App->GetCamera()->GetProjectionMatrix();
 	model = App->GetCamera()->GetModel();
 
-		//glUseProgram(program);
 	App->GetProgram()->UseProgram();
 
 	App->GetProgram()->SendToShaderMatrix4fv("model", &model[0][0]);
@@ -178,7 +169,6 @@ void Mesh::Render(GLuint textureMaterialID) //Rendering with an EBO
 	App->GetProgram()->SendToShaderMatrix4fv("proj", &proj[0][0]); 
 
 	glEnable(GL_TEXTURE_2D);
-	//glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, textureMaterialID);
 
 	glBindVertexArray(vao);

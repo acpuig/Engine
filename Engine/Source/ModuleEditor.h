@@ -7,21 +7,10 @@
 struct InfoMenu {
 	short devilVersion;
 	HardwareDetection openglVersion;
-	//FPS graph
-	//memory consumption
-	//Hardware Detection
 	SDL_version sdlVersion;
 	int CPUcount;
 	float CPUcacheSize;
 	float SystemRAM;
-	//CAPS (?)
-	//GPU
-	//BRAND
-	//VRAM Budget
-	//VRAM Usage
-	//VRAM Available
-	//VRAM Reserved
-
 };
 
 class ModuleEditor : public Module
@@ -38,7 +27,6 @@ public:
 	bool CleanUp();
 
 
-
 private:
 	InfoMenu info; 
 	void* context;
@@ -47,5 +35,6 @@ private:
 	void Draw();
 	void ConfigWindow();
 	bool quit = false;
+	Model* model;
 
 };

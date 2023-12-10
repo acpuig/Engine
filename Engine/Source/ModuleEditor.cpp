@@ -3,7 +3,7 @@
 #include "ModuleEditor.h"
 #include "ModuleWindow.h"
 #include "ModuleOpenGL.h"
-
+#include "Model.h"
 #include "SDL.h"
 
 #include "imgui/imgui.h"
@@ -42,7 +42,6 @@ bool ModuleEditor::Init()
 
 	//Give info SDL/OpenGL/Devil 
 	SDL_GetVersion(&info.sdlVersion);
-	//about.devil_version = App->textures->GetDevilVersion();
 	info.CPUcacheSize = SDL_GetCPUCacheLineSize();
 	info.CPUcount = SDL_GetCPUCount();
 	info.SystemRAM = SDL_GetSystemRAM(); 
@@ -61,6 +60,7 @@ update_status ModuleEditor::PreUpdate()
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame(App->GetWindow()->window);
 	ImGui::NewFrame();
+	Draw();
 
 	return UPDATE_CONTINUE;
 }
@@ -68,9 +68,6 @@ update_status ModuleEditor::PreUpdate()
 // Called every draw update
 update_status ModuleEditor::Update()
 {
-	//ImGui::ShowDemoWindow();
-	Draw();
-	//Render frame before swapping buffers
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	ImGui::UpdatePlatformWindows();
@@ -133,6 +130,8 @@ void ModuleEditor::ConfigWindow() {
 	}
 	if (ImGui::CollapsingHeader("Models")) {
 		App->GetOpenGL()->MenuConfigModels();
+		model = new Model();
+		model->MenuConfigTexture();
 	}
 	ImGui::End();
 
@@ -140,18 +139,14 @@ void ModuleEditor::ConfigWindow() {
 
 void ModuleEditor::MainMenu() {
 	if (ImGui::BeginMainMenuBar()) {
-		if (ImGui::BeginMenu("About")) {
-			//		RequestBrowser();
-			ImGui::EndMenu();
-		}
 
 		if (ImGui::BeginMenu("GitHub")) {
 
-			if (ImGui::MenuItem("Documentation")) {
-				//	RequestBrowser();
+			if (ImGui::MenuItem("Profile")) {
+				RequestBrowser("https://github.com/acpuig");
 			}
-			if (ImGui::MenuItem("Report a Bug")) {
-				//	RequestBrowser();
+			if (ImGui::MenuItem("Documentation")) {
+				RequestBrowser("https://github.com/acpuig/Engine/blob/3db98b0a43c36fb4f87b214bd7021145e20d5341/README.md");
 			}
 			ImGui::EndMenu();
 		}

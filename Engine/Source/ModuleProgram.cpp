@@ -28,6 +28,7 @@ bool ModuleProgram::Init() {
     program = App->GetProgram()->CreateProgram(vertexShader, fragmentShader);
 
     glValidateProgram(program);
+
     // Delete individual shaders
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);

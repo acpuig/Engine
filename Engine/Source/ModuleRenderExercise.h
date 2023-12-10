@@ -20,14 +20,9 @@ public:
 	void RenderTriangle(unsigned vbo, unsigned program);
 	void RenderQuad(unsigned textureID, unsigned program);
 
-	// Forward declaration
-
 	unsigned program;
 	unsigned vbo;
 
 private: 
 	GLuint textureID;
-
-
-
 };

@@ -13,20 +13,13 @@ struct Texture {
 	unsigned height;
 	float* uvs;
 };
-/*
-namespace  DirectX
-{
-	class ScratchImage;
-	struct TexMetadata;
 
-}
-*/
 class ModuleTexture : public Module {
 public: 
 
 	ModuleTexture(); 
 	bool Init();
-	GLuint Load(const std::string& texture_path, GLint wrapParam, GLint minParam, GLint magParam, bool mipmap);
+	GLuint Load(const std::string& texture_path, GLint wrapParam, GLint minParam, GLint magParam);
 
 
 private: 
@@ -36,5 +29,5 @@ private:
 	DirectX::TexMetadata imageMetadata;
 
 	void LoadImage(const wchar_t* texture_path);
-	GLuint LoadTexture(GLint wrapParam, GLint minParam, GLint magParam, bool mipmap);
+	GLuint LoadTexture(GLint wrapParam, GLint minParam, GLint magParam);
 };

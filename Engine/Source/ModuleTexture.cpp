@@ -12,7 +12,7 @@ bool ModuleTexture::Init() {
 	return true; 
 }
 
-GLuint ModuleTexture::Load(const std::string& path, GLint wrapParam, GLint minParam, GLint magParam, bool mipmap) {
+GLuint ModuleTexture::Load(const std::string& path, GLint wrapParam, GLint minParam, GLint magParam) {
 	//1. Load image data with external library into CPU
 	Texture texture;
 	assert(!path.empty());
@@ -27,7 +27,7 @@ GLuint ModuleTexture::Load(const std::string& path, GLint wrapParam, GLint minPa
 
 	if (imageLoad) {
 		//2. Create and load OpenGL texture into GPU
-		texture.id = LoadTexture( wrapParam,  minParam,  magParam,  mipmap);
+		texture.id = LoadTexture( wrapParam,  minParam,  magParam);
 		
 	}else {
 		assert(image_path = nullptr);
@@ -57,7 +57,7 @@ void ModuleTexture::LoadImage(const wchar_t* image_path){
 	}
 }
 
-GLuint ModuleTexture::LoadTexture(GLint wrapParam, GLint minParam, GLint magParam, bool mipmap) {
+GLuint ModuleTexture::LoadTexture(GLint wrapParam, GLint minParam, GLint magParam) {
 	GLuint textureID;
 	glGenTextures(1, &textureID);
 	glBindTexture(GL_TEXTURE_2D, textureID);
@@ -95,19 +95,13 @@ GLuint ModuleTexture::LoadTexture(GLint wrapParam, GLint minParam, GLint magPara
 	default:
 		assert(false && "Unsupported format");
 	}
-	//if(mipmap){
 	if (imageMetadata.mipLevels > 1) {
 		// Assuming you have loaded mipmaps into imageData
 		for (size_t i = 0; i < imageMetadata.mipLevels; ++i) {
 			const DirectX::Image* mip = imageData.GetImage(i, 0, 0);
 			glTexImage2D(GL_TEXTURE_2D, i, internalFormat, mip->width, mip->height, 0, format, type, mip->pixels);
 		}
-
-		// Generate mipmaps for the texture with multiple mip levels
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	}
-	else {
+	} else {
 		// Assuming you have loaded the main texture into imageData
 		glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, imageMetadata.width, imageMetadata.height, 0, format, type, imageData.GetPixels());
 		glGenerateMipmap(GL_TEXTURE_2D);
